@@ -8,6 +8,7 @@
 - 全manifestとREADMEを0.2.0へ統一。README（同梱ファイル表・ホスト別配布）と`release-verification.json`（0.1.0記録を`baseline_0_1_0`へ移し、0.2.0の結果と未検証項目を追加）を更新。
 - `scripts/test_package.py`を追加（バージョン一致、SKILL.md frontmatter、install_skill.pyの配置・CLI実行・上書き拒否）。この過程で、Windowsで読取専用属性のあるフォルダがあると`install_skill.py --force`が権限エラーになる不具合を見つけて修正。
 - LICENSE（MIT）を追加し、作者名を`t93094195-jpn`へ設定。単独skill配置にもLICENSEを同梱。
+- Antigravity単独skill配置(plugin無し)でも、更新後の手順書どおりSKILL_ROOT直下の存在確認からinit成功を確認。
 - Antigravity(plugin配置)でも、更新後の手順書どおりに直接のTest-Pathで解決しinit成功を確認。
 - operation-guideに、`cic_cli.py`の存在確認は直接指定のls/Test-Path/Readで行い、Glob0件や広域検索の結果で判断しない旨を追記。再実行でSKILL_ROOT→Test-Path→2階層上→Test-Pathの手順どおりに解決しinit成功。
 - Claude Code対話セッションでskill起動からinit成功(ok:true)まで確認（許可確認の有無は未判定）。
