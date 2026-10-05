@@ -1,5 +1,5 @@
 {
-  "release": "0.3.0",
+  "release": "0.3.1",
   "recorded_date_jst": "2026-10-05",
   "verification_kind": "deterministic_cli_contracts_and_packaging",
   "baseline_0_1_0": {
@@ -103,5 +103,8 @@
       "not available for ChatGPT/Codex",
       "multi-device and /clear sessions not covered"
     ]
+  },
+  "release_0_3_1": {
+    "change": "author/copyright holder name unified to the GitHub account name ray-works-jp (was t93094195-jpn in LICENSE and manifests); no code change"
   }
 }

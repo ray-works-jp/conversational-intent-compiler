@@ -1,6 +1,6 @@
 # Conversational Intent Compiler
 
-独立したプラグイン / version 0.3.0 / 2026-10-05 JST。
+独立したプラグイン / version 0.3.1 / 2026-10-05 JST。
 
 会話の原文を保持し、指示の変更・撤回・採用範囲・未決事項・判断委任・権限境界を、小さいTurn IRへ整理する。今回作成した研究・schema・offline試作を再利用した明示起動型のプラグインである。
 
@@ -90,7 +90,7 @@ PYTHON PLUGIN_ROOT/scripts/cic_cli.py --db STATE_DB init --conversation conversa
 
 ## ライセンス
 
-MIT（[LICENSE](LICENSE)）、Copyright (c) 2026 t93094195-jpn。作者名はGit設定のユーザー名で、メールアドレスは載せていない。`resources/research/`等の研究資料に含まれる第三者の原典・引用は、それぞれの権利者の条件に従い、MITの対象外である。
+MIT（[LICENSE](LICENSE)）、Copyright (c) 2026 ray-works-jp。作者名はGitHubアカウント名で、メールアドレスは載せていない。`resources/research/`等の研究資料に含まれる第三者の原典・引用は、それぞれの権利者の条件に従い、MITの対象外である。
 
 ## 権限と保存の境界
 

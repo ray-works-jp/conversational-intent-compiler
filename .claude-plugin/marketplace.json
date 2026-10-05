@@ -1,7 +1,7 @@
 {
   "name": "conversational-intent-compiler",
   "metadata": { "description": "会話意図コンパイラ（原文保持・差分・権限境界の追跡）" },
-  "owner": { "name": "t93094195-jpn" },
+  "owner": { "name": "ray-works-jp" },
   "plugins": [
     {
       "name": "conversational-intent-compiler-plugin",
