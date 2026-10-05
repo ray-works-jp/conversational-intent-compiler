@@ -57,7 +57,7 @@
     "skill_root_resolution_in_session": "passed: base directory shown at skill load; PLUGIN_ROOT resolved two levels up; init ok:true (run with --allowedTools Read, Bash(python:*))",
     "bash_permission_behavior": "not_tested_without_allow_rule (headless run denied Read outside cwd until --add-dir/allowedTools were given)",
     "headless_without_allow_rule": "Bash command denied: 'This command requires approval'; no DB created.",
-    "interactive_permission_prompt": "not_tested: the user's attempt was typed into a still-running agy session, not into claude"
+    "interactive_permission_prompt": "Run by the user (Claude Code 2.1.280, claude --plugin-dir, cwd C:\\Users\\HP, permission mode default). Skill loaded as conversational-intent-compiler-plugin:conversational-intent-compiler; the model resolved PLUGIN_ROOT (a first Glob in the wrong place found nothing, a **/cic_cli.py search found scripts/cic_cli.py) and ran init via the PowerShell tool: ok: true, DB created. No allow rules in ~/.claude/settings.json or the project entry in ~/.claude.json. Whether a permission prompt was shown before the PowerShell call is NOT determined: the pasted screen shows none and the session transcript does not record prompts."
   },
   "antigravity": {
     "host": "agy 1.2.14 (Antigravity CLI)",
