@@ -1,6 +1,6 @@
 # Conversational Intent Compiler
 
-独立したプラグイン / version 0.2.1 / 2026-10-05 JST。
+独立したプラグイン / version 0.3.0 / 2026-10-05 JST。
 
 会話の原文を保持し、指示の変更・撤回・採用範囲・未決事項・判断委任・権限境界を、小さいTurn IRへ整理する。今回作成した研究・schema・offline試作を再利用した明示起動型のプラグインである。
 
@@ -24,6 +24,16 @@ Antigravity（CLI）は、リポジトリをcloneして`agy plugin install <clon
 | Antigravity（CLI `agy` / IDE） | `python scripts/install_skill.py <workspace>/.agents/skills`。全プロジェクト共通の置き場は版で異なる（CLI: `~/.gemini/antigravity-cli/skills`、2.0/IDE: `~/.gemini/config/skills`）。リポジトリを`agy plugin install <path>`でプラグインとして入れる方法もある（`~/.gemini/config/plugins/`へコピーされる。`dist/`も含めてコピーされるので、不要なら先に消す） | `agy 1.2.14` で、配置したskillの認識と、SKILL_ROOT/PLUGIN_ROOT解決の正しさを確認。`agy plugin validate`合格、`agy plugin install`で導入しskill認識とroot解決（2階層上）を確認。`agy plugin install`したplugin配置から、`cic_cli.py init`がhost内で`ok:true`になることを確認（headless。コマンド実行を許可するregex rule `command(regex:python <plugin>/scripts/cic_cli\.py .*)`を一時的に`~/.gemini/antigravity-cli/settings.json`へ追加し、実行後に元へ戻した）。許可ルールが無いheadless実行はコマンドが自動拒否される。対話モード(agy 1.2.16)では、コマンド実行(`RunCommand`)の許可確認が出て、承認後に`ok: true`になった（CLIログで確認。承認は保存されず、毎回確認される）。既存DBへの再`init`は`ok: false`(FileExistsError)で拒否される |
 
 Antigravityのskill仕様（既定は`.agents/skills/<name>/SKILL.md`、旧`.agent/skills`も後方互換、frontmatterは`description`必須・`name`任意、script/resourceはskillフォルダ相対）は公式docs（antigravity.google/docs/skills）に基づく。Claude Codeのmanifest仕様は公式のplugin reference（`.claude-plugin/plugin.json`、`skills/`標準配置）に基づく。Claude Codeでは、skill読込時にbase directoryが提示され、`SKILL_ROOT`の解決とinitの成功を確認した（`--allowedTools`で許可した実行）。許可ルールを足していない対話セッション(default mode, cwd=`C:\Users\HP`)でも、skillが読み込まれ`init`が`ok: true`になった。このときPowerShellツールの実行前に許可確認が出たかは、貼られた画面にも記録にも残っておらず確認できていない。headlessでは許可なしだと`This command requires approval`で拒否される。
+
+## Claude Codeの自動捕捉（任意・既定は無効）
+
+同梱の`hooks/hooks.json`は、Claude Codeの`UserPromptSubmit`で**人間の入力原文だけ**を、会話ごとのSQLite台帳へ追記する。環境変数`CIC_CAPTURE=1`を付けて`claude`を起動したときだけ動き、付けなければ何も書かない。
+
+- 保存先: `CIC_LEDGER_DIR`、なければ`$CLAUDE_PLUGIN_DATA/ledgers`、なければ`~/.cic/ledgers`。ファイルは`<session_id>.db`。入力原文がそのまま平文で残るので、不要になったら削除する。
+- 記録するのはユーザー入力の逐語のみ。AI応答・tool結果・意味解釈(Delta)は記録しない。意味状態の更新は従来どおり、skillを起動してホストAIが行う。台帳の原文を使って`delta-template`→`apply`へ進める。
+- stdoutには何も出さず（モデルの文脈へ混入させない）、失敗してもターンを止めない（常にexit 0、理由はstderr）。
+- 確認済み: 単体テスト3件、およびClaude Code実機(`claude -p`)で1ターンが台帳に記録されること。ChatGPT/Codex・Antigravityには同等のhookは付けていない。
+- この機能でも「全会話を漏れなく追跡」とは言えない。hookが無効な起動、複数端末、/clear後の別session等の入力は記録されない。
 
 ## 使い方
 

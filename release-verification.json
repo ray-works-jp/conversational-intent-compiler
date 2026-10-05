@@ -1,5 +1,5 @@
 {
-  "release": "0.2.1",
+  "release": "0.3.0",
   "recorded_date_jst": "2026-10-05",
   "verification_kind": "deterministic_cli_contracts_and_packaging",
   "baseline_0_1_0": {
@@ -86,5 +86,16 @@
     "change": "Repository blobs of 17 hashed resource files had been normalised to LF at first commit, so resources/upstream-files.json SHA-256 did not match a fresh clone; stored byte-exact (CRLF) now.",
     "new_test": "test_package.test_upstream_hashes_match_files",
     "tests": 22
+  },
+  "release_0_3_0": {
+    "change": "opt-in Claude Code UserPromptSubmit hook that records verbatim human prompts into a per-session ledger",
+    "tests": "scripts/test_hook.py (3)",
+    "claude_code_e2e": "claude -p with CIC_CAPTURE=1 recorded 1 event in a new ledger; hook output empty, exit 0",
+    "not_covered": [
+      "AI responses and tool results are not captured",
+      "no semantic Delta is written by the hook",
+      "not available for ChatGPT/Codex or Antigravity",
+      "multi-device and /clear sessions not covered"
+    ]
   }
 }

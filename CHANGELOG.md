@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.3.0 — 2026-10-05
+
+- Claude Code用の任意(`CIC_CAPTURE=1`)の`UserPromptSubmit`フック`hooks/capture_turn.py`を追加。人間入力の原文を会話別の台帳へ自動で逐語記録する。stdout無し・常にexit 0。単体テスト3件と実機1ターンで確認。AI応答・Delta・他ホストは対象外。
+
 ## 0.2.1 — 2026-10-05
 
 - 公開リポジトリで、ハッシュ記録のある17ファイルがLFに正規化されており`resources/upstream-files.json`のSHA-256と一致しなかった不具合を修正（元のバイト列のまま保存）。再発防止に`test_upstream_hashes_match_files`を追加。
