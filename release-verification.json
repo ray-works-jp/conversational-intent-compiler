@@ -1,33 +1,67 @@
 {
-  "release": "0.1.0",
+  "release": "0.2.0",
   "recorded_date_jst": "2026-10-05",
-  "verification_kind": "deterministic_cli_contracts",
-  "builder_run": {
-    "tests": 17, "failures": 0, "errors": 0, "exit_code": 0,
-    "reported_seconds": 19.127,
-    "record": "scripts/cli-test-results.json"
+  "verification_kind": "deterministic_cli_contracts_and_packaging",
+  "baseline_0_1_0": {
+    "note": "Recorded for 0.1.0; CLI/core/schema/skill bodies are unchanged in 0.2.0 apart from one sentence in operation-guide.md.",
+    "builder_run": {
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "reported_seconds": 19.127,
+      "record": "scripts/cli-test-results.json"
+    },
+    "independent_reviewer_run": {
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "reported_seconds": 18.023,
+      "review_record_outside_plugin": "outputs/plugin-validation-review.md"
+    },
+    "release_rerun": {
+      "tests": 17,
+      "failures": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "reported_seconds": 11.269,
+      "command": "python -m unittest discover -s scripts -p test_cli.py -q",
+      "environment": "Permission-reviewed execution with accessible operating-system temporary directory"
+    },
+    "preceding_restricted_environment_run": {
+      "exit_code": 1,
+      "tests": 17,
+      "reported_seconds": 5.126,
+      "reported_failures": 15,
+      "reported_errors": 19,
+      "cause_observed": "PermissionError and WinError 5 on sandbox TemporaryDirectory creation and cleanup",
+      "interpretation": "Environment failure; same unchanged source passed the release rerun"
+    },
+    "source_identity": "Final CLI/core/test hashes match scripts/cli-test-results.json"
   },
-  "independent_reviewer_run": {
-    "tests": 17, "failures": 0, "errors": 0, "exit_code": 0,
-    "reported_seconds": 18.023,
-    "review_record_outside_plugin": "outputs/plugin-validation-review.md"
+  "release_0_2_0_run": {
+    "command": "python -m unittest discover -s scripts -p \"test_*.py\" -q",
+    "tests": 21,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "covers": [
+      "17 CLI contracts (test_cli.py)",
+      "4 packaging contracts (test_package.py): manifest/README/CHANGELOG/release version agreement, SKILL.md frontmatter, install_skill.py layout + CLI run + overwrite refusal"
+    ]
   },
-  "release_rerun": {
-    "tests": 17, "failures": 0, "errors": 0, "exit_code": 0,
-    "reported_seconds": 11.269,
-    "command": "python -m unittest discover -s scripts -p test_cli.py -q",
-    "environment": "Permission-reviewed execution with accessible operating-system temporary directory"
+  "claude_code": {
+    "claude_plugin_validate": "passed",
+    "plugin_dir_skill_recognized": "conversational-intent-compiler-plugin:conversational-intent-compiler",
+    "skill_root_resolution_in_session": "not_tested",
+    "bash_permission_behavior": "not_tested"
   },
-  "preceding_restricted_environment_run": {
-    "exit_code": 1,
-    "tests": 17,
-    "reported_seconds": 5.126,
-    "reported_failures": 15,
-    "reported_errors": 19,
-    "cause_observed": "PermissionError and WinError 5 on sandbox TemporaryDirectory creation and cleanup",
-    "interpretation": "Environment failure; same unchanged source passed the release rerun"
+  "antigravity": {
+    "install_skill_layout_and_cli_init": "passed_locally",
+    "host_load_and_trigger": "not_tested"
   },
-  "source_identity": "Final CLI/core/test hashes match scripts/cli-test-results.json",
+  "codex_chatgpt_host": "not_retested_in_0.2.0",
   "model_calls": 0,
   "external_actions": 0,
   "host_activation": "not_tested",

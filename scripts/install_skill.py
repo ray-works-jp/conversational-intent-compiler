@@ -3,11 +3,16 @@
 
 Layout written: <target>/<name>/{SKILL.md, references/, scripts/, schemas/}
 so that SKILL_ROOT == PLUGIN_ROOT. Refuses to overwrite unless --force."""
-import argparse, shutil, sys
+import argparse, os, shutil, stat, sys
 from pathlib import Path
 
 NAME = "conversational-intent-compiler"
 ROOT = Path(__file__).resolve().parent.parent
+def _writable_retry(func, path, exc):
+    # Windows: directories/files may carry a read-only attribute that blocks removal.
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
 RUNTIME = ("cic.py", "cic_cli.py", "schema_spec.py")
 
 def main():
@@ -19,7 +24,7 @@ def main():
     if dest.exists():
         if not a.force:
             sys.exit(f"exists: {dest} (use --force)")
-        shutil.rmtree(dest)
+        shutil.rmtree(dest, onexc=_writable_retry)
     shutil.copytree(ROOT / "skills" / NAME, dest)
     (dest / "scripts").mkdir()
     for f in RUNTIME:

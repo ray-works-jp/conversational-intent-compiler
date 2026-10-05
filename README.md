@@ -1,6 +1,6 @@
 # Conversational Intent Compiler
 
-独立したプラグイン / version 0.1.0 / 2026-10-05 JST。
+独立したプラグイン / version 0.2.0 / 2026-10-05 JST。
 
 会話の原文を保持し、指示の変更・撤回・採用範囲・未決事項・判断委任・権限境界を、小さいTurn IRへ整理する。今回作成した研究・schema・offline試作を再利用した明示起動型のプラグインである。
 
@@ -52,8 +52,9 @@ PYTHON PLUGIN_ROOT/scripts/cic_cli.py --db STATE_DB init --conversation conversa
 |---|---|
 | `plugin.json` | Agent Plugins 1.0 portable manifest、表示名、説明、starter prompts |
 | `.codex-plugin/plugin.json` | 同じidentity/presentationの互換manifest |
+| `.claude-plugin/plugin.json` | Claude Code用manifest |
 | `skills/conversational-intent-compiler/` | 常用手順、CLI案内、引継ぎ、短い例と限界 |
-| `scripts/` | 原試作のcic/schema定義のコピーと新CLI adapter・契約テスト |
+| `scripts/` | 原試作のcic/schema定義のコピーと新CLI adapter・契約テスト（`test_cli.py`、パッケージ契約の`test_package.py`）、Antigravity等向けの単独skill配置 `install_skill.py` |
 | `schemas/` | Event/State/Delta/Turn IR/Artifact、Node/Adoption/Authority/Referenceの9schema |
 | `resources/research/` | 今回の研究レポート、原典、現行監査、設計と実施済みoffline結果のsnapshot |
 | `resources/evaluation/` | 合成selfcheck、記録済みラベルの集計器、応答に追従するユーザー方策 |
@@ -74,7 +75,13 @@ PYTHON PLUGIN_ROOT/scripts/cic_cli.py --db STATE_DB init --conversation conversa
 
 既存試作の45契約テスト、10/30/100-turn手作成Delta replayの結果は履歴snapshotとして同梱した。新CLIの実行結果は同梱の [release verification](release-verification.json) を参照する。配布パッケージと登録の検査結果は、プラグイン外の検査記録へ保存する。モデル比較結果は含めていない。合成counterを改善率として使わない。
 
-Plugin Creatorへこの一つのディレクトリを含むZIPを渡し、privateプラグインとして保存する。登録結果のplugin ID/release ID/リンクはプラグイン外のcreation receiptへ記録する。accountへの保存と、ホストでの有効化・自然言語動作の検証は区別する。
+ホスト別の配布方法（登録・公開はホスト側の操作であり、ここでは実行しない）:
+
+- **ChatGPT / Codex**: 下記のとおりPlugin Creatorへ渡す。
+- **Claude Code**: リポジトリ全体をプラグインとして読み込む（`claude --plugin-dir <repo>`）。marketplace配布は未整備。
+- **Antigravity**: `python scripts/install_skill.py <出力先>/skills`で作ったskillフォルダ（`conversational-intent-compiler/`）をZIP化して配る。受け取り側は`.agent/skills/`または`~/.gemini/antigravity/skills/`へ置く。
+
+**ChatGPT / Codex**: Plugin Creatorへこの一つのディレクトリを含むZIPを渡し、privateプラグインとして保存する。登録結果のplugin ID/release ID/リンクはプラグイン外のcreation receiptへ記録する。accountへの保存と、ホストでの有効化・自然言語動作の検証は区別する。
 
 **creation receiptの注記**: creation receiptは登録後に作る外部記録であり、このパッケージには含めない（登録結果をZIP内へ書き戻すと、登録済みの内容と食い違う）。次を記録する。
 
@@ -84,4 +91,4 @@ Plugin Creatorへこの一つのディレクトリを含むZIPを渡し、privat
 
 この版のZIPに登録結果は含まれていない。`release-verification.json`の`package_and_account_registration`も、登録後の記録がZIPの外にあることを指す。
 
-公式形式: [Package your plugin](https://developers.openai.com/plugins/build/plugins)。skillは指示・資料としても単独利用できる構成である。[Build skills](https://developers.openai.com/plugins/build/skills)
+公式形式（ChatGPT / Codex）: [Package your plugin](https://developers.openai.com/plugins/build/plugins)。skillは指示・資料としても単独利用できる構成である。[Build skills](https://developers.openai.com/plugins/build/skills)
