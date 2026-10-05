@@ -65,7 +65,8 @@
     "skill_root_resolution": "passed (SKILL_ROOT == PLUGIN_ROOT for standalone layout)",
     "cli_execution_in_host": "passed (headless agy 1.2.14, plugin install layout): cic_cli.py init returned ok:true and created the DB. Needed an allow rule; a bare command(python) rule and a PowerShell probe command were not enough, a regex rule on the exact script path worked. Settings were restored afterwards. Interactive permission prompt not tested; skill-driven root discovery was verified separately, in this run the command line was given explicitly.",
     "agy_plugin_install": "passed: copied to ~/.gemini/config/plugins/conversational-intent-compiler-plugin; skill discovered; SKILL_ROOT/PLUGIN_ROOT resolved two levels up; scripts/cic_cli.py present. Command execution in host still not tested.",
-    "antigravity_ide_and_2_0": "not_tested"
+    "antigravity_ide_and_2_0": "not_tested",
+    "interactive_mode": "Run by the user in their own PowerShell (agy 1.2.16, pasted transcript): the single python cic_cli.py init command ran with no permission prompt shown and reported ok: true. Cause of no prompt not isolated: config.json global grants contain no matching command rule; an earlier headless run's temporary rule may have been persisted as a project grant (log: 'ApplyProjectPermissionGrants: stored 1 allow'), unchecked. A prompt-on-first-use case was therefore not observed."
   },
   "codex_chatgpt_host": "not_retested_in_0.2.0",
   "model_calls": 0,
