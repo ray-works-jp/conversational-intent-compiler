@@ -69,7 +69,8 @@
     "agy_plugin_install": "passed: copied to ~/.gemini/config/plugins/conversational-intent-compiler-plugin; skill discovered; SKILL_ROOT/PLUGIN_ROOT resolved two levels up; scripts/cic_cli.py present. Command execution in host still not tested.",
     "antigravity_ide_and_2_0": "not_tested",
     "interactive_mode": "Run by the user in their own PowerShell (agy 1.2.16). CLI log shows 'Surfacing tool confirmation: RunCommand' then 'approved=true, persistGrants=[]' 27 s later, so the permission prompt did appear (the pasted transcript omitted it) and the approval was not persisted. After approval init returned ok: true. A second run on the same DB returned ok: false (FileExistsError), the intended refusal to re-initialise. Earlier note that no prompt appeared was wrong.",
-    "interactive_prompt_options": "Pasted agy 1.2.16 prompt for a RunCommand offers: 1 run once, 2 always allow in this conversation (prefix match), 3 always allow and persist to settings.json, 4 cancel. Option 3 writes to the user's settings."
+    "interactive_prompt_options": "Pasted agy 1.2.16 prompt for a RunCommand offers: 1 run once, 2 always allow in this conversation (prefix match), 3 always allow and persist to settings.json, 4 cancel. Option 3 writes to the user's settings.",
+    "guide_direct_path_check_rerun": "passed (headless agy, plugin layout reinstalled with the updated operation-guide): Test-Path on SKILL_ROOT/scripts/cic_cli.py, Test-Path on PLUGIN_ROOT/scripts/cic_cli.py, then python ... init -> ok: true. No search tool used. Needed regex allow rules (prefix rules like command(Test-Path) did not match); settings restored. Standalone .agents/skills layout not re-run after the guide change."
   },
   "codex_chatgpt_host": "not_retested_in_0.2.0",
   "model_calls": 0,
