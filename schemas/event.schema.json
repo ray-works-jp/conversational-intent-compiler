@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cic:cic-prototype-0.1:event",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "cic-prototype-0.1"
+    },
+    "compiler_version": {
+      "type": "string"
+    },
+    "event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "conversation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "branch_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "seq": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "origin": {
+      "enum": [
+        "user",
+        "assistant",
+        "tool",
+        "external",
+        "compiler"
+      ]
+    },
+    "principal": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "trusted_identity": {
+      "type": "boolean"
+    },
+    "kind": {
+      "enum": [
+        "human",
+        "assistant",
+        "tool_result",
+        "external",
+        "interpretation",
+        "artifact",
+        "fork",
+        "tick",
+        "action_status"
+      ]
+    },
+    "recorded_at": {
+      "type": "string",
+      "minLength": 1
+    },
+    "effective_at": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "raw": {
+      "type": "string"
+    },
+    "raw_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "parent_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "reference_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "attrs": {
+      "type": "object"
+    },
+    "request_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "prev_event_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "event_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "schema_version",
+    "compiler_version",
+    "event_id",
+    "conversation_id",
+    "branch_id",
+    "seq",
+    "origin",
+    "principal",
+    "trusted_identity",
+    "kind",
+    "recorded_at",
+    "effective_at",
+    "raw",
+    "raw_sha256",
+    "parent_ids",
+    "reference_ids",
+    "attrs",
+    "request_sha256",
+    "prev_event_hash",
+    "event_hash"
+  ],
+  "additionalProperties": false
+}

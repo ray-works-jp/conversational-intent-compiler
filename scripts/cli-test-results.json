@@ -1,0 +1,26 @@
+{
+  "suite": "stateful_cli_wrapper",
+  "tests_run": 17,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "successful": true,
+  "reported_unittest_seconds": 19.127,
+  "model_calls": 0,
+  "external_actions": 0,
+  "unchanged_core_copies": {
+    "cic.py": true,
+    "schema_spec.py": true
+  },
+  "source_sha256": {
+    "cic.py": "7b437c48898ca2139a7edab09c7055ec6cddc2f1f6cebb43b990de9dfcf346ab",
+    "schema_spec.py": "8063d800e35f39e16607755442ab1487aa9f9fc17cb558b44bc544a0a7778577",
+    "cic_cli.py": "a3b938474cde0d923a324ef52e78e611305df200ecec43e1a1c210a65ff2f291",
+    "test_cli.py": "78e202b8b26828ea85190178b0f418096adf94eb4a7c2edce88e9cf9a24799ce"
+  },
+  "command": "python -m unittest -v test_cli",
+  "limitations": [
+    "Deterministic CLI contracts only; semantic parsing accuracy is unmeasured.",
+    "Attestation flags are not authentication or external permission."
+  ]
+}

@@ -1,0 +1,277 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cic:cic-prototype-0.1:node",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "content": {
+      "type": "string"
+    },
+    "origin": {
+      "enum": [
+        "user",
+        "assistant",
+        "tool",
+        "external",
+        "compiler"
+      ]
+    },
+    "relation": {
+      "enum": [
+        "explicit",
+        "unadopted",
+        "inferred",
+        "observed"
+      ]
+    },
+    "role": {
+      "enum": [
+        "goal",
+        "constraint",
+        "preference",
+        "prohibition",
+        "proposal",
+        "latitude",
+        "unknown"
+      ]
+    },
+    "resolution": {
+      "enum": [
+        "unresolved",
+        "resolved",
+        "unverified",
+        "verified"
+      ]
+    },
+    "lifecycle": {
+      "enum": [
+        "active",
+        "revoked",
+        "superseded",
+        "suspended",
+        "completed",
+        "expired"
+      ]
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "conversation",
+            "task",
+            "turn"
+          ]
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "turn_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "task_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "valid_from": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "valid_until": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "targets",
+        "turn_id",
+        "task_id",
+        "valid_from",
+        "valid_until"
+      ],
+      "additionalProperties": false
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "quote": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_id",
+          "start",
+          "end",
+          "quote"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "semantics": {
+      "type": "object",
+      "properties": {
+        "actor": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "action": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "object": {
+          "type": [
+            "string",
+            "object",
+            "null"
+          ]
+        },
+        "goal": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "deadline": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "time_range": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "start": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "end": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "required": [
+            "start",
+            "end"
+          ],
+          "additionalProperties": false
+        },
+        "quantity": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "value": {
+              "type": "number"
+            },
+            "unit": {
+              "type": "string",
+              "minLength": 1
+            },
+            "epistemic": {
+              "enum": [
+                "USER_EXPLICIT",
+                "AI_assumption",
+                "COMPILER_INFERRED"
+              ]
+            },
+            "comparator": {
+              "enum": [
+                "eq",
+                "lt",
+                "lte",
+                "gt",
+                "gte"
+              ]
+            }
+          },
+          "required": [
+            "value",
+            "unit"
+          ],
+          "additionalProperties": false
+        },
+        "sequence": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "version",
+    "content",
+    "origin",
+    "relation",
+    "role",
+    "resolution",
+    "lifecycle",
+    "scope",
+    "evidence",
+    "dependencies",
+    "semantics"
+  ],
+  "additionalProperties": false
+}

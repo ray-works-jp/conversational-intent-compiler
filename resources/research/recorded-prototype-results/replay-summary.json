@@ -1,0 +1,53 @@
+{
+  "experiment": "offline_fixture_replay_contract",
+  "interpretations": "hand_authored_fixture",
+  "model_calls": 0,
+  "natural_language_accuracy_measured": false,
+  "raw_baseline_comparison_run": false,
+  "closed_loop_run": false,
+  "semantic_correctness_proven": false,
+  "hokkaido": {
+    "booking_denied": true,
+    "budget_origin_assistant": true,
+    "budget_not_confirmed": true,
+    "replay_identical": true
+  },
+  "trajectories": [
+    {
+      "human_turns": 10,
+      "events": 20,
+      "state_checks": 36,
+      "passed_state_checks": 36,
+      "replay_identical": true,
+      "state_hash": "aead8e2ce41a72bb7eb563f0eb8b0dcba391268e3263ea2b91e57596f02c1f8d",
+      "declared_context_event_coverage": 1.0,
+      "wall_seconds_offline_harness": 0.93929
+    },
+    {
+      "human_turns": 30,
+      "events": 60,
+      "state_checks": 116,
+      "passed_state_checks": 116,
+      "replay_identical": true,
+      "state_hash": "8a0f9c8070df89b011e4b9353700ed2d3c6760d70f0ff6dcc76744ce8fda725c",
+      "declared_context_event_coverage": 1.0,
+      "wall_seconds_offline_harness": 7.437848
+    },
+    {
+      "human_turns": 100,
+      "events": 200,
+      "state_checks": 396,
+      "passed_state_checks": 396,
+      "replay_identical": true,
+      "state_hash": "b4acdc90b4675679e5e3f011c7182f7a658b555524da04e5fbd469038889ab26",
+      "declared_context_event_coverage": 1.0,
+      "wall_seconds_offline_harness": 107.099332
+    }
+  ],
+  "elapsed_seconds": 115.708494,
+  "limits": [
+    "State checks evaluate deterministic application of supplied interpretations.",
+    "Wall times include inefficient whole-ledger integrity checks and are not model/API latency.",
+    "Context coverage is over explicitly required source events, not an independent semantic gold coverage score."
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema_version": "cic-prototype-0.1",
+  "compiler_version": "deterministic-projector-0.1",
+  "python": "3.12.14",
+  "platform": "Windows",
+  "tests_run": 45,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "successful": true,
+  "wall_seconds": 1.903615,
+  "test_kind": "deterministic_contracts_and_replay_properties",
+  "model_calls": 0,
+  "source_sha256": {
+    "cic.py": "7b437c48898ca2139a7edab09c7055ec6cddc2f1f6cebb43b990de9dfcf346ab",
+    "schema_spec.py": "8063d800e35f39e16607755442ab1487aa9f9fc17cb558b44bc544a0a7778577",
+    "fixtures.py": "9ba70af7205aa458ef9122154e3a10a977359fa549410d32ca7b7983ef8f46c3",
+    "test_cic.py": "e58407a8196d4a00f2c2a17b4f107d1346429b06c4bbae2c0a19e414ab6480fe"
+  }
+}

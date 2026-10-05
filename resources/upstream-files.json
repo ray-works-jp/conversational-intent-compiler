@@ -1,0 +1,205 @@
+{
+  "kind": "upstream_source_mapping",
+  "date_jst": "2026-10-04",
+  "source_status": "snapshots of research and offline prototype, not host instructions or semantic proof",
+  "files": [
+    {
+      "source": "conversational-intent-compiler-vnext.md",
+      "packaged": "resources/research/conversational-intent-compiler-vnext.md",
+      "sha256": "38a5f7aa8f78649c21a6270920b7f6d35fa2b3b43ecccc687d74b55b0a6077bc",
+      "bytes": 46464
+    },
+    {
+      "source": "current-implementation-audit.md",
+      "packaged": "resources/research/current-implementation-audit.md",
+      "sha256": "083390263a447eb2b0448a10812f5839777e99154aadccdb6eb616454870dd8c",
+      "bytes": 13222
+    },
+    {
+      "source": "research-evidence.md",
+      "packaged": "resources/research/research-evidence.md",
+      "sha256": "8b7962fc5c428ac90a23d961536b067565cf51606383726937be20a34e059e05",
+      "bytes": 18383
+    },
+    {
+      "source": "research-systems-evidence.md",
+      "packaged": "resources/research/research-systems-evidence.md",
+      "sha256": "0bb9ff0aa037ff2831e22657f2dbe39a9e8c5f0f5235f02b517631c08ac50f58",
+      "bytes": 4601
+    },
+    {
+      "source": "references.json",
+      "packaged": "resources/research/references.json",
+      "sha256": "e28dcb9de1dc96482f838c53a460679c999d8b655a5ff16f2ab4b88143b1921d",
+      "bytes": 9664
+    },
+    {
+      "source": "work-integration-evidence.md",
+      "packaged": "resources/research/work-integration-evidence.md",
+      "sha256": "be5d9ce700510a6b74489d280d62da3a011d34d8d4a8babce192f50f1a2b02a8",
+      "bytes": 6787
+    },
+    {
+      "source": "prompt-contracts.md",
+      "packaged": "resources/research/prompt-contracts.md",
+      "sha256": "3670d8390674886a1038a679f347876043cf6a83d109fb474cfbfcdaad8dfaf8",
+      "bytes": 7116
+    },
+    {
+      "source": "benchmark-protocol.md",
+      "packaged": "resources/research/benchmark-protocol.md",
+      "sha256": "83fc15907303bb8b1e84ca678829fb91dff37a46302c614f85a95b64be461979",
+      "bytes": 13409
+    },
+    {
+      "source": "validation-results.md",
+      "packaged": "resources/research/validation-results.md",
+      "sha256": "624229122d5e1331bda5407a37440afd7358128c0bf26003b578cbdd32a0edc0",
+      "bytes": 7842
+    },
+    {
+      "source": "prototype-review.md",
+      "packaged": "resources/research/prototype-review.md",
+      "sha256": "f9af1944a65364f31c5fff6973e870d3afa4456b3e296b87f5462b5f9c74e756",
+      "bytes": 11540
+    },
+    {
+      "source": "deliverable-map.md",
+      "packaged": "resources/research/deliverable-map.md",
+      "sha256": "88a04054c3b3ea1425e44fbdbc34b50956cc15160f07410684a9e83da22d5079",
+      "bytes": 3721
+    },
+    {
+      "source": "material-inventory.json",
+      "packaged": "resources/research/material-inventory.json",
+      "sha256": "a9f0c3a3443482b8da4ce084d5b7c713c1079490906e7a710c287d4180d9f287",
+      "bytes": 10488
+    },
+    {
+      "source": "prototype/README.md",
+      "packaged": "resources/research/prototype-readme.md",
+      "sha256": "dc3d8ef4a2613203839db24ad977edecc718aa042fd1539508ea259914c24237",
+      "bytes": 15756
+    },
+    {
+      "source": "prototype/schemas/adoption.schema.json",
+      "packaged": "schemas/adoption.schema.json",
+      "sha256": "844d51b35633a2f20252830bdcd8b0c490bac50b53ed741ca43222df4d05f56f",
+      "bytes": 1701
+    },
+    {
+      "source": "prototype/schemas/artifact.schema.json",
+      "packaged": "schemas/artifact.schema.json",
+      "sha256": "e04b4b88d67aa82161154d74f51a2bb1a10fede72012ffe3bf9338770c157c4e",
+      "bytes": 751
+    },
+    {
+      "source": "prototype/schemas/authority.schema.json",
+      "packaged": "schemas/authority.schema.json",
+      "sha256": "bfb570b25f821f2f2e380d209eab364bcd2a882999c3279df6043451064ebf59",
+      "bytes": 3190
+    },
+    {
+      "source": "prototype/schemas/delta.schema.json",
+      "packaged": "schemas/delta.schema.json",
+      "sha256": "18c3b65d39b875489152d5d16b8b13ccc2f086b1769ea1ee95d8bbd871984e9b",
+      "bytes": 8686
+    },
+    {
+      "source": "prototype/schemas/event.schema.json",
+      "packaged": "schemas/event.schema.json",
+      "sha256": "b1b4a055dae013347c75420a479dad0abd0a536105882f227d4fc80645d098b0",
+      "bytes": 2454
+    },
+    {
+      "source": "prototype/schemas/node.schema.json",
+      "packaged": "schemas/node.schema.json",
+      "sha256": "f8e7405d0be42252a8896a3854292e9a6bcf8fed9ab08ba81c284b1d2845e722",
+      "bytes": 5498
+    },
+    {
+      "source": "prototype/schemas/reference.schema.json",
+      "packaged": "schemas/reference.schema.json",
+      "sha256": "88a2cd8f40baae4be1988d258c2b518eff586ac7398b1d09f19c4dc1f53cdc03",
+      "bytes": 2176
+    },
+    {
+      "source": "prototype/schemas/state.schema.json",
+      "packaged": "schemas/state.schema.json",
+      "sha256": "42a4fcc0f200eab6523ca9bee1307dee5ba03984bab412089b6783f42aa90c76",
+      "bytes": 20246
+    },
+    {
+      "source": "prototype/schemas/turn_ir.schema.json",
+      "packaged": "schemas/turn_ir.schema.json",
+      "sha256": "e5dec0fd0e0f4b37a1c7054c8f5e279445ba586880d6f2c2251427eefa2d84d7",
+      "bytes": 22461
+    },
+    {
+      "source": "prototype/results/test-results.json",
+      "packaged": "resources/research/recorded-prototype-results/test-results.json",
+      "sha256": "3e72ff8e110a7c3d9006f96cd9211feff98568ad378f84379b52983f7035a0a4",
+      "bytes": 737
+    },
+    {
+      "source": "prototype/results/replay-summary.json",
+      "packaged": "resources/research/recorded-prototype-results/replay-summary.json",
+      "sha256": "668e28271f221d765c7d0b9167397169e862727d6b34b5d584513b0fd983535c",
+      "bytes": 1848
+    },
+    {
+      "source": "prototype/results/hokkaido.turn_ir.json",
+      "packaged": "resources/research/recorded-prototype-results/hokkaido.turn_ir.json",
+      "sha256": "b24650317e5d5fb441605e0b0753e236f12d743a5e6fab1051e22712156bf42c",
+      "bytes": 10892
+    },
+    {
+      "source": "prototype/results/hokkaido.events.jsonl",
+      "packaged": "resources/research/recorded-prototype-results/hokkaido.events.jsonl",
+      "sha256": "3e56be06ebdb523a3770a4a2eeba73eb07328b52fb63244344f41a6c68bae05a",
+      "bytes": 11214
+    },
+    {
+      "source": "evaluation/score_recorded.py",
+      "packaged": "resources/evaluation/score_recorded.py",
+      "sha256": "c7f885193119bdb267d3510fdd56576f8e696e4bb4626cbd069656f7c4b5eca5",
+      "bytes": 12279
+    },
+    {
+      "source": "evaluation/user_policy.py",
+      "packaged": "resources/evaluation/user_policy.py",
+      "sha256": "d5023e8ffd171e1c6e2bf988d2aab42179f8c5ca0b4ab8300d7d3b8f7d470f7b",
+      "bytes": 3511
+    },
+    {
+      "source": "evaluation/selfcheck.py",
+      "packaged": "resources/evaluation/selfcheck.py",
+      "sha256": "1d5e6480d638ccb14301f645f19a9ba85c164582fc780f805f917ab32b16bd94",
+      "bytes": 8976
+    },
+    {
+      "source": "evaluation/README.md",
+      "packaged": "resources/evaluation/README.md",
+      "sha256": "ac7b06dbaae35b9ae882a3fd0ce2c2bd2a815a68e2f73a108ddea78a65973c78",
+      "bytes": 4913
+    },
+    {
+      "source": "evaluation/manifest.synthetic.json",
+      "packaged": "resources/evaluation/manifest.synthetic.json",
+      "sha256": "a5d329c6f3b93738de2397de841a0c97b6ebceffc8e42ed5da349bb9d1fdc450",
+      "bytes": 3493
+    },
+    {
+      "source": "evaluation/observations.synthetic.jsonl",
+      "packaged": "resources/evaluation/observations.synthetic.jsonl",
+      "sha256": "113bbf151599866219ac7ed3c31bb4033441b7656387da7a842ece1e2ab9d124",
+      "bytes": 5180
+    },
+    {
+      "source": "evaluation/selfcheck-results.json",
+      "packaged": "resources/evaluation/selfcheck-results.json",
+      "sha256": "dd2fc753f5907b4a99e54d8a2dd163f9d08de715448d4a7496ee7a9a4a1544f5",
+      "bytes": 2497
+    }
+  ]
+}

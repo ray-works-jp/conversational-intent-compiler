@@ -1,0 +1,102 @@
+{
+  "kind": "synthetic_selfcheck",
+  "tests_passed": 22,
+  "tests": [
+    {
+      "test": "explicit_synthetic_status",
+      "passed": true
+    },
+    {
+      "test": "per_conversation_numerator_denominator",
+      "passed": true
+    },
+    {
+      "test": "missing_is_NA",
+      "passed": true
+    },
+    {
+      "test": "mean_tokens_are_not_rate_bounded",
+      "passed": true
+    },
+    {
+      "test": "paired_cluster_bootstrap_identical_arms_zero",
+      "passed": true
+    },
+    {
+      "test": "bootstrap_seed_reproducible",
+      "passed": true
+    },
+    {
+      "test": "duplicate_observation_rejected",
+      "passed": true
+    },
+    {
+      "test": "unequal_context_budget_rejected",
+      "passed": true
+    },
+    {
+      "test": "unequal_declared_access_rejected",
+      "passed": true
+    },
+    {
+      "test": "invalid_rate_counter_rejected",
+      "passed": true
+    },
+    {
+      "test": "zero_denominator_omitted_not_zero_score",
+      "passed": true
+    },
+    {
+      "test": "synthetic_labels_cannot_masquerade_as_measurement",
+      "passed": true
+    },
+    {
+      "test": "one_conversation_bootstrap_NA",
+      "passed": true
+    },
+    {
+      "test": "observations_for_unexecuted_arm_rejected",
+      "passed": true
+    },
+    {
+      "test": "closed_loop_adapts_number_to_each_actual_response",
+      "passed": true
+    },
+    {
+      "test": "closed_loop_preserves_seen_target_version",
+      "passed": true
+    },
+    {
+      "test": "choice_does_not_confirm_AI_assumptions",
+      "passed": true
+    },
+    {
+      "test": "choice_does_not_grant_booking_authority",
+      "passed": true
+    },
+    {
+      "test": "missing_target_requires_policy_clarification",
+      "passed": true
+    },
+    {
+      "test": "multiple_numbered_sets_not_recency_guessed",
+      "passed": true
+    },
+    {
+      "test": "unseen_artifact_cannot_be_user_referent",
+      "passed": true
+    },
+    {
+      "test": "availability_is_research_only",
+      "passed": true
+    }
+  ],
+  "model_calls": 0,
+  "semantic_labels_generated": false,
+  "scientific_interpretation": "Only arithmetic, validation and response-adaptive policy contracts were exercised. No compiler superiority result.",
+  "synthetic_score_summary": {
+    "all_arm_constraint_survival": 0.5,
+    "identical_arms_difference": 0,
+    "note": "fabricated counters for calculation checks, not model performance"
+  }
+}

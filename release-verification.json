@@ -1,0 +1,38 @@
+{
+  "release": "0.1.0",
+  "recorded_date_jst": "2026-10-05",
+  "verification_kind": "deterministic_cli_contracts",
+  "builder_run": {
+    "tests": 17, "failures": 0, "errors": 0, "exit_code": 0,
+    "reported_seconds": 19.127,
+    "record": "scripts/cli-test-results.json"
+  },
+  "independent_reviewer_run": {
+    "tests": 17, "failures": 0, "errors": 0, "exit_code": 0,
+    "reported_seconds": 18.023,
+    "review_record_outside_plugin": "outputs/plugin-validation-review.md"
+  },
+  "release_rerun": {
+    "tests": 17, "failures": 0, "errors": 0, "exit_code": 0,
+    "reported_seconds": 11.269,
+    "command": "python -m unittest discover -s scripts -p test_cli.py -q",
+    "environment": "Permission-reviewed execution with accessible operating-system temporary directory"
+  },
+  "preceding_restricted_environment_run": {
+    "exit_code": 1,
+    "tests": 17,
+    "reported_seconds": 5.126,
+    "reported_failures": 15,
+    "reported_errors": 19,
+    "cause_observed": "PermissionError and WinError 5 on sandbox TemporaryDirectory creation and cleanup",
+    "interpretation": "Environment failure; same unchanged source passed the release rerun"
+  },
+  "source_identity": "Final CLI/core/test hashes match scripts/cli-test-results.json",
+  "model_calls": 0,
+  "external_actions": 0,
+  "host_activation": "not_tested",
+  "natural_language_semantic_accuracy": "not_measured",
+  "raw_baseline_superiority": "not_measured",
+  "all_turn_automatic_interception": "not_implemented",
+  "package_and_account_registration": "Recorded separately after archive construction"
+}

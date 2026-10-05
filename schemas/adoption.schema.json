@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cic:cic-prototype-0.1:adoption",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "target_version": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "relation": {
+      "enum": [
+        "selected",
+        "confirmed",
+        "referenced"
+      ]
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "exceptions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "quote": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_id",
+          "start",
+          "end",
+          "quote"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "artifact_version": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "target_id",
+    "target_version",
+    "relation",
+    "fields",
+    "exceptions",
+    "evidence",
+    "artifact_version"
+  ],
+  "additionalProperties": false
+}

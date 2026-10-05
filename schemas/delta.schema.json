@@ -1,0 +1,358 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cic:cic-prototype-0.1:delta",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "cic-prototype-0.1"
+    },
+    "delta_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "conversation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "branch_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "human_event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "base_state_version": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "base_watermark": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "op": {
+            "enum": [
+              "ADD",
+              "MODIFY",
+              "REVOKE",
+              "REPLACE",
+              "SUPERSEDE",
+              "CONFIRM",
+              "SELECT",
+              "REFERENCE",
+              "RESOLVE",
+              "REOPEN",
+              "DELEGATE",
+              "NARROW_SCOPE",
+              "EXPAND_SCOPE",
+              "NO_CHANGE",
+              "COMPLETE",
+              "SUSPEND"
+            ]
+          },
+          "target_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "value": {},
+          "patch": {},
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "event_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "start": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "end": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "quote": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "event_id",
+                "start",
+                "end",
+                "quote"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "scope": {
+            "type": "object",
+            "properties": {
+              "kind": {
+                "enum": [
+                  "conversation",
+                  "task",
+                  "turn"
+                ]
+              },
+              "targets": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "turn_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "task_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "valid_from": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "valid_until": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "required": [
+              "kind",
+              "targets",
+              "turn_id",
+              "task_id",
+              "valid_from",
+              "valid_until"
+            ],
+            "additionalProperties": false
+          },
+          "resolution": {
+            "enum": [
+              "resolved",
+              "unresolved"
+            ]
+          }
+        },
+        "required": [
+          "op",
+          "target_id",
+          "value",
+          "patch",
+          "evidence",
+          "scope",
+          "resolution"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "authority_operations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "op": {
+            "enum": [
+              "GRANT",
+              "REVOKE",
+              "NARROW",
+              "EXPIRE"
+            ]
+          },
+          "target_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "value": {},
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "event_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "start": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "end": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "quote": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "event_id",
+                "start",
+                "end",
+                "quote"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "op",
+          "target_id",
+          "value",
+          "evidence"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "unresolved": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expression": {
+            "type": "string"
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "event_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "start": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "end": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "quote": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "event_id",
+                "start",
+                "end",
+                "quote"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "candidates": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "target_id": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "version": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "type": {
+                  "enum": [
+                    "node",
+                    "event",
+                    "artifact"
+                  ]
+                }
+              },
+              "required": [
+                "target_id",
+                "version",
+                "type"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "resolved_target": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "resolved_version": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "status": {
+            "enum": [
+              "resolved",
+              "unresolved"
+            ]
+          },
+          "behavior_changes": {
+            "type": "boolean"
+          },
+          "rationale": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "expression",
+          "evidence",
+          "candidates",
+          "resolved_target",
+          "resolved_version",
+          "status",
+          "behavior_changes",
+          "rationale"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "interpretation_method": {
+      "enum": [
+        "hand_authored_fixture",
+        "reviewed_external_candidate"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "delta_id",
+    "conversation_id",
+    "branch_id",
+    "human_event_id",
+    "base_state_version",
+    "base_watermark",
+    "operations",
+    "authority_operations",
+    "unresolved",
+    "interpretation_method"
+  ],
+  "additionalProperties": false
+}

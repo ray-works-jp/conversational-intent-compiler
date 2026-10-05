@@ -1,0 +1,412 @@
+{
+  "schema_version": "cic-prototype-0.1",
+  "compiler_version": "deterministic-projector-0.1",
+  "conversation_id": "c1",
+  "branch_id": "main",
+  "turn_id": "H3",
+  "human_raw": "それで予約できるところ調べて",
+  "human_raw_sha256": "9fd8c788ad11fedbbd74d7d3e486f5d7e16c4b247652b950141441e5d3c757c3",
+  "base_state_version": 7,
+  "ledger_watermark": 7,
+  "routing": "ANNOTATE",
+  "intent_delta": {
+    "authority_operations": [],
+    "base_state_version": 6,
+    "base_watermark": 6,
+    "branch_id": "main",
+    "conversation_id": "c1",
+    "delta_id": "d-H3",
+    "human_event_id": "H3",
+    "interpretation_method": "hand_authored_fixture",
+    "operations": [
+      {
+        "evidence": [
+          {
+            "end": 2,
+            "event_id": "H3",
+            "quote": "それ",
+            "start": 0
+          }
+        ],
+        "op": "REFERENCE",
+        "patch": null,
+        "resolution": "resolved",
+        "scope": {
+          "kind": "conversation",
+          "targets": [],
+          "task_id": null,
+          "turn_id": null,
+          "valid_from": null,
+          "valid_until": null
+        },
+        "target_id": null,
+        "value": {
+          "behavior_changes": true,
+          "candidates": [
+            {
+              "target_id": "plan-2",
+              "type": "node",
+              "version": 2
+            }
+          ],
+          "evidence": [
+            {
+              "end": 2,
+              "event_id": "H3",
+              "quote": "それ",
+              "start": 0
+            }
+          ],
+          "expression": "それ",
+          "id": "ref-it",
+          "rationale": "Hand-authored fixture: the immediately revised selected plan.",
+          "resolved_target": "plan-2",
+          "resolved_version": 2,
+          "status": "resolved"
+        }
+      },
+      {
+        "evidence": [
+          {
+            "end": 14,
+            "event_id": "H3",
+            "quote": "それで予約できるところ調べて",
+            "start": 0
+          }
+        ],
+        "op": "ADD",
+        "patch": null,
+        "resolution": "resolved",
+        "scope": {
+          "kind": "conversation",
+          "targets": [],
+          "task_id": null,
+          "turn_id": null,
+          "valid_from": null,
+          "valid_until": null
+        },
+        "target_id": null,
+        "value": {
+          "content": "予約可能な候補を調査",
+          "dependencies": [],
+          "evidence": [
+            {
+              "end": 14,
+              "event_id": "H3",
+              "quote": "それで予約できるところ調べて",
+              "start": 0
+            }
+          ],
+          "id": "search-bookable",
+          "lifecycle": "active",
+          "origin": "user",
+          "relation": "explicit",
+          "resolution": "unverified",
+          "role": "goal",
+          "scope": {
+            "kind": "conversation",
+            "targets": [],
+            "task_id": null,
+            "turn_id": null,
+            "valid_from": null,
+            "valid_until": null
+          },
+          "semantics": {
+            "action": "research",
+            "object": "bookable_options"
+          },
+          "version": 1
+        }
+      }
+    ],
+    "schema_version": "cic-prototype-0.1",
+    "unresolved": []
+  },
+  "active_requirements": [
+    {
+      "content": "予算20万円",
+      "dependencies": [],
+      "evidence": [
+        {
+          "end": 54,
+          "event_id": "A1",
+          "quote": "予算20万円はAIの仮定です。",
+          "start": 39
+        }
+      ],
+      "id": "assumed-budget",
+      "lifecycle": "active",
+      "origin": "assistant",
+      "relation": "unadopted",
+      "resolution": "unverified",
+      "role": "proposal",
+      "scope": {
+        "kind": "conversation",
+        "targets": [],
+        "task_id": null,
+        "turn_id": null,
+        "valid_from": null,
+        "valid_until": null
+      },
+      "semantics": {
+        "quantity": {
+          "epistemic": "AI_assumption",
+          "unit": "JPY",
+          "value": 200000
+        }
+      },
+      "version": 1
+    },
+    {
+      "content": "ホテル費用を下げる",
+      "dependencies": [],
+      "evidence": [
+        {
+          "end": 17,
+          "event_id": "H2",
+          "quote": "ホテルだけもう少し安くして",
+          "start": 4
+        }
+      ],
+      "id": "hotel-cheaper",
+      "lifecycle": "active",
+      "origin": "user",
+      "relation": "explicit",
+      "resolution": "unverified",
+      "role": "constraint",
+      "scope": {
+        "kind": "conversation",
+        "targets": [],
+        "task_id": null,
+        "turn_id": null,
+        "valid_from": null,
+        "valid_until": null
+      },
+      "semantics": {
+        "action": "reduce_cost",
+        "object": "hotel"
+      },
+      "version": 1
+    },
+    {
+      "content": "札幌・小樽、ホテル費用を下げる",
+      "dependencies": [],
+      "evidence": [
+        {
+          "end": 30,
+          "event_id": "A1",
+          "quote": "2番: 札幌・小樽、ホテルは上位クラス。",
+          "start": 10
+        },
+        {
+          "end": 17,
+          "event_id": "H2",
+          "quote": "2番で。ホテルだけもう少し安くして",
+          "start": 0
+        }
+      ],
+      "id": "plan-2",
+      "lifecycle": "active",
+      "origin": "assistant",
+      "relation": "unadopted",
+      "resolution": "unverified",
+      "role": "proposal",
+      "scope": {
+        "kind": "conversation",
+        "targets": [],
+        "task_id": null,
+        "turn_id": null,
+        "valid_from": null,
+        "valid_until": null
+      },
+      "semantics": {},
+      "version": 2
+    },
+    {
+      "content": "予約可能な候補を調査",
+      "dependencies": [],
+      "evidence": [
+        {
+          "end": 14,
+          "event_id": "H3",
+          "quote": "それで予約できるところ調べて",
+          "start": 0
+        }
+      ],
+      "id": "search-bookable",
+      "lifecycle": "active",
+      "origin": "user",
+      "relation": "explicit",
+      "resolution": "unverified",
+      "role": "goal",
+      "scope": {
+        "kind": "conversation",
+        "targets": [],
+        "task_id": null,
+        "turn_id": null,
+        "valid_from": null,
+        "valid_until": null
+      },
+      "semantics": {
+        "action": "research",
+        "object": "bookable_options"
+      },
+      "version": 1
+    }
+  ],
+  "adoptions": [
+    {
+      "artifact_version": null,
+      "evidence": [
+        {
+          "end": 4,
+          "event_id": "H2",
+          "quote": "2番で。",
+          "start": 0
+        }
+      ],
+      "exceptions": [
+        "budget",
+        "hotel_price"
+      ],
+      "fields": [
+        "route"
+      ],
+      "id": "select-2",
+      "relation": "selected",
+      "target_id": "plan-2",
+      "target_version": 1
+    }
+  ],
+  "references": [
+    {
+      "behavior_changes": true,
+      "candidates": [
+        {
+          "target_id": "plan-2",
+          "type": "node",
+          "version": 2
+        }
+      ],
+      "evidence": [
+        {
+          "end": 2,
+          "event_id": "H3",
+          "quote": "それ",
+          "start": 0
+        }
+      ],
+      "expression": "それ",
+      "id": "ref-it",
+      "rationale": "Hand-authored fixture: the immediately revised selected plan.",
+      "resolved_target": "plan-2",
+      "resolved_version": 2,
+      "status": "resolved"
+    }
+  ],
+  "authority_boundaries": [],
+  "artifacts": [],
+  "source_evidence": [
+    {
+      "evidence": {
+        "end": 54,
+        "event_id": "A1",
+        "quote": "予算20万円はAIの仮定です。",
+        "start": 39
+      },
+      "origin": "assistant",
+      "raw_sha256": "9c4dff3ec43336c38441a6f838438fb3003eb23f12610d983ce9bcd87ecf62ce"
+    },
+    {
+      "evidence": {
+        "end": 30,
+        "event_id": "A1",
+        "quote": "2番: 札幌・小樽、ホテルは上位クラス。",
+        "start": 10
+      },
+      "origin": "assistant",
+      "raw_sha256": "9c4dff3ec43336c38441a6f838438fb3003eb23f12610d983ce9bcd87ecf62ce"
+    },
+    {
+      "evidence": {
+        "end": 17,
+        "event_id": "H2",
+        "quote": "ホテルだけもう少し安くして",
+        "start": 4
+      },
+      "origin": "user",
+      "raw_sha256": "58d7d7194f42e9ceee1a82414b9684a99b1526834fda99ebd7789a079555afe5"
+    },
+    {
+      "evidence": {
+        "end": 17,
+        "event_id": "H2",
+        "quote": "2番で。ホテルだけもう少し安くして",
+        "start": 0
+      },
+      "origin": "user",
+      "raw_sha256": "58d7d7194f42e9ceee1a82414b9684a99b1526834fda99ebd7789a079555afe5"
+    },
+    {
+      "evidence": {
+        "end": 4,
+        "event_id": "H2",
+        "quote": "2番で。",
+        "start": 0
+      },
+      "origin": "user",
+      "raw_sha256": "58d7d7194f42e9ceee1a82414b9684a99b1526834fda99ebd7789a079555afe5"
+    },
+    {
+      "evidence": {
+        "end": 14,
+        "event_id": "H3",
+        "quote": "それで予約できるところ調べて",
+        "start": 0
+      },
+      "origin": "user",
+      "raw_sha256": "9fd8c788ad11fedbbd74d7d3e486f5d7e16c4b247652b950141441e5d3c757c3"
+    },
+    {
+      "evidence": {
+        "end": 2,
+        "event_id": "H3",
+        "quote": "それ",
+        "start": 0
+      },
+      "origin": "user",
+      "raw_sha256": "9fd8c788ad11fedbbd74d7d3e486f5d7e16c4b247652b950141441e5d3c757c3"
+    }
+  ],
+  "open_unknown": [],
+  "context_coverage": {
+    "required_event_ids": [
+      "A1",
+      "H2",
+      "H3"
+    ],
+    "delivered_event_ids": [
+      "A1",
+      "H2",
+      "H3"
+    ],
+    "missing_event_ids": [],
+    "ratio": 1.0,
+    "missing_sources": [],
+    "selection_policy": "conservative invariant + selected-node dependency/evidence closure v0.1",
+    "known_omissions": [
+      "Nonselected goals/proposals and unrelated raw history omitted by finite closure policy.",
+      "Coverage ratio measures declared required-event set, not semantic sufficiency."
+    ]
+  },
+  "validation": {
+    "schema": true,
+    "deterministic": true,
+    "semantic": "not_run"
+  },
+  "limitations": [
+    "Candidate deltas are hand authored; natural-language parsing/routing/resolution is not implemented.",
+    "Schema/evidence/transition validation does not prove semantic correctness.",
+    "Missing evidence/artifact content must block affected work; independent read-only work may continue."
+  ]
+}

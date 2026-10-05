@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:cic:cic-prototype-0.1:reference",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "expression": {
+      "type": "string"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "event_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "start": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "end": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "quote": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "event_id",
+          "start",
+          "end",
+          "quote"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "type": {
+            "enum": [
+              "node",
+              "event",
+              "artifact"
+            ]
+          }
+        },
+        "required": [
+          "target_id",
+          "version",
+          "type"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "resolved_target": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "resolved_version": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "resolved",
+        "unresolved"
+      ]
+    },
+    "behavior_changes": {
+      "type": "boolean"
+    },
+    "rationale": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "expression",
+    "evidence",
+    "candidates",
+    "resolved_target",
+    "resolved_version",
+    "status",
+    "behavior_changes",
+    "rationale"
+  ],
+  "additionalProperties": false
+}

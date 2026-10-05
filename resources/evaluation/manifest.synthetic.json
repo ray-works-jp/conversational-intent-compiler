@@ -1,0 +1,125 @@
+{
+  "run_id": "synthetic-selfcheck-only",
+  "evaluation_kind": "replay",
+  "environment": "synthetic",
+  "measurement_status": "synthetic_selfcheck",
+  "model_settings": {
+    "model": "none_called",
+    "reasoning": "none",
+    "snapshot": "not_applicable"
+  },
+  "conditions": {
+    "A": {
+      "implementation": "synthetic counter fixture; no arm executed as a model",
+      "access_manifest": {
+        "raw_event_ids": [
+          "fixture:h1",
+          "fixture:a1",
+          "fixture:h2"
+        ],
+        "artifacts": [
+          "fixture:proposal-set@1"
+        ],
+        "tools": [
+          "fixture:availability"
+        ],
+        "lookup_policy": "same access permissions and evidence pool in all arms"
+      },
+      "context_budget_tokens": 8192,
+      "status": "executed"
+    },
+    "B": {
+      "implementation": "synthetic counter fixture; no arm executed as a model",
+      "access_manifest": {
+        "raw_event_ids": [
+          "fixture:h1",
+          "fixture:a1",
+          "fixture:h2"
+        ],
+        "artifacts": [
+          "fixture:proposal-set@1"
+        ],
+        "tools": [
+          "fixture:availability"
+        ],
+        "lookup_policy": "same access permissions and evidence pool in all arms"
+      },
+      "context_budget_tokens": 8192,
+      "status": "executed"
+    },
+    "C": {
+      "implementation": "synthetic counter fixture; no arm executed as a model",
+      "access_manifest": {
+        "raw_event_ids": [
+          "fixture:h1",
+          "fixture:a1",
+          "fixture:h2"
+        ],
+        "artifacts": [
+          "fixture:proposal-set@1"
+        ],
+        "tools": [
+          "fixture:availability"
+        ],
+        "lookup_policy": "same access permissions and evidence pool in all arms"
+      },
+      "context_budget_tokens": 8192,
+      "status": "executed"
+    },
+    "D": {
+      "implementation": "synthetic counter fixture; no arm executed as a model",
+      "access_manifest": {
+        "raw_event_ids": [
+          "fixture:h1",
+          "fixture:a1",
+          "fixture:h2"
+        ],
+        "artifacts": [
+          "fixture:proposal-set@1"
+        ],
+        "tools": [
+          "fixture:availability"
+        ],
+        "lookup_policy": "same access permissions and evidence pool in all arms"
+      },
+      "context_budget_tokens": 8192,
+      "status": "executed"
+    },
+    "E": {
+      "implementation": "synthetic counter fixture; no arm executed as a model",
+      "access_manifest": {
+        "raw_event_ids": [
+          "fixture:h1",
+          "fixture:a1",
+          "fixture:h2"
+        ],
+        "artifacts": [
+          "fixture:proposal-set@1"
+        ],
+        "tools": [
+          "fixture:availability"
+        ],
+        "lookup_policy": "same access permissions and evidence pool in all arms"
+      },
+      "context_budget_tokens": 8192,
+      "status": "executed"
+    }
+  },
+  "primary_metrics": [
+    "constraint_survival",
+    "authority_drift"
+  ],
+  "noninferiority": {
+    "clear_task_success_margin": 0.02,
+    "note": "example preregistration, not a chosen scientific threshold"
+  },
+  "max_cost": {
+    "relative_total_cost_ratio": 1.25,
+    "note": "example only; actual experiment must preregister"
+  },
+  "labeling_protocol": {
+    "gold_source": "synthetic fixture",
+    "blind": false,
+    "human_adjudication": "not a real evaluation"
+  }
+}

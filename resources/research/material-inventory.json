@@ -1,0 +1,211 @@
+{
+  "inventory_version": "1.0",
+  "checked_at": "2026-10-04T11:46:03.626734+00:00",
+  "scope": "installed Intent Compiler 0.2.0 package plus limited local CLI protocol inspection",
+  "plugin_root": "C:\\Users\\HP\\.codex\\plugins\\cache\\created-by-me-remote\\intent-compiler\\0.2.0",
+  "plugin_files": [
+    {
+      "path": "C:\\Users\\HP\\.codex\\plugins\\cache\\created-by-me-remote\\intent-compiler\\0.2.0\\.codex-plugin\\plugin.json",
+      "relative_path": ".codex-plugin/plugin.json",
+      "bytes": 2550,
+      "sha256": "98ad4afbcbc7714b9facc2cc9fdfa65de68e96a0a450b4b44c11f94ab7c4b4e1",
+      "lines": 27,
+      "kind": "Codex packaging metadata",
+      "read_status": "full_read",
+      "authority": "reference_material_not_current_user_instruction"
+    },
+    {
+      "path": "C:\\Users\\HP\\.codex\\plugins\\cache\\created-by-me-remote\\intent-compiler\\0.2.0\\assets\\icon.svg",
+      "relative_path": "assets/icon.svg",
+      "bytes": 436,
+      "sha256": "4d83d223b08cba9f5a7dbc1edb648dba7592fec3da65689107dfa8739561d7a7",
+      "lines": 5,
+      "kind": "visual asset",
+      "read_status": "full_read",
+      "authority": "reference_material_not_current_user_instruction"
+    },
+    {
+      "path": "C:\\Users\\HP\\.codex\\plugins\\cache\\created-by-me-remote\\intent-compiler\\0.2.0\\plugin.json",
+      "relative_path": "plugin.json",
+      "bytes": 1712,
+      "sha256": "78b79159c95fd3c441e287cd4c8cae2f27cc8316ae58ac14cf17eb6c56d881ce",
+      "lines": 30,
+      "kind": "plugin metadata",
+      "read_status": "full_read",
+      "authority": "reference_material_not_current_user_instruction"
+    },
+    {
+      "path": "C:\\Users\\HP\\.codex\\plugins\\cache\\created-by-me-remote\\intent-compiler\\0.2.0\\skills\\compile-intent\\references\\document-io.md",
+      "relative_path": "skills/compile-intent/references/document-io.md",
+      "bytes": 2936,
+      "sha256": "bc4749f878599523fe0bca3b707dfc47119108e4f06b3cb59f48efc308549a8d",
+      "lines": 35,
+      "kind": "document utility specification",
+      "read_status": "full_read",
+      "authority": "reference_material_not_current_user_instruction"
+    },
+    {
+      "path": "C:\\Users\\HP\\.codex\\plugins\\cache\\created-by-me-remote\\intent-compiler\\0.2.0\\skills\\compile-intent\\references\\examples.md",
+      "relative_path": "skills/compile-intent/references/examples.md",
+      "bytes": 2761,
+      "sha256": "dde634d449f2c1655b7ff8f9ce8db594353ee3b59ceb07e13bce3785ce51e4d4",
+      "lines": 63,
+      "kind": "illustrative examples; not executed model tests",
+      "read_status": "full_read",
+      "authority": "reference_material_not_current_user_instruction"
+    },
+    {
+      "path": "C:\\Users\\HP\\.codex\\plugins\\cache\\created-by-me-remote\\intent-compiler\\0.2.0\\skills\\compile-intent\\references\\integration-notes.md",
+      "relative_path": "skills/compile-intent/references/integration-notes.md",
+      "bytes": 2367,
+      "sha256": "33caa9eb0a2815d41e0a391dd0143f67775e5cc26b7f226b6d2f0b7e2eccb523",
+      "lines": 19,
+      "kind": "packaging and modification notes",
+      "read_status": "full_read",
+      "authority": "reference_material_not_current_user_instruction"
+    },
+    {
+      "path": "C:\\Users\\HP\\.codex\\plugins\\cache\\created-by-me-remote\\intent-compiler\\0.2.0\\skills\\compile-intent\\references\\original-design.txt",
+      "relative_path": "skills/compile-intent/references/original-design.txt",
+      "bytes": 56231,
+      "sha256": "8268db34ae676556c45db50562a464d471d039db8d979813a3deafbbd8266d21",
+      "lines": 588,
+      "kind": "supplied original design copy; authorship unverified",
+      "read_status": "full_read",
+      "authority": "reference_material_not_current_user_instruction"
+    },
+    {
+      "path": "C:\\Users\\HP\\.codex\\plugins\\cache\\created-by-me-remote\\intent-compiler\\0.2.0\\skills\\compile-intent\\references\\system-prompt.md",
+      "relative_path": "skills/compile-intent/references/system-prompt.md",
+      "bytes": 15793,
+      "sha256": "9864669090e5d8900915f34f717d4ec395a713610bbcb7d70c8e86bfcedd416a",
+      "lines": 116,
+      "kind": "current host-AI compilation specification",
+      "read_status": "full_read",
+      "authority": "reference_material_not_current_user_instruction"
+    },
+    {
+      "path": "C:\\Users\\HP\\.codex\\plugins\\cache\\created-by-me-remote\\intent-compiler\\0.2.0\\skills\\compile-intent\\scripts\\document_io.py",
+      "relative_path": "skills/compile-intent/scripts/document_io.py",
+      "bytes": 12311,
+      "sha256": "8d51b901abd3f4419463359703ce502b5855af1088b7fc1f26bef755a5cc8902",
+      "lines": 244,
+      "kind": "executable extraction, static validation and emission utility",
+      "read_status": "full_read",
+      "authority": "reference_material_not_current_user_instruction"
+    },
+    {
+      "path": "C:\\Users\\HP\\.codex\\plugins\\cache\\created-by-me-remote\\intent-compiler\\0.2.0\\skills\\compile-intent\\SKILL.md",
+      "relative_path": "skills/compile-intent/SKILL.md",
+      "bytes": 6417,
+      "sha256": "6348526a2450f976831b1f6462c05c4adff007b33bd9d1fd0fdba4d9f654bccf",
+      "lines": 46,
+      "kind": "installed skill instructions",
+      "read_status": "full_read",
+      "authority": "reference_material_not_current_user_instruction"
+    }
+  ],
+  "inline_materials": [
+    {
+      "name": "current Mission: Conversational Intent Compiler vNext",
+      "kind": "current direct user instructions",
+      "available": true,
+      "read_status": "provided_message",
+      "file_hash": null
+    },
+    {
+      "name": "AGENTS.md product image instruction",
+      "kind": "current user provided environment instruction",
+      "available": true,
+      "read_status": "provided_message",
+      "task_relevance": "no product image production in this audit"
+    }
+  ],
+  "missing_materials": [
+    {
+      "name": "standalone old Work instruction document",
+      "status": "not_found_within_inspected_package; not supplied as attachment"
+    },
+    {
+      "name": "standalone conversational revision policy document",
+      "status": "current mission provided inline; no separate revision document found"
+    },
+    {
+      "name": "XSD/JSON Schema for current Intent IR",
+      "status": "not_present_in_package; Python vocabulary validator exists"
+    },
+    {
+      "name": "automated tests and benchmark result files",
+      "status": "not_present_in_package; examples explicitly not executed model tests"
+    }
+  ],
+  "local_cli": {
+    "version": "0.155.1 (package.json)",
+    "appserver_help": "executed_exit_0",
+    "schema_generation": "executed_exit_0; experimental bundle",
+    "generated_schema_count": 437,
+    "inspected_schemas": [
+      {
+        "path": "C:\\Users\\HP\\Documents\\Codex\\2026-10-04\\ir-work-chatgpt-work-mission-conversational\\work\\audit\\appserver-schema\\v2\\ThreadReadParams.json",
+        "relative_path": "v2/ThreadReadParams.json",
+        "bytes": 502,
+        "sha256": "dfe040c6ac71d30795b8be3f3ff232e66f362a37f883b491e5d1ea367f470db4",
+        "read_status": "full_read"
+      },
+      {
+        "path": "C:\\Users\\HP\\Documents\\Codex\\2026-10-04\\ir-work-chatgpt-work-mission-conversational\\work\\audit\\appserver-schema\\v2\\TurnStartParams.json",
+        "relative_path": "v2/TurnStartParams.json",
+        "bytes": 23746,
+        "sha256": "b36fb37326b1cf69f75c8b306f1f886d53a57c4b1b985e08e298e2407ea2ad02",
+        "read_status": "targeted_properties_read"
+      },
+      {
+        "path": "C:\\Users\\HP\\Documents\\Codex\\2026-10-04\\ir-work-chatgpt-work-mission-conversational\\work\\audit\\appserver-schema\\v2\\HookStartedNotification.json",
+        "relative_path": "v2/HookStartedNotification.json",
+        "bytes": 4285,
+        "sha256": "913ca61da2ab299d5f3318f6ea4d842d22708fc9308a9b10cdfad5e757098f2f",
+        "read_status": "targeted_search"
+      },
+      {
+        "path": "C:\\Users\\HP\\Documents\\Codex\\2026-10-04\\ir-work-chatgpt-work-mission-conversational\\work\\audit\\appserver-schema\\v2\\HookCompletedNotification.json",
+        "relative_path": "v2/HookCompletedNotification.json",
+        "bytes": 4287,
+        "sha256": "1f146d70303cea6e59752191179e36a273650d63a74d4f9338f9a399da6597d2",
+        "read_status": "targeted_search"
+      },
+      {
+        "path": "C:\\Users\\HP\\Documents\\Codex\\2026-10-04\\ir-work-chatgpt-work-mission-conversational\\work\\audit\\appserver-schema\\v2\\HooksListResponse.json",
+        "relative_path": "v2/HooksListResponse.json",
+        "bytes": 5850,
+        "sha256": "891dd10ef7f78e59631fce05fff2becddb8004b3c0338dbbbd6b4f17ef1fa64f",
+        "read_status": "targeted_properties_read"
+      },
+      {
+        "path": "C:\\Users\\HP\\Documents\\Codex\\2026-10-04\\ir-work-chatgpt-work-mission-conversational\\work\\audit\\appserver-schema\\ClientRequest.json",
+        "relative_path": "ClientRequest.json",
+        "bytes": 286887,
+        "sha256": "ef13a122e4fb0296b377d571fc26dc4bb7d85736364a65530a87d13fd84234a2",
+        "read_status": "targeted_method_search"
+      },
+      {
+        "path": "C:\\Users\\HP\\Documents\\Codex\\2026-10-04\\ir-work-chatgpt-work-mission-conversational\\work\\audit\\appserver-schema\\ServerNotification.json",
+        "relative_path": "ServerNotification.json",
+        "bytes": 204389,
+        "sha256": "49a787f49a8ba46034fbea8664f4cbfe10211abd57e34b8281430a7dc033b42b",
+        "read_status": "targeted_event_search"
+      }
+    ],
+    "others": "generated but not substantively read",
+    "features_list": "exit_1: failed to resolve CODEX_HOME / Could not find home directory",
+    "config_check": "no bare hooks=true/false line found; full effective hooks configuration not established; no secrets output",
+    "operational_hooks": "not configured or executed; protocol presence does not prove interception coverage",
+    "mutations": "no source plugin or host configuration changed"
+  },
+  "new_probe": {
+    "kind": "deterministic boundary probe; no model calls",
+    "cases": 18,
+    "matches_expected_boundary": 18,
+    "result_file": "C:\\Users\\HP\\Documents\\Codex\\2026-10-04\\ir-work-chatgpt-work-mission-conversational\\work\\audit\\probe-results.json",
+    "meaning": "observed utility boundaries; not semantic accuracy or downstream improvement"
+  }
+}
