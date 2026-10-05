@@ -17,9 +17,9 @@ Antigravity（CLI）は、リポジトリをcloneして`agy plugin install <clon
 
 同じ `skills/conversational-intent-compiler/`（SKILL.md + references）とPython CLIを共有する。ホストごとの差はmanifestと配置だけである。
 
-| ホスト | 導入 | 確認状況（0.2.0） |
+| ホスト | 導入 | 確認状況（0.4.1時点） |
 |---|---|---|
-| ChatGPT / Codex | 従来どおり `plugin.json` / `.codex-plugin/plugin.json` | 0.1.0から変更なし。今回は再検証していない |
+| ChatGPT / Codex | 従来どおり `plugin.json` / `.codex-plugin/plugin.json` | 0.1.0から変更なし。0.2.0以降は再検証していない |
 | Claude Code | このリポジトリをプラグインとして読み込む（`claude --plugin-dir <repo>` またはmarketplace経由）。manifestは `.claude-plugin/plugin.json` | `claude plugin validate` 合格。`--plugin-dir` で `conversational-intent-compiler-plugin:conversational-intent-compiler` として認識されることを確認 |
 | Antigravity（CLI `agy` / IDE） | `python scripts/install_skill.py <workspace>/.agents/skills`。全プロジェクト共通の置き場は版で異なる（CLI: `~/.gemini/antigravity-cli/skills`、2.0/IDE: `~/.gemini/config/skills`）。リポジトリを`agy plugin install <path>`でプラグインとして入れる方法もある（`~/.gemini/config/plugins/`へコピーされる。`dist/`も含めてコピーされるので、不要なら先に消す） | `agy 1.2.14` で、配置したskillの認識と、SKILL_ROOT/PLUGIN_ROOT解決の正しさを確認。`agy plugin validate`合格、`agy plugin install`で導入しskill認識とroot解決（2階層上）を確認。`agy plugin install`したplugin配置から、`cic_cli.py init`がhost内で`ok:true`になることを確認（headless。コマンド実行を許可するregex rule `command(regex:python <plugin>/scripts/cic_cli\.py .*)`を一時的に`~/.gemini/antigravity-cli/settings.json`へ追加し、実行後に元へ戻した）。許可ルールが無いheadless実行はコマンドが自動拒否される。対話モード(agy 1.2.16)では、コマンド実行(`RunCommand`)の許可確認が出て、承認後に`ok: true`になった（CLIログで確認。承認は保存されず、毎回確認される）。既存DBへの再`init`は`ok: false`(FileExistsError)で拒否される |
 
@@ -34,6 +34,7 @@ Antigravityのskill仕様（既定は`.agents/skills/<name>/SKILL.md`、旧`.age
 | Claude Code | `hooks/hooks.json`の`UserPromptSubmit`→`hooks/capture_turn.py`（入力のpromptを記録） | プラグインを入れれば自動で有効化の対象。`CIC_CAPTURE=1`で起動 |
 | Antigravity | `PreInvocation`→`hooks/capture_antigravity.py`。フックの入力に発話本文は無いので、渡される`transcriptPath`のtranscriptから`USER_EXPLICIT`の`USER_INPUT`だけを読み、未記録分を追記する | `python scripts/install_antigravity_hook.py --workspace <dir>`（または`--global`）で`hooks.json`を書く。`CIC_CAPTURE=1`で起動 |
 
+- 前提: フックは`python`コマンド（3.12以上）をPATHから呼ぶ。`python`が無い環境（`python3`のみのmacOS/Linux等）ではフックがエラーになるので、`python`を用意するか、有効化しない（プラグインを入れない）。
 - 保存先: `CIC_LEDGER_DIR`、なければ`~/.cic/ledgers`（フックとskillで同じ場所になるよう固定）。ファイルは`<会話ID>.db`と`.count`。入力原文が平文で残るので、不要になったら削除する。
 - 引き継ぎ: `python scripts/ledger_status.py`が、台帳ごとの未解釈の人間入力(`pending`: event IDと逐語の原文)を読み取り専用で一覧する。skillはoperation-guideの「フックで捕捉済みの台帳を引き継ぐ」に従い、古い順に`delta-template`→`validate`→`apply`で解釈する。applyが通ると`pending`から外れる。
 - 記録するのはユーザー入力の逐語のみ。AI応答・tool結果・意味解釈(Delta)は記録しない。意味状態の更新は従来どおり、skillを起動してホストAIが行う。台帳の原文を使って`delta-template`→`apply`へ進める。

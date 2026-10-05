@@ -117,6 +117,7 @@
     ]
   },
   "release_0_4_1": {
-    "change": "pilot harness and results for host-AI Delta quality (scenarios.json, run_pilot.py, score_pilot.py, RESULTS.md); no code change to the CLI or hooks"
+    "change": "pilot harness and results for host-AI Delta quality (scenarios.json, run_pilot.py, score_pilot.py, RESULTS.md); no code change to the CLI or hooks",
+    "pre_release_audit": "README stale headings fixed; SKILL.md now points to hook-captured ledgers (verified by a Claude Code run whose prompt did not name the guide section); hook requires a `python` command on PATH (documented, not fixed: macOS/Linux with only python3 would show a hook error each prompt); run-log.json local path removed; no secrets/PII found in tracked files outside resources/research"
   }
 }

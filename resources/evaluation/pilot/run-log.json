@@ -7,7 +7,7 @@
   "S2-add-withdraw-open": {
     "seconds": 93,
     "returncode": 0,
-    "reply_tail": "H1〜H4 の 4 件を処理し、4 件とも apply に成功しました。台帳の状態も確認済みで、未解釈の人間入力は 0 件です。外部操作は一切していません。\n\nH4 の「送付先は後で相談」は、後で相談する未決事項として記録しました。権限は付与していません。\n\n台帳 DB は `C:/Users/HP/AppData/Local/Temp/tmp.DU6KXdPkK6/S2-add-withdraw-open.db` です。最初の試行で JSON スキーマ違反と未決の置き場所を間違えて validate が失敗しましたが、どちらもコミット前で、その後に修正して通しました。\n"
+    "reply_tail": "H1〜H4 の 4 件を処理し、4 件とも apply に成功しました。台帳の状態も確認済みで、未解釈の人間入力は 0 件です。外部操作は一切していません。\n\nH4 の「送付先は後で相談」は、後で相談する未決事項として記録しました。権限は付与していません。\n\n台帳 DB は `<OUT_DIR>/S2-add-withdraw-open.db` です。最初の試行で JSON スキーマ違反と未決の置き場所を間違えて validate が失敗しましたが、どちらもコミット前で、その後に修正して通しました。\n"
   },
   "S3-authority": {
     "seconds": 202,
