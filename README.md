@@ -1,6 +1,6 @@
 # Conversational Intent Compiler
 
-独立したプラグイン / version 0.4.0 / 2026-10-05 JST。
+独立したプラグイン / version 0.4.1 / 2026-10-05 JST。
 
 会話の原文を保持し、指示の変更・撤回・採用範囲・未決事項・判断委任・権限境界を、小さいTurn IRへ整理する。今回作成した研究・schema・offline試作を再利用した明示起動型のプラグインである。
 
@@ -99,7 +99,7 @@ MIT（[LICENSE](LICENSE)）、Copyright (c) 2026 ray-works-jp。作者名はGitH
 
 原試作はraw captureとprojectionを同じtransactionで処理し、capture中の失敗ではrawもrollbackする。独立durable inbox、privacy/retention/deletion、暗号化、production ACL、dispatch lease、実行中取消は未実装である。保存する内容と期間は利用環境の方針に従い、機密原文を無条件に受け入れる本番保存サービスとみなさない。
 
-自然言語Compiler/Verifierの精度、原文直接入力に対する優位性、全turn自動介入、ホストへのインストール後の意味workflowは、このパッケージのローカル契約テストとは別に評価する。
+自然言語Compiler/Verifierの精度、原文直接入力に対する優位性、全turn自動介入、ホストへのインストール後の意味workflowは、このパッケージのローカル契約テストとは別に評価する。意味解釈については小規模パイロットのみ実施した（`resources/evaluation/pilot/RESULTS.md`: Claude Code上の5シナリオ・18発話で18/18がapply、自動チェック19/20。正解設計と判断が同一者・各1回・比較対象なしのため、精度や優位性の根拠にはならない）。
 
 ## 検証・配布
 

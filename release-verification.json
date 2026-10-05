@@ -1,5 +1,5 @@
 {
-  "release": "0.4.0",
+  "release": "0.4.1",
   "recorded_date_jst": "2026-10-05",
   "verification_kind": "deterministic_cli_contracts_and_packaging",
   "baseline_0_1_0": {
@@ -78,7 +78,7 @@
   "model_calls": 0,
   "external_actions": 0,
   "host_activation": "not_tested",
-  "natural_language_semantic_accuracy": "not_measured",
+  "natural_language_semantic_accuracy": "pilot_only: resources/evaluation/pilot/RESULTS.md (5 scenarios, 18 turns, Claude Code + claude-sonnet-5-5, one run each; 18/18 applied, 19/20 keyword checks, the miss judged a scorer false positive; gold and judging by the same party; no baseline comparison)",
   "raw_baseline_superiority": "not_measured",
   "all_turn_automatic_interception": "not_implemented",
   "package_and_account_registration": "Recorded separately after archive construction",
@@ -115,5 +115,8 @@
       "Antigravity run of the ledger_status flow",
       "the host AI producing correct Deltas from captured turns (semantic accuracy not measured)"
     ]
+  },
+  "release_0_4_1": {
+    "change": "pilot harness and results for host-AI Delta quality (scenarios.json, run_pilot.py, score_pilot.py, RESULTS.md); no code change to the CLI or hooks"
   }
 }
