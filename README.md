@@ -1,5 +1,32 @@
 # Conversational Intent Compiler
 
+> **Keeps a conversation's original text as the source of truth** and tracks what changed, what is still open, what was delegated, and what is not authorized. A plugin and CLI for Claude Code, Antigravity and ChatGPT/Codex. Python, SQLite, MIT.
+
+長い会話で「何が変わったか・今も有効な条件・未決事項・任せた範囲・許可していない操作」を、原文に紐づけて記録・追跡します。AIが過去の指示を取り違えたり、許可を広げて解釈したりするのを減らすための土台です（AIの挙動を保証するものではありません）。
+
+| | |
+|---|---|
+| 対応 | Claude Code / Antigravity（CLI）/ ChatGPT・Codex |
+| 実装 | Python 3.12+（標準ライブラリのみ）、SQLite、JSON Schema |
+| 検証 | 自動テスト30件。ZIPを展開した状態でも検証。実機（Claude Code・Antigravity）で `init` と人間入力の記録を確認 |
+| 評価 | 日本語5シナリオ・18発話の小規模パイロット（作者側の評価。精度の保証ではありません。[結果](resources/evaluation/pilot/RESULTS.md)） |
+| ライセンス | [MIT](LICENSE) |
+
+### インストール
+
+```bash
+# Claude Code
+claude plugin marketplace add ray-works-jp/conversational-intent-compiler
+claude plugin install conversational-intent-compiler-plugin@conversational-intent-compiler
+
+# Antigravity (CLI)
+agy plugin install https://github.com/ray-works-jp/conversational-intent-compiler
+```
+
+配布ZIPは [Releases](https://github.com/ray-works-jp/conversational-intent-compiler/releases/latest)。詳しい導入・使い方・限界は、以下の本文を参照してください。
+
+---
+
 独立したプラグイン / version 0.5.0 / 2026-10-05 JST。
 
 会話の原文を保持し、指示の変更・撤回・採用範囲・未決事項・判断委任・権限境界を、小さいTurn IRへ整理する。今回作成した研究・schema・offline試作を再利用した明示起動型のプラグインである。
