@@ -1,5 +1,5 @@
 {
-  "release": "0.5.0",
+  "release": "0.5.1",
   "recorded_date_jst": "2026-10-05",
   "verification_kind": "deterministic_cli_contracts_and_packaging",
   "baseline_0_1_0": {
@@ -126,5 +126,8 @@
     "e2e": "agy plugin install <repo>; agy -p then agy --continue -p with CIC_CAPTURE=1: 2 verbatim human turns recorded; a further run recorded 1 verbatim turn",
     "note": "Antigravity IDE/2.0 plugin-hook behaviour not tested (a forum thread asks whether they execute plugin hooks)",
     "security_note": "the probe printed the hook process environment, which contained a Gemini API key variable; the temp file was deleted; the capture hooks never read or log the environment"
+  },
+  "release_0_5_1": {
+    "change": "README only: summary table and install commands at the top; no code change"
   }
 }

@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.5.1 — 2026-10-05
+
+- READMEの冒頭に、概要の表（対応・実装・検証・評価・ライセンス）と導入コマンドを追加し、同梱ZIPにも反映。コード・機能の変更なし。
+
 ## 0.5.0 — 2026-10-05
 
 - ルートに`hooks.json`を追加。Antigravityでリポジトリをplugin導入すると、`PreInvocation`の自動捕捉フックが追加設定なしで組み込まれる（hookのcwdがplugin dirなので相対コマンドで動く。`CIC_CAPTURE=1`のときだけ記録）。使い捨てplugin（probe）で挙動を確認し、実機で2ターン＋1ターンの逐語記録を確認。Claude Code/Codexはこのファイルを読まない。IDE/2.0は未確認。
