@@ -6,6 +6,15 @@
 
 ## 対応ホストと導入
 
+リポジトリ: https://github.com/ray-works-jp/conversational-intent-compiler （MIT）。Claude Codeへは次の2コマンドで入る（公開リポジトリから隔離環境で導入まで確認）。
+
+```bash
+claude plugin marketplace add ray-works-jp/conversational-intent-compiler
+claude plugin install conversational-intent-compiler-plugin@conversational-intent-compiler
+```
+
+Antigravity（CLI）は、リポジトリをcloneして`agy plugin install <clone先>`、または`scripts/install_skill.py`で単独skillを配置する。
+
 同じ `skills/conversational-intent-compiler/`（SKILL.md + references）とPython CLIを共有する。ホストごとの差はmanifestと配置だけである。
 
 | ホスト | 導入 | 確認状況（0.2.0） |
