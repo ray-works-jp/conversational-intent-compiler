@@ -1,22 +1,23 @@
-# 導入指示書：ChatGPT / Codex 用（Conversational Intent Compiler v0.5.1）
+# 導入指示書：ChatGPT / Codex 用（Conversational Intent Compiler）
 
 この文書は、**ChatGPT（Plugin Creator）またはCodexのAIエージェントへそのまま渡して、導入を依頼するための指示書**です。人間が読む場合は、「あなたが行うこと」の節だけを見れば足ります。
 
 ## 依頼（AIへ）
 
-次の配布物を、ChatGPTのprivateプラグインとして登録（既に0.1.0が登録済みなら更新）し、導入結果を検証・報告してください。外部への公開・共有・送信、権限設定の変更は行わないでください。
+次の配布物（**最新のRelease**）を、ChatGPTのprivateプラグインとして登録（既に0.1.0が登録済みなら更新）し、導入結果を検証・報告してください。外部への公開・共有・送信、権限設定の変更は行わないでください。
 
 ### 対象ファイル
-- 配布元：https://github.com/ray-works-jp/conversational-intent-compiler/releases/tag/v0.5.1
-- ファイル：`conversational-intent-compiler-plugin-0.5.1.zip`（201,554 bytes、71ファイル）
-- SHA-256：`6837088364908d924298c63c9d128a9692df1a46d922db1aea8153fde5801eb3`
+- 配布元：https://github.com/ray-works-jp/conversational-intent-compiler/releases/latest
+- ファイル：`conversational-intent-compiler-plugin-<バージョン>.zip`（以下、**そのReleaseの版**を `<バージョン>` とする）
+- SHA-256：Releaseページに表示される、そのファイルの **digest（sha256）** と照合する（この文書にはハッシュを書きません。ZIPの中にこの文書自体が入るため）。
+- ファイル数：ZIPを展開して数える（展開すると `conversational-intent-compiler-plugin/` が1つできる）。
 - 展開すると `conversational-intent-compiler-plugin/` が1つできます。
 
 ### 手順
-1. ZIPを取得し、**SHA-256が上記と一致すること**を確認する。一致しなければ中止して報告する。
-2. 展開し、次を確認する：`plugin.json` と `.codex-plugin/plugin.json` の `version` が `0.5.1`、`name` が `conversational-intent-compiler-plugin`、`skills/conversational-intent-compiler/SKILL.md` があること。
+1. ZIPを取得し、**SHA-256がReleaseページのdigestと一致すること**を確認する。一致しなければ中止して報告する。
+2. 展開し、次を確認する：`plugin.json` と `.codex-plugin/plugin.json` の `version` が Release の版（`<バージョン>`）、`name` が `conversational-intent-compiler-plugin`、`skills/conversational-intent-compiler/SKILL.md` があること。
 3. Plugin Creatorへ、**ZIPをそのまま**（中身を書き換えず、ディレクトリを含む形で）渡し、**privateプラグイン**として保存する。既存の0.1.0がある場合は新しいreleaseとして更新する。
-4. 登録後、登録されたファイル数が**71**であること、`plugin.json` と `SKILL.md` の内容がZIPと一致することを確認する。
+4. 登録後、登録されたファイル数が、展開したZIPのファイル数と一致すること、`plugin.json` と `SKILL.md` の内容がZIPと一致することを確認する。
 5. 登録したプラグインを新しい会話で有効化し、スキル `conversational-intent-compiler` が選べることを確認する。
 
 ### 注意（正確に扱うこと）
@@ -37,6 +38,6 @@
 ---
 
 ## あなたが行うこと（人間向けの要約）
-1. 上のReleaseから `conversational-intent-compiler-plugin-0.5.1.zip` をダウンロードする。
+1. 上のReleaseから `conversational-intent-compiler-plugin-<バージョン>.zip` をダウンロードする。
 2. このページの「依頼（AIへ）」の節を、ChatGPT（Plugin Creator）またはCodexの会話へ貼り、ZIPを添付する。
 3. AIの報告を確認する。フックが使えないことは、仕様どおりです。

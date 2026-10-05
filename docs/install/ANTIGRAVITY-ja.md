@@ -1,4 +1,4 @@
-# 導入指示書：Antigravity 用（Conversational Intent Compiler v0.5.1）
+# 導入指示書：Antigravity 用（Conversational Intent Compiler）
 
 この文書は、**AntigravityのAIエージェントへそのまま渡して、導入と検証を依頼するための指示書**です。人間が読む場合は、末尾の「コマンドだけ見たい場合」を参照してください。確認できている環境は Antigravity CLI（`agy` 1.2.14〜1.2.16）です。IDE版・2.0版は未検証です。
 
@@ -10,11 +10,11 @@
 1. 次を実行する：
    `agy plugin install https://github.com/ray-works-jp/conversational-intent-compiler`
    （更新も同じコマンドです。出力に `skills : 1 processed`、`hooks : 1 processed` が出ること）
-2. `agy plugin list` に `conversational-intent-compiler-plugin` があること、導入先（`~/.gemini/config/plugins/conversational-intent-compiler-plugin/`）の `plugin.json` の `version` が `0.5.1` であることを確認する。
+2. `agy plugin list` に `conversational-intent-compiler-plugin` があること、導入先（`~/.gemini/config/plugins/conversational-intent-compiler-plugin/`）の `plugin.json` の `version` が、GitHubの最新Releaseの版（https://github.com/ray-works-jp/conversational-intent-compiler/releases/latest ）と一致することを確認する。
 
 ### 導入（方法B：単独skill。pluginを使わない場合）
-1. `https://github.com/ray-works-jp/conversational-intent-compiler/releases/tag/v0.5.1` から `conversational-intent-compiler-antigravity-0.5.1.zip` を取得する。
-   SHA-256：`cc410235fd0fb6fef4b8702141af89af4f72f5ccfbfd2ec8dd3c01ddd59fe94b`（53,923 bytes）。一致しなければ中止して報告する。
+1. `https://github.com/ray-works-jp/conversational-intent-compiler/releases/latest` から `conversational-intent-compiler-antigravity-<バージョン>.zip` を取得する。
+   SHA-256は、Releaseページに表示される、そのファイルの digest（sha256）と照合する（この文書にはハッシュを書きません）。一致しなければ中止して報告する。
 2. 展開してできる `conversational-intent-compiler/` を、`<ワークスペース>/.agents/skills/` に置く。全プロジェクト共通にする場合の置き場は、CLIが `~/.gemini/antigravity-cli/skills`、2.0とIDEが `~/.gemini/config/skills` です。
 3. 方法Aと方法Bを**同時に有効にしない**（同じskillが二重になります）。
 
