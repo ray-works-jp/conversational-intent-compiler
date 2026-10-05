@@ -27,7 +27,7 @@ agy plugin install https://github.com/ray-works-jp/conversational-intent-compile
 
 ---
 
-独立したプラグイン / version 0.5.1 / 2026-10-05 JST。
+独立したプラグイン / version 0.5.2 / 2026-10-05 JST。
 
 会話の原文を保持し、指示の変更・撤回・採用範囲・未決事項・判断委任・権限境界を、小さいTurn IRへ整理する。今回作成した研究・schema・offline試作を再利用した明示起動型のプラグインである。
 

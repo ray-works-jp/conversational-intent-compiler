@@ -1,5 +1,5 @@
 {
-  "release": "0.5.1",
+  "release": "0.5.2",
   "recorded_date_jst": "2026-10-05",
   "verification_kind": "deterministic_cli_contracts_and_packaging",
   "baseline_0_1_0": {
@@ -129,5 +129,10 @@
   },
   "release_0_5_1": {
     "change": "README only: summary table and install commands at the top; no code change"
+  },
+  "release_0_5_2": {
+    "change": "README links to docs/install instruction sheets (GPT-ja.md, ANTIGRAVITY-ja.md) and the sheets themselves are included in the archives; no code change",
+    "antigravity_instruction_sheet_run": "An Antigravity agent followed ANTIGRAVITY-ja.md: agy plugin install from GitHub (skills/hooks processed), version 0.5.1 confirmed, Test-Path then init -> ok: true, temp DB removed, no permission bypass. Self-reported by that agent; hook firing not tested in that run.",
+    "chatgpt_registration": "Reported by a GPT session (not independently verified): the existing private plugin plugins_6ac26d5a3f888191852dc80bd3a9d2a1 was updated 0.1.0 -> 0.5.1 with the verified ZIP (71 files, discoverability PRIVATE, scope USER, release ID pluginrel_6ac391fcab808191b7ec2485a4848977). Skill invocation, Python execution and persistent ledger inside ChatGPT remain unverified. 0.5.2 is not registered there."
   }
 }
