@@ -13,7 +13,8 @@ def _writable_retry(func, path, exc):
     os.chmod(path, stat.S_IWRITE)
     func(path)
 
-RUNTIME = ("cic.py", "cic_cli.py", "schema_spec.py")
+RUNTIME = ("cic.py", "cic_cli.py", "schema_spec.py", "install_antigravity_hook.py")
+HOOKS = ("cic_ledger.py", "capture_antigravity.py")
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
@@ -29,6 +30,9 @@ def main():
     (dest / "scripts").mkdir()
     for f in RUNTIME:
         shutil.copy2(ROOT / "scripts" / f, dest / "scripts" / f)
+    (dest / "hooks").mkdir()
+    for f in HOOKS:
+        shutil.copy2(ROOT / "hooks" / f, dest / "hooks" / f)
     shutil.copytree(ROOT / "schemas", dest / "schemas")
     shutil.copy2(ROOT / "LICENSE", dest / "LICENSE")
     print(dest)

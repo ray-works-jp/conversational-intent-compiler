@@ -2,7 +2,7 @@
 
 ## 0.3.0 — 2026-10-05
 
-- Claude Code用の任意(`CIC_CAPTURE=1`)の`UserPromptSubmit`フック`hooks/capture_turn.py`を追加。人間入力の原文を会話別の台帳へ自動で逐語記録する。stdout無し・常にexit 0。単体テスト3件と実機1ターンで確認。AI応答・Delta・他ホストは対象外。
+- 任意(`CIC_CAPTURE=1`)の自動捕捉フックを追加。Claude Code: `UserPromptSubmit`→`hooks/capture_turn.py`。Antigravity: `PreInvocation`→`hooks/capture_antigravity.py`（transcriptから人間入力を読む）と`scripts/install_antigravity_hook.py`。人間入力の原文を会話別の台帳へ逐語記録する。共通処理は`hooks/cic_ledger.py`。単体テスト7件、実機でClaude Code1ターン・Antigravity2ターンを確認。AI応答・Delta・ChatGPT/Codexは対象外。
 
 ## 0.2.1 — 2026-10-05
 

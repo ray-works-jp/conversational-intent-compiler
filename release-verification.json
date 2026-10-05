@@ -88,13 +88,19 @@
     "tests": 22
   },
   "release_0_3_0": {
-    "change": "opt-in Claude Code UserPromptSubmit hook that records verbatim human prompts into a per-session ledger",
-    "tests": "scripts/test_hook.py (3)",
-    "claude_code_e2e": "claude -p with CIC_CAPTURE=1 recorded 1 event in a new ledger; hook output empty, exit 0",
+    "change": "opt-in hooks that record verbatim human prompts into a per-session ledger: Claude Code UserPromptSubmit and Antigravity PreInvocation (reads transcriptPath)",
+    "tests": "scripts/test_hook.py (7)",
+    "claude_code_e2e": "claude -p with CIC_CAPTURE=1 recorded 1 event; hook stdout empty, exit 0",
+    "antigravity_e2e": "agy -p then agy --continue -p with a workspace .agents/hooks.json written by install_antigravity_hook.py: 2 events H1,H2, verbatim, parent link, no duplicates, last_step tracked",
+    "antigravity_notes": [
+      "hook input has no prompt text; transcript format is observed (USER_INPUT/USER_EXPLICIT, <USER_REQUEST> wrapper), not documented",
+      "command with embedded quotes failed (path mangled); unquoted path works; paths with whitespace are refused by the installer",
+      "global hooks.json install (--global) not executed"
+    ],
     "not_covered": [
       "AI responses and tool results are not captured",
-      "no semantic Delta is written by the hook",
-      "not available for ChatGPT/Codex or Antigravity",
+      "no semantic Delta is written by the hooks",
+      "not available for ChatGPT/Codex",
       "multi-device and /clear sessions not covered"
     ]
   }

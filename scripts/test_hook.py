@@ -45,5 +45,48 @@ class HookTests(unittest.TestCase):
                 r = fire(None, env, raw=raw)
                 self.assertEqual((r.returncode, r.stdout), (0, b""))
 
+
+
+AG_HOOK = ROOT / "hooks" / "capture_antigravity.py"
+
+def ag_fire(payload, env_extra):
+    env = {**os.environ, **env_extra}
+    return subprocess.run([sys.executable, str(AG_HOOK)], input=json.dumps(payload).encode("utf-8"),
+                          capture_output=True, env=env)
+
+class AntigravityHookTests(unittest.TestCase):
+    def transcript(self, t, texts):
+        p = Path(t) / "transcript_full.jsonl"
+        steps = []
+        for i, text in enumerate(texts):
+            steps.append({"step_index": 2 * i, "source": "USER_EXPLICIT", "type": "USER_INPUT",
+                          "content": f"<USER_REQUEST>\n{text}\n</USER_REQUEST>\n<ADDITIONAL_METADATA>\nx"})
+            steps.append({"step_index": 2 * i + 1, "source": "MODEL", "type": "PLANNER_RESPONSE", "content": "<USER_REQUEST>no</USER_REQUEST>"})
+        p.write_text("\n".join(json.dumps(s, ensure_ascii=False) for s in steps), encoding="utf-8")
+        return p
+
+    def test_records_user_steps_once_and_ignores_model_steps(self):
+        with tempfile.TemporaryDirectory() as t, tempfile.TemporaryDirectory() as led:
+            env = {"CIC_CAPTURE": "1", "CIC_LEDGER_DIR": led}
+            msg = lambda p: {"conversationId": "conv-1", "transcriptPath": str(p)}
+            r = ag_fire(msg(self.transcript(t, ["最初の依頼"])), env)
+            self.assertEqual((r.returncode, r.stdout.strip()), (0, b"{}"), r.stderr)
+            ag_fire(msg(self.transcript(t, ["最初の依頼", "二つ目 \n(空白保持)"])), env)
+            ag_fire(msg(self.transcript(t, ["最初の依頼", "二つ目 \n(空白保持)"])), env)  # repeat: no duplicates
+            evs = events(Path(led) / "conv-1.db")
+            self.assertEqual([e["raw"] for e in evs], ["最初の依頼", "二つ目 \n(空白保持)"])
+            self.assertEqual(evs[1]["parent_ids"], [evs[0]["event_id"]])
+            self.assertEqual(evs[0]["attrs"]["source"], "antigravity-hook")
+
+    def test_disabled_and_bad_input_are_silent(self):
+        with tempfile.TemporaryDirectory() as t, tempfile.TemporaryDirectory() as led:
+            p = self.transcript(t, ["x"])
+            r = ag_fire({"conversationId": "c", "transcriptPath": str(p)}, {"CIC_LEDGER_DIR": led})
+            self.assertEqual((r.returncode, r.stdout.strip()), (0, b"{}"))
+            self.assertEqual(list(Path(led).iterdir()), [])
+            r = ag_fire({"conversationId": "c", "transcriptPath": str(Path(t) / "missing.jsonl")},
+                        {"CIC_CAPTURE": "1", "CIC_LEDGER_DIR": led})
+            self.assertEqual((r.returncode, r.stdout.strip()), (0, b"{}"))
+
 if __name__ == "__main__":
     unittest.main()

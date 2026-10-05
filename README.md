@@ -25,15 +25,21 @@ Antigravity（CLI）は、リポジトリをcloneして`agy plugin install <clon
 
 Antigravityのskill仕様（既定は`.agents/skills/<name>/SKILL.md`、旧`.agent/skills`も後方互換、frontmatterは`description`必須・`name`任意、script/resourceはskillフォルダ相対）は公式docs（antigravity.google/docs/skills）に基づく。Claude Codeのmanifest仕様は公式のplugin reference（`.claude-plugin/plugin.json`、`skills/`標準配置）に基づく。Claude Codeでは、skill読込時にbase directoryが提示され、`SKILL_ROOT`の解決とinitの成功を確認した（`--allowedTools`で許可した実行）。許可ルールを足していない対話セッション(default mode, cwd=`C:\Users\HP`)でも、skillが読み込まれ`init`が`ok: true`になった。このときPowerShellツールの実行前に許可確認が出たかは、貼られた画面にも記録にも残っておらず確認できていない。headlessでは許可なしだと`This command requires approval`で拒否される。
 
-## Claude Codeの自動捕捉（任意・既定は無効）
+## 人間入力の自動捕捉（Claude Code / Antigravity・任意・既定は無効）
 
-同梱の`hooks/hooks.json`は、Claude Codeの`UserPromptSubmit`で**人間の入力原文だけ**を、会話ごとのSQLite台帳へ追記する。環境変数`CIC_CAPTURE=1`を付けて`claude`を起動したときだけ動き、付けなければ何も書かない。
+**人間の入力原文だけ**を、会話ごとのSQLite台帳へ自動で追記するフック。環境変数`CIC_CAPTURE=1`を付けて起動したときだけ動き、付けなければ何も書かない。
 
-- 保存先: `CIC_LEDGER_DIR`、なければ`$CLAUDE_PLUGIN_DATA/ledgers`、なければ`~/.cic/ledgers`。ファイルは`<session_id>.db`。入力原文がそのまま平文で残るので、不要になったら削除する。
+| ホスト | 仕組み | 設定 |
+|---|---|---|
+| Claude Code | `hooks/hooks.json`の`UserPromptSubmit`→`hooks/capture_turn.py`（入力のpromptを記録） | プラグインを入れれば自動で有効化の対象。`CIC_CAPTURE=1`で起動 |
+| Antigravity | `PreInvocation`→`hooks/capture_antigravity.py`。フックの入力に発話本文は無いので、渡される`transcriptPath`のtranscriptから`USER_EXPLICIT`の`USER_INPUT`だけを読み、未記録分を追記する | `python scripts/install_antigravity_hook.py --workspace <dir>`（または`--global`）で`hooks.json`を書く。`CIC_CAPTURE=1`で起動 |
+
+- 保存先: `CIC_LEDGER_DIR`、なければ`$CLAUDE_PLUGIN_DATA/ledgers`、なければ`~/.cic/ledgers`。ファイルは`<会話ID>.db`と`.count`。入力原文が平文で残るので、不要になったら削除する。
 - 記録するのはユーザー入力の逐語のみ。AI応答・tool結果・意味解釈(Delta)は記録しない。意味状態の更新は従来どおり、skillを起動してホストAIが行う。台帳の原文を使って`delta-template`→`apply`へ進める。
-- stdoutには何も出さず（モデルの文脈へ混入させない）、失敗してもターンを止めない（常にexit 0、理由はstderr）。
-- 確認済み: 単体テスト3件、およびClaude Code実機(`claude -p`)で1ターンが台帳に記録されること。ChatGPT/Codex・Antigravityには同等のhookは付けていない。
-- この機能でも「全会話を漏れなく追跡」とは言えない。hookが無効な起動、複数端末、/clear後の別session等の入力は記録されない。
+- どちらもstdoutへ余計な文を出さず（Claude Codeは何も出さない/Antigravityは`{}`）、失敗してもターンを止めない（常にexit 0、理由はstderr）。
+- 確認済み: 単体テスト7件。実機で、Claude Code(`claude -p`)は1ターン、Antigravity CLI(`agy -p`と`--continue`)は2ターンが、逐語・順序どおり・重複なしで台帳に入ること。
+- Antigravityの`transcript`の形式は公式docsに無く、実機の観察に基づく。agyの更新で形式が変わると取り込めなくなる可能性がある。Antigravityのフックのcommandは空白を含むパスを安全に渡せないため、リポジトリのパスに空白があると`install_antigravity_hook.py`は拒否する。ChatGPT/Codexには同等のフックは付けていない。
+- この機能でも「全会話を漏れなく追跡」とは言えない。有効にしない起動、複数端末、`/clear`後の別session等の入力は記録されない。
 
 ## 使い方
 

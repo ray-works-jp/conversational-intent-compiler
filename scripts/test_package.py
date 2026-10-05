@@ -42,6 +42,11 @@ class PackageTests(unittest.TestCase):
             self.assertEqual(sorted(p.name for p in (dest / "schemas").iterdir()),
                              sorted(p.name for p in (ROOT / "schemas").iterdir()))
             self.assertTrue((dest / "references" / "operation-guide.md").exists())
+            for f in ("cic_ledger.py", "capture_antigravity.py"):
+                self.assertTrue((dest / "hooks" / f).exists())
+            r = run(dest / "scripts" / "install_antigravity_hook.py", "--workspace", Path(t) / "ws")
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertIn((dest / "hooks" / "capture_antigravity.py").as_posix(), (Path(t) / "ws" / ".agents" / "hooks.json").read_text("utf-8"))
             self.assertEqual((dest / "LICENSE").read_bytes(), (ROOT / "LICENSE").read_bytes())
             r = run(dest / "scripts" / "cic_cli.py", "--db", Path(t) / "s.db", "init",
                     "--conversation", "c", "--branch", "main")
