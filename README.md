@@ -23,7 +23,7 @@ claude plugin install conversational-intent-compiler-plugin@conversational-inten
 agy plugin install https://github.com/ray-works-jp/conversational-intent-compiler
 ```
 
-配布ZIPは [Releases](https://github.com/ray-works-jp/conversational-intent-compiler/releases/latest)。詳しい導入・使い方・限界は、以下の本文を参照してください。
+配布ZIPは [Releases](https://github.com/ray-works-jp/conversational-intent-compiler/releases/latest)。AIエージェントへ貼って導入を任せられる指示書もあります: [ChatGPT / Codex 用](docs/install/GPT-ja.md)、[Antigravity 用](docs/install/ANTIGRAVITY-ja.md)。詳しい導入・使い方・限界は、以下の本文を参照してください。
 
 ---
 
@@ -40,7 +40,7 @@ claude plugin marketplace add ray-works-jp/conversational-intent-compiler
 claude plugin install conversational-intent-compiler-plugin@conversational-intent-compiler
 ```
 
-Antigravity（CLI）は、リポジトリをcloneして`agy plugin install <clone先>`、または`scripts/install_skill.py`で単独skillを配置する。
+Antigravity（CLI）は、リポジトリをcloneして`agy plugin install <clone先>`、または`scripts/install_skill.py`で単独skillを配置する。 導入と検証をAIへ任せる場合の指示書は [docs/install/ANTIGRAVITY-ja.md](docs/install/ANTIGRAVITY-ja.md)（ChatGPT / Codex 用は [docs/install/GPT-ja.md](docs/install/GPT-ja.md)）。
 
 同じ `skills/conversational-intent-compiler/`（SKILL.md + references）とPython CLIを共有する。ホストごとの差はmanifestと配置だけである。
 
