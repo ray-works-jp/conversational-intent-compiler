@@ -63,7 +63,7 @@
     "install_skill_layout_and_cli_init": "passed_locally",
     "skill_discovered_in_workspace_.agents_skills": "passed",
     "skill_root_resolution": "passed (SKILL_ROOT == PLUGIN_ROOT for standalone layout)",
-    "cli_execution_in_host": "not_tested: headless mode auto-denied the command permission; --dangerously-skip-permissions was not used",
+    "cli_execution_in_host": "passed (headless agy 1.2.14, plugin install layout): cic_cli.py init returned ok:true and created the DB. Needed an allow rule; a bare command(python) rule and a PowerShell probe command were not enough, a regex rule on the exact script path worked. Settings were restored afterwards. Interactive permission prompt not tested; skill-driven root discovery was verified separately, in this run the command line was given explicitly.",
     "agy_plugin_install": "passed: copied to ~/.gemini/config/plugins/conversational-intent-compiler-plugin; skill discovered; SKILL_ROOT/PLUGIN_ROOT resolved two levels up; scripts/cic_cli.py present. Command execution in host still not tested.",
     "antigravity_ide_and_2_0": "not_tested"
   },
