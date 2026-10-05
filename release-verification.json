@@ -1,5 +1,5 @@
 {
-  "release": "0.4.1",
+  "release": "0.5.0",
   "recorded_date_jst": "2026-10-05",
   "verification_kind": "deterministic_cli_contracts_and_packaging",
   "baseline_0_1_0": {
@@ -119,5 +119,12 @@
   "release_0_4_1": {
     "change": "pilot harness and results for host-AI Delta quality (scenarios.json, run_pilot.py, score_pilot.py, RESULTS.md); no code change to the CLI or hooks",
     "pre_release_audit": "README stale headings fixed; SKILL.md now points to hook-captured ledgers (verified by a Claude Code run whose prompt did not name the guide section); hook requires a `python` command on PATH (documented, not fixed: macOS/Linux with only python3 would show a hook error each prompt); run-log.json local path removed; no secrets/PII found in tracked files outside resources/research"
+  },
+  "release_0_5_0": {
+    "change": "root hooks.json so that installing the repo as an Antigravity plugin wires the PreInvocation capture hook automatically (command is relative: Antigravity runs plugin hooks with cwd = the plugin directory)",
+    "antigravity_probe": "a throwaway plugin showed hooks.json at the plugin root is processed ('hooks: 1 processed'), cwd of the hook = ~/.gemini/config/plugins/<name>, env has ANTIGRAVITY_CONVERSATION_ID and no plugin-root variable",
+    "e2e": "agy plugin install <repo>; agy -p then agy --continue -p with CIC_CAPTURE=1: 2 verbatim human turns recorded; a further run recorded 1 verbatim turn",
+    "note": "Antigravity IDE/2.0 plugin-hook behaviour not tested (a forum thread asks whether they execute plugin hooks)",
+    "security_note": "the probe printed the hook process environment, which contained a Gemini API key variable; the temp file was deleted; the capture hooks never read or log the environment"
   }
 }

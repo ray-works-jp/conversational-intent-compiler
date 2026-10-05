@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "conversational-intent-compiler-plugin",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "会話の原文を保存し、指示変更・採用範囲・未決事項・委任・権限境界を根拠付きで追跡する、明示起動型の会話意図コンパイラ。",
   "author": { "name": "ray-works-jp" },
   "keywords": ["intent", "conversation", "provenance", "ledger", "state", "replay"],

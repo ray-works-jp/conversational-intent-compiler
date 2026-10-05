@@ -1,6 +1,6 @@
 # Conversational Intent Compiler
 
-独立したプラグイン / version 0.4.1 / 2026-10-05 JST。
+独立したプラグイン / version 0.5.0 / 2026-10-05 JST。
 
 会話の原文を保持し、指示の変更・撤回・採用範囲・未決事項・判断委任・権限境界を、小さいTurn IRへ整理する。今回作成した研究・schema・offline試作を再利用した明示起動型のプラグインである。
 
@@ -32,7 +32,7 @@ Antigravityのskill仕様（既定は`.agents/skills/<name>/SKILL.md`、旧`.age
 | ホスト | 仕組み | 設定 |
 |---|---|---|
 | Claude Code | `hooks/hooks.json`の`UserPromptSubmit`→`hooks/capture_turn.py`（入力のpromptを記録） | プラグインを入れれば自動で有効化の対象。`CIC_CAPTURE=1`で起動 |
-| Antigravity | `PreInvocation`→`hooks/capture_antigravity.py`。フックの入力に発話本文は無いので、渡される`transcriptPath`のtranscriptから`USER_EXPLICIT`の`USER_INPUT`だけを読み、未記録分を追記する | `python scripts/install_antigravity_hook.py --workspace <dir>`（または`--global`）で`hooks.json`を書く。`CIC_CAPTURE=1`で起動 |
+| Antigravity | プラグイン導入(`agy plugin install https://github.com/ray-works-jp/conversational-intent-compiler`)なら、ルートの`hooks.json`で`PreInvocation`フックも自動で組み込まれる（`CIC_CAPTURE=1`で起動したときだけ記録）。単独skill配置(`scripts/install_skill.py`)では`python scripts/install_antigravity_hook.py --workspace <dir>`（または`--global`）で`hooks.json`を書く | `agy plugin install`したplugin配置のフックが、`agy -p`で人間入力を逐語・重複なしで記録することを確認 |
 
 - 前提: フックは`python`コマンド（3.12以上）をPATHから呼ぶ。`python`が無い環境（`python3`のみのmacOS/Linux等）ではフックがエラーになるので、`python`を用意するか、有効化しない（プラグインを入れない）。
 - 保存先: `CIC_LEDGER_DIR`、なければ`~/.cic/ledgers`（フックとskillで同じ場所になるよう固定）。ファイルは`<会話ID>.db`と`.count`。入力原文が平文で残るので、不要になったら削除する。

@@ -26,6 +26,14 @@ class PackageTests(unittest.TestCase):
                if hashlib.sha256((ROOT / f["packaged"]).read_bytes()).hexdigest() != f["sha256"]]
         self.assertEqual(bad, [])
 
+    def test_antigravity_plugin_hooks_json(self):
+        cfg = json.loads((ROOT / "hooks.json").read_text("utf-8"))
+        cmds = [h["command"] for v in cfg.values() for h in v.get("PreInvocation", [])]
+        self.assertEqual(len(cmds), 1)
+        script = cmds[0].split()[-1]
+        self.assertFalse(Path(script).is_absolute())  # Antigravity runs plugin hooks with cwd = plugin dir
+        self.assertTrue((ROOT / script).exists())
+
     def test_skill_frontmatter(self):
         head = (SKILL / "SKILL.md").read_text("utf-8").split("---")[1]
         self.assertRegex(head, r"(?m)^name: conversational-intent-compiler$")

@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.5.0 — 2026-10-05
+
+- ルートに`hooks.json`を追加。Antigravityでリポジトリをplugin導入すると、`PreInvocation`の自動捕捉フックが追加設定なしで組み込まれる（hookのcwdがplugin dirなので相対コマンドで動く。`CIC_CAPTURE=1`のときだけ記録）。使い捨てplugin（probe）で挙動を確認し、実機で2ターン＋1ターンの逐語記録を確認。Claude Code/Codexはこのファイルを読まない。IDE/2.0は未確認。
+
 ## 0.4.1 — 2026-10-05
 
 - ホストAIの意味解釈の小規模パイロットを追加（`resources/evaluation/pilot/`: 5シナリオ・18発話、実行器と採点器、結果）。Claude Code実機で18/18がapply、自動チェック19/20（不一致1件は採点器の偽陽性と判断）。実行側が正解設計と判断を兼ねる・各1回・ベースライン比較なし、のため精度の一般化は不可。CLI・フックの変更なし。
