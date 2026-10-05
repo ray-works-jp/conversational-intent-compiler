@@ -10,6 +10,7 @@
 - LICENSE（MIT）を追加し、作者名を`t93094195-jpn`へ設定。単独skill配置にもLICENSEを同梱。
 - Antigravity単独skill配置(plugin無し)でも、更新後の手順書どおりSKILL_ROOT直下の存在確認からinit成功を確認。
 - Antigravity(plugin配置)でも、更新後の手順書どおりに直接のTest-Pathで解決しinit成功を確認。
+- Claude Code用`.claude-plugin/marketplace.json`を追加（validate合格、隔離環境でadd/install確認）。
 - operation-guideに、`cic_cli.py`の存在確認は直接指定のls/Test-Path/Readで行い、Glob0件や広域検索の結果で判断しない旨を追記。再実行でSKILL_ROOT→Test-Path→2階層上→Test-Pathの手順どおりに解決しinit成功。
 - Claude Code対話セッションでskill起動からinit成功(ok:true)まで確認（許可確認の有無は未判定）。
 - Antigravity対話モードで許可確認が出て、承認後にok:trueになること、承認が保存されないことをログで確認（先の「プロンプトなし」の記録は誤りで訂正）。

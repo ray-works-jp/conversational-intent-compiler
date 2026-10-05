@@ -82,7 +82,7 @@ MIT（[LICENSE](LICENSE)）、Copyright (c) 2026 t93094195-jpn。作者名はGit
 ホスト別の配布方法（登録・公開はホスト側の操作であり、ここでは実行しない）:
 
 - **ChatGPT / Codex**: 下記のとおりPlugin Creatorへ渡す。
-- **Claude Code**: リポジトリ全体をプラグインとして読み込む（`claude --plugin-dir <repo>`）。marketplace配布は未整備。
+- **Claude Code**: リポジトリ全体をプラグインとして読み込む（`claude --plugin-dir <repo>`）。`.claude-plugin/marketplace.json`を同梱したので、`claude plugin marketplace add <repo>`→`claude plugin install conversational-intent-compiler-plugin@conversational-intent-compiler`でも入る（隔離した設定ディレクトリで追加・導入・enabledまで確認。公開はしていない）。
 - **Antigravity**: `python scripts/install_skill.py <出力先>/skills`で作ったskillフォルダ（`conversational-intent-compiler/`）をZIP化して配る。受け取り側は上表のskills置き場（`.agents/skills/`等）へ置く。
 
 **ChatGPT / Codex**: Plugin Creatorへこの一つのディレクトリを含むZIPを渡し、privateプラグインとして保存する。登録結果のplugin ID/release ID/リンクはプラグイン外のcreation receiptへ記録する。accountへの保存と、ホストでの有効化・自然言語動作の検証は区別する。
