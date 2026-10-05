@@ -88,5 +88,37 @@ class AntigravityHookTests(unittest.TestCase):
                         {"CIC_CAPTURE": "1", "CIC_LEDGER_DIR": led})
             self.assertEqual((r.returncode, r.stdout.strip()), (0, b"{}"))
 
+
+class LedgerStatusTests(unittest.TestCase):
+    def test_pending_turns_listed_then_cleared_by_applied_delta(self):
+        cli = ROOT / "scripts" / "cic_cli.py"
+        status = ROOT / "scripts" / "ledger_status.py"
+        with tempfile.TemporaryDirectory() as led, tempfile.TemporaryDirectory() as t:
+            env = {"CIC_CAPTURE": "1", "CIC_LEDGER_DIR": led}
+            prompts = ["京都2泊、ホテルは1万円以内で", "やっぱり3泊に"]
+            for p in prompts:
+                fire({"session_id": "s1", "prompt": p}, env)
+
+            def pending():
+                r = subprocess.run([sys.executable, str(status), "--dir", led], capture_output=True)
+                self.assertEqual(r.returncode, 0, r.stderr)
+                return json.loads(r.stdout.decode("utf-8"))["ledgers"][0]["pending"]
+
+            self.assertEqual([p["raw"] for p in pending()], prompts)
+            r = subprocess.run([sys.executable, str(cli), "--db", str(Path(led) / "s1.db"), "delta-template",
+                                "--human-event-id", "s1:main:H1"], capture_output=True)
+            cand = json.loads(r.stdout.decode("utf-8"))["result"]["candidate_delta"]
+            req = Path(t) / "cand.json"
+            req.write_text(json.dumps(cand), encoding="utf-8")
+            r = subprocess.run([sys.executable, str(cli), "--db", str(Path(led) / "s1.db"), "apply",
+                                "--input", str(req), "--output", str(Path(t) / "out.json")], capture_output=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertEqual([p["event_id"] for p in pending()], ["s1:main:H2"])
+
+    def test_empty_dir_is_not_an_error(self):
+        with tempfile.TemporaryDirectory() as led:
+            r = subprocess.run([sys.executable, str(ROOT / "scripts" / "ledger_status.py"), "--dir", led], capture_output=True)
+            self.assertEqual(json.loads(r.stdout.decode("utf-8"))["ledgers"], [])
+
 if __name__ == "__main__":
     unittest.main()

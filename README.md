@@ -1,6 +1,6 @@
 # Conversational Intent Compiler
 
-独立したプラグイン / version 0.3.1 / 2026-10-05 JST。
+独立したプラグイン / version 0.4.0 / 2026-10-05 JST。
 
 会話の原文を保持し、指示の変更・撤回・採用範囲・未決事項・判断委任・権限境界を、小さいTurn IRへ整理する。今回作成した研究・schema・offline試作を再利用した明示起動型のプラグインである。
 
@@ -34,7 +34,8 @@ Antigravityのskill仕様（既定は`.agents/skills/<name>/SKILL.md`、旧`.age
 | Claude Code | `hooks/hooks.json`の`UserPromptSubmit`→`hooks/capture_turn.py`（入力のpromptを記録） | プラグインを入れれば自動で有効化の対象。`CIC_CAPTURE=1`で起動 |
 | Antigravity | `PreInvocation`→`hooks/capture_antigravity.py`。フックの入力に発話本文は無いので、渡される`transcriptPath`のtranscriptから`USER_EXPLICIT`の`USER_INPUT`だけを読み、未記録分を追記する | `python scripts/install_antigravity_hook.py --workspace <dir>`（または`--global`）で`hooks.json`を書く。`CIC_CAPTURE=1`で起動 |
 
-- 保存先: `CIC_LEDGER_DIR`、なければ`$CLAUDE_PLUGIN_DATA/ledgers`、なければ`~/.cic/ledgers`。ファイルは`<会話ID>.db`と`.count`。入力原文が平文で残るので、不要になったら削除する。
+- 保存先: `CIC_LEDGER_DIR`、なければ`~/.cic/ledgers`（フックとskillで同じ場所になるよう固定）。ファイルは`<会話ID>.db`と`.count`。入力原文が平文で残るので、不要になったら削除する。
+- 引き継ぎ: `python scripts/ledger_status.py`が、台帳ごとの未解釈の人間入力(`pending`: event IDと逐語の原文)を読み取り専用で一覧する。skillはoperation-guideの「フックで捕捉済みの台帳を引き継ぐ」に従い、古い順に`delta-template`→`validate`→`apply`で解釈する。applyが通ると`pending`から外れる。
 - 記録するのはユーザー入力の逐語のみ。AI応答・tool結果・意味解釈(Delta)は記録しない。意味状態の更新は従来どおり、skillを起動してホストAIが行う。台帳の原文を使って`delta-template`→`apply`へ進める。
 - どちらもstdoutへ余計な文を出さず（Claude Codeは何も出さない/Antigravityは`{}`）、失敗してもターンを止めない（常にexit 0、理由はstderr）。
 - 確認済み: 単体テスト7件。実機で、Claude Code(`claude -p`)は1ターン、Antigravity CLI(`agy -p`と`--continue`)は2ターンが、逐語・順序どおり・重複なしで台帳に入ること。

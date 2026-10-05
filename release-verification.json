@@ -1,5 +1,5 @@
 {
-  "release": "0.3.1",
+  "release": "0.4.0",
   "recorded_date_jst": "2026-10-05",
   "verification_kind": "deterministic_cli_contracts_and_packaging",
   "baseline_0_1_0": {
@@ -106,5 +106,14 @@
   },
   "release_0_3_1": {
     "change": "author/copyright holder name unified to the GitHub account name ray-works-jp (was t93094195-jpn in LICENSE and manifests); no code change"
+  },
+  "release_0_4_0": {
+    "change": "scripts/ledger_status.py lists hook-captured human turns not yet interpreted (state.pending_human, verbatim raw, read-only); operation-guide section on resuming from a hook-captured ledger; ledger default dir fixed to ~/.cic/ledgers (CLAUDE_PLUGIN_DATA dropped because the skill's Bash lacks it)",
+    "tests": "scripts/test_hook.py now 9 tests; full suite 29",
+    "claude_code_e2e": "claude -p with CIC_CAPTURE=1: hook captured the prompt, the skill ran ledger_status.py and reported it as pending H1 without applying any Delta",
+    "not_verified": [
+      "Antigravity run of the ledger_status flow",
+      "the host AI producing correct Deltas from captured turns (semantic accuracy not measured)"
+    ]
   }
 }

@@ -79,3 +79,12 @@ AI応答は `origin=assistant`、tool結果は `origin=tool`、外部検索は `
 state cacheだけが欠けた場合はreplayで再構築し、必要なら明示 `rebuild`。raw sourceやartifact版が欠けた場合はreplayで内容が復活したと装わない。台帳破損や未知schema版は処理を止め、手元sourceとエラーを保持する。replayはメール送信・予約・購入やtool呼出しを再実行しない。
 
 preflightは最新Stateへactor/action/target IDと版/現在時刻/条件を照合する。結果の `mechanical_allowed` は決定論的な契約適合だけを示し、`external_execution_authorized:false` と `semantic_authority_verified:false` を保持する。これを「外部操作を承認した」と翻訳しない。意味上の許可は人間原文、ホストの権限ルール、実executorの確認に戻る。判定から実行までのrace/cancellation/leaseは未実装なので、実サービスの強制gateとして使わない。
+
+## フックで捕捉済みの台帳を引き継ぐ
+
+`CIC_CAPTURE=1`でフックを有効にした環境では、人間入力が`~/.cic/ledgers/<会話ID>.db`（`CIC_LEDGER_DIR`があればそこ）へ逐語で入るが、意味解釈(Delta)は付いていない。起動時に `python PLUGIN_ROOT/scripts/ledger_status.py` を実行すると、台帳ごとの `pending`（未解釈の人間入力のevent IDと原文）が分かる。
+
+- 対象の台帳が複数あれば、更新が新しい順に並ぶ。今の会話のものか原文で確かめ、取り違えない。台帳が無い／`pending`が空なら、この節は使わず通常の手順で進める。
+- `pending`は古い順に1件ずつ、`delta-template --human-event-id` → 意味解釈 → `validate` → `apply` で処理する。捕捉済みのrawを再captureしない。applyが通ると、そのeventは`pending`から外れる。
+- 記録されているのは人間入力だけ。AI応答・tool結果は台帳に無いので、それらに依存する解釈はknown omissionsへ残す。
+- フックの有無で、検証通過と意味上の正しさ、実行許可の区別は変わらない。

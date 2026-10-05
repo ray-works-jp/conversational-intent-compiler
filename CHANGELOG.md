@@ -1,5 +1,11 @@
 # Release notes
 
+## 0.4.0 — 2026-10-05
+
+- フックで捕捉した台帳の引き継ぎ: `scripts/ledger_status.py`（未解釈の人間入力を読み取り専用で一覧）と、operation-guideの該当節を追加。applyで`pending`から外れることをテスト化。
+- 台帳の既定の保存先を`~/.cic/ledgers`に固定（`CLAUDE_PLUGIN_DATA`はskillのBashから見えず、hookとskillで場所がずれるため）。
+- 単独skillの配置に`ledger_status.py`を同梱。テストは29件。Claude Code実機でフック→skill→pending報告まで確認。意味解釈の精度とAntigravity上の同flowは未確認。
+
 ## 0.3.1 — 2026-10-05
 
 - 作者名・著作権者名をGitHubアカウント名`ray-works-jp`へ統一（LICENSE、3つのmanifest、marketplace、README）。コードの変更なし。

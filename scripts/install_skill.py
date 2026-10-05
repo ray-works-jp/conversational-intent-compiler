@@ -13,7 +13,7 @@ def _writable_retry(func, path, exc):
     os.chmod(path, stat.S_IWRITE)
     func(path)
 
-RUNTIME = ("cic.py", "cic_cli.py", "schema_spec.py", "install_antigravity_hook.py")
+RUNTIME = ("cic.py", "cic_cli.py", "schema_spec.py", "install_antigravity_hook.py", "ledger_status.py")
 HOOKS = ("cic_ledger.py", "capture_antigravity.py")
 
 def main():

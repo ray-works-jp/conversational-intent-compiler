@@ -11,10 +11,8 @@ def enabled():
     return os.environ.get("CIC_CAPTURE") == "1"
 
 def ledger_dir():
-    base = os.environ.get("CIC_LEDGER_DIR")
-    if not base:
-        data = os.environ.get("CLAUDE_PLUGIN_DATA")
-        base = str(Path(data) / "ledgers") if data else str(Path.home() / ".cic" / "ledgers")
+    # One fixed default so hooks and the skill's Bash (which lacks CLAUDE_PLUGIN_DATA) agree.
+    base = os.environ.get("CIC_LEDGER_DIR") or str(Path.home() / ".cic" / "ledgers")
     Path(base).mkdir(parents=True, exist_ok=True)
     return Path(base)
 
