@@ -44,9 +44,9 @@ Antigravity（CLI）は、リポジトリをcloneして`agy plugin install <clon
 
 同じ `skills/conversational-intent-compiler/`（SKILL.md + references）とPython CLIを共有する。ホストごとの差はmanifestと配置だけである。
 
-| ホスト | 導入 | 確認状況（0.4.1時点） |
+| ホスト | 導入 | 確認状況（0.5.2時点） |
 |---|---|---|
-| ChatGPT / Codex | 従来どおり `plugin.json` / `.codex-plugin/plugin.json` | 0.1.0から変更なし。0.2.0以降は再検証していない |
+| ChatGPT / Codex | 従来どおり `plugin.json` / `.codex-plugin/plugin.json` | ChatGPTには0.5.1を登録済み（private。GPT側の報告で、こちらでは未照合）。ChatGPT内でのスキル起動・Python実行・永続保存は未確認。フック（自動捕捉）はChatGPT/Codexでは動作しない |
 | Claude Code | このリポジトリをプラグインとして読み込む（`claude --plugin-dir <repo>` またはmarketplace経由）。manifestは `.claude-plugin/plugin.json` | `claude plugin validate` 合格。`--plugin-dir` で `conversational-intent-compiler-plugin:conversational-intent-compiler` として認識されることを確認 |
 | Antigravity（CLI `agy` / IDE） | `python scripts/install_skill.py <workspace>/.agents/skills`。全プロジェクト共通の置き場は版で異なる（CLI: `~/.gemini/antigravity-cli/skills`、2.0/IDE: `~/.gemini/config/skills`）。リポジトリを`agy plugin install <path>`でプラグインとして入れる方法もある（`~/.gemini/config/plugins/`へコピーされる。`dist/`も含めてコピーされるので、不要なら先に消す） | `agy 1.2.14` で、配置したskillの認識と、SKILL_ROOT/PLUGIN_ROOT解決の正しさを確認。`agy plugin validate`合格、`agy plugin install`で導入しskill認識とroot解決（2階層上）を確認。`agy plugin install`したplugin配置から、`cic_cli.py init`がhost内で`ok:true`になることを確認（headless。コマンド実行を許可するregex rule `command(regex:python <plugin>/scripts/cic_cli\.py .*)`を一時的に`~/.gemini/antigravity-cli/settings.json`へ追加し、実行後に元へ戻した）。許可ルールが無いheadless実行はコマンドが自動拒否される。対話モード(agy 1.2.16)では、コマンド実行(`RunCommand`)の許可確認が出て、承認後に`ok: true`になった（CLIログで確認。承認は保存されず、毎回確認される）。既存DBへの再`init`は`ok: false`(FileExistsError)で拒否される |
 
