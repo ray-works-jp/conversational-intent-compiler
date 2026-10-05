@@ -30,6 +30,7 @@ def main():
     for f in RUNTIME:
         shutil.copy2(ROOT / "scripts" / f, dest / "scripts" / f)
     shutil.copytree(ROOT / "schemas", dest / "schemas")
+    shutil.copy2(ROOT / "LICENSE", dest / "LICENSE")
     print(dest)
 
 if __name__ == "__main__":

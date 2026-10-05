@@ -35,6 +35,7 @@ class PackageTests(unittest.TestCase):
             self.assertEqual(sorted(p.name for p in (dest / "schemas").iterdir()),
                              sorted(p.name for p in (ROOT / "schemas").iterdir()))
             self.assertTrue((dest / "references" / "operation-guide.md").exists())
+            self.assertEqual((dest / "LICENSE").read_bytes(), (ROOT / "LICENSE").read_bytes())
             r = run(dest / "scripts" / "cic_cli.py", "--db", Path(t) / "s.db", "init",
                     "--conversation", "c", "--branch", "main")
             self.assertEqual(r.returncode, 0, r.stderr)
