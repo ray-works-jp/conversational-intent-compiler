@@ -4,7 +4,7 @@
 
 ## 入出力の共通契約
 
-`SKILL_ROOT` は実際にロードされたこのスキルの場所。`PLUGIN_ROOT` は、`SKILL_ROOT/scripts/cic_cli.py` が存在すれば `SKILL_ROOT`（Antigravity等へ `scripts/install_skill.py` で入れた単独skill配置）、存在しなければその2階層上（`SKILL_ROOT/../..`、プラグイン配置: Claude Code/Codex）を絶対パスへ解決したパッケージルート。`STATE_DB` は今回の会話用の永続DBへの絶対パスに置き換える。CLIは `PLUGIN_ROOT/scripts/cic_cli.py`、schemaは `PLUGIN_ROOT/schemas/` に存在する。例のpathを実在するものとして使わない。初回起動で書ける専用作業ディレクトリを選び、継続では同じconversation/branch/DBを使う。conversationとbranchの対応が不明なら既存DBを初期化し直さない。
+`SKILL_ROOT` は実際にロードされたこのスキルの場所。`PLUGIN_ROOT` は、`SKILL_ROOT/scripts/cic_cli.py` が存在すれば `SKILL_ROOT`（Antigravity等へ `scripts/install_skill.py` で入れた単独skill配置）、存在しなければその2階層上（`SKILL_ROOT/../..`、プラグイン配置: Claude Code/Codex）を絶対パスへ解決したパッケージルート。`STATE_DB` は今回の会話用の永続DBへの絶対パスに置き換える。CLIは `PLUGIN_ROOT/scripts/cic_cli.py`、schemaは `PLUGIN_ROOT/schemas/` に存在する。例のpathを実在するものとして使わない。コマンド名の`python`は説明用で、環境に合わせて`python3`や`py -3`に置き換え、`--version`で3.12以上を確認する。非対話実行ではコマンド実行の許可ルールが無いと自動拒否されることがある。その場合は許可を求めるか、引継ぎ方式へ切り替える。初回起動で書ける専用作業ディレクトリを選び、継続では同じconversation/branch/DBを使う。conversationとbranchの対応が不明なら既存DBを初期化し直さない。
 
 ```text
 python PLUGIN_ROOT/scripts/cic_cli.py --db STATE_DB COMMAND --input INPUT_JSON --output OUTPUT_JSON

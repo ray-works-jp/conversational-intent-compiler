@@ -1,5 +1,5 @@
 """Install the skill as a self-contained folder for hosts that load bare skills
-(e.g. Antigravity: <workspace>/.agent/skills/ or ~/.gemini/antigravity/skills/).
+(e.g. Antigravity: <workspace>/.agents/skills/ or the global dir for the Antigravity variant).
 
 Layout written: <target>/<name>/{SKILL.md, references/, scripts/, schemas/}
 so that SKILL_ROOT == PLUGIN_ROOT. Refuses to overwrite unless --force."""
@@ -17,7 +17,7 @@ RUNTIME = ("cic.py", "cic_cli.py", "schema_spec.py")
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("target", type=Path, help="skills directory, e.g. .agent/skills")
+    ap.add_argument("target", type=Path, help="skills directory, e.g. .agents/skills")
     ap.add_argument("--force", action="store_true", help="replace an existing install")
     a = ap.parse_args()
     dest = a.target.resolve() / NAME

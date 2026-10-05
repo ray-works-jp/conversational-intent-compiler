@@ -54,12 +54,18 @@
   "claude_code": {
     "claude_plugin_validate": "passed",
     "plugin_dir_skill_recognized": "conversational-intent-compiler-plugin:conversational-intent-compiler",
-    "skill_root_resolution_in_session": "not_tested",
-    "bash_permission_behavior": "not_tested"
+    "skill_root_resolution_in_session": "passed: base directory shown at skill load; PLUGIN_ROOT resolved two levels up; init ok:true (run with --allowedTools Read, Bash(python:*))",
+    "bash_permission_behavior": "not_tested_without_allow_rule (headless run denied Read outside cwd until --add-dir/allowedTools were given)"
   },
   "antigravity": {
+    "host": "agy 1.2.14 (Antigravity CLI)",
+    "agy_plugin_validate_repo": "passed (skills: 1 processed)",
     "install_skill_layout_and_cli_init": "passed_locally",
-    "host_load_and_trigger": "not_tested"
+    "skill_discovered_in_workspace_.agents_skills": "passed",
+    "skill_root_resolution": "passed (SKILL_ROOT == PLUGIN_ROOT for standalone layout)",
+    "cli_execution_in_host": "not_tested: headless mode auto-denied the command permission; --dangerously-skip-permissions was not used",
+    "agy_plugin_install": "not_tried (would change user-level config)",
+    "antigravity_ide_and_2_0": "not_tested"
   },
   "codex_chatgpt_host": "not_retested_in_0.2.0",
   "model_calls": 0,

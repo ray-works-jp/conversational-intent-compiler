@@ -12,9 +12,9 @@
 |---|---|---|
 | ChatGPT / Codex | 従来どおり `plugin.json` / `.codex-plugin/plugin.json` | 0.1.0から変更なし。今回は再検証していない |
 | Claude Code | このリポジトリをプラグインとして読み込む（`claude --plugin-dir <repo>` またはmarketplace経由）。manifestは `.claude-plugin/plugin.json` | `claude plugin validate` 合格。`--plugin-dir` で `conversational-intent-compiler-plugin:conversational-intent-compiler` として認識されることを確認 |
-| Antigravity | `python scripts/install_skill.py <workspace>/.agent/skills`（全プロジェクト共通なら `~/.gemini/antigravity/skills`）。skill単独の自己完結フォルダを作る | 配置先からCLIが動くことをローカルで確認。Antigravity上での実読込・起動は未検証 |
+| Antigravity（CLI `agy` / IDE） | `python scripts/install_skill.py <workspace>/.agents/skills`。全プロジェクト共通の置き場は版で異なる（CLI: `~/.gemini/antigravity-cli/skills`、2.0/IDE: `~/.gemini/config/skills`）。リポジトリを`agy plugin install <path>`でプラグインとして入れる方法もあるが、未試行 | `agy 1.2.14` で、配置したskillの認識と、SKILL_ROOT/PLUGIN_ROOT解決の正しさを確認。`agy plugin validate`は合格。headless(`-p`)ではコマンド実行が権限ルール無しだと自動拒否され、CLI実行そのものは未確認 |
 
-Antigravityのskill仕様（`.agent/skills/<name>/SKILL.md`、frontmatterは`description`必須・`name`任意、script/resourceはskillフォルダ相対）は公開codelabに基づく。Claude Codeのmanifest仕様は公式のplugin reference（`.claude-plugin/plugin.json`、`skills/`標準配置）に基づく。
+Antigravityのskill仕様（既定は`.agents/skills/<name>/SKILL.md`、旧`.agent/skills`も後方互換、frontmatterは`description`必須・`name`任意、script/resourceはskillフォルダ相対）は公式docs（antigravity.google/docs/skills）に基づく。Claude Codeのmanifest仕様は公式のplugin reference（`.claude-plugin/plugin.json`、`skills/`標準配置）に基づく。Claude Codeでは、skill読込時にbase directoryが提示され、`SKILL_ROOT`の解決とinitの成功を確認した（`--allowedTools`で許可した実行。許可なしの対話挙動は未確認）。
 
 ## 使い方
 
@@ -32,7 +32,7 @@ Antigravityのskill仕様（`.agent/skills/<name>/SKILL.md`、frontmatterは`des
 
 | 環境 | 利用できる動作 | 状態の扱い |
 |---|---|---|
-| Python 3.12以上のコード実行と永続ファイルを利用可能 | 台帳記録、Delta適用、State/Turn IR出力、replay、機械的preflight | 会話専用のSQLite DB。ユーザーが利用を認めた作業領域に保存 |
+| Python 3.12以上（コマンド名は環境で`python`/`python3`/`py -3`。`--version`で3.12以上を確認してから使う）のコード実行と永続ファイルを利用可能 | 台帳記録、Delta適用、State/Turn IR出力、replay、機械的preflight | 会話専用のSQLite DB。ユーザーが利用を認めた作業領域に保存 |
 | コード実行または永続ファイルを利用不可 | 原文・根拠・変更・有効条件・未決・権限境界の引継ぎpacket | 手動引継ぎ。永続台帳更新が完了したとは扱わない |
 
 パッケージにはMCP server、host hooks、独立アプリ画面を設定していない。会話全体への自動介入や、任意のweb/mobile環境でのSQLite実行を保証しない。起動した範囲で、取得・保存できた原文を扱う。
@@ -79,7 +79,7 @@ PYTHON PLUGIN_ROOT/scripts/cic_cli.py --db STATE_DB init --conversation conversa
 
 - **ChatGPT / Codex**: 下記のとおりPlugin Creatorへ渡す。
 - **Claude Code**: リポジトリ全体をプラグインとして読み込む（`claude --plugin-dir <repo>`）。marketplace配布は未整備。
-- **Antigravity**: `python scripts/install_skill.py <出力先>/skills`で作ったskillフォルダ（`conversational-intent-compiler/`）をZIP化して配る。受け取り側は`.agent/skills/`または`~/.gemini/antigravity/skills/`へ置く。
+- **Antigravity**: `python scripts/install_skill.py <出力先>/skills`で作ったskillフォルダ（`conversational-intent-compiler/`）をZIP化して配る。受け取り側は上表のskills置き場（`.agents/skills/`等）へ置く。
 
 **ChatGPT / Codex**: Plugin Creatorへこの一つのディレクトリを含むZIPを渡し、privateプラグインとして保存する。登録結果のplugin ID/release ID/リンクはプラグイン外のcreation receiptへ記録する。accountへの保存と、ホストでの有効化・自然言語動作の検証は区別する。
 
