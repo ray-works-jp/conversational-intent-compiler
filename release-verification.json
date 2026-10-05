@@ -64,7 +64,7 @@
     "skill_discovered_in_workspace_.agents_skills": "passed",
     "skill_root_resolution": "passed (SKILL_ROOT == PLUGIN_ROOT for standalone layout)",
     "cli_execution_in_host": "not_tested: headless mode auto-denied the command permission; --dangerously-skip-permissions was not used",
-    "agy_plugin_install": "not_tried (would change user-level config)",
+    "agy_plugin_install": "passed: copied to ~/.gemini/config/plugins/conversational-intent-compiler-plugin; skill discovered; SKILL_ROOT/PLUGIN_ROOT resolved two levels up; scripts/cic_cli.py present. Command execution in host still not tested.",
     "antigravity_ide_and_2_0": "not_tested"
   },
   "codex_chatgpt_host": "not_retested_in_0.2.0",
