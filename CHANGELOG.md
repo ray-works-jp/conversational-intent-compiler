@@ -1,5 +1,9 @@
 # Release notes
 
+## 0.2.1 — 2026-10-05
+
+- 公開リポジトリで、ハッシュ記録のある17ファイルがLFに正規化されており`resources/upstream-files.json`のSHA-256と一致しなかった不具合を修正（元のバイト列のまま保存）。再発防止に`test_upstream_hashes_match_files`を追加。
+
 ## 0.2.0 — 2026-10-05
 
 - Claude Code用 `.claude-plugin/plugin.json` を追加（validate合格、skill認識を確認）。

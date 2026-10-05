@@ -19,6 +19,13 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(json.loads((ROOT / "release-verification.json").read_text("utf-8"))["release"], v)
         self.assertIn(f"## {v} ", (ROOT / "CHANGELOG.md").read_text("utf-8"))
 
+    def test_upstream_hashes_match_files(self):
+        import hashlib
+        files = json.loads((ROOT / "resources" / "upstream-files.json").read_text("utf-8"))["files"]
+        bad = [f["packaged"] for f in files
+               if hashlib.sha256((ROOT / f["packaged"]).read_bytes()).hexdigest() != f["sha256"]]
+        self.assertEqual(bad, [])
+
     def test_skill_frontmatter(self):
         head = (SKILL / "SKILL.md").read_text("utf-8").split("---")[1]
         self.assertRegex(head, r"(?m)^name: conversational-intent-compiler$")

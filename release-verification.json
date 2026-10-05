@@ -1,5 +1,5 @@
 {
-  "release": "0.2.0",
+  "release": "0.2.1",
   "recorded_date_jst": "2026-10-05",
   "verification_kind": "deterministic_cli_contracts_and_packaging",
   "baseline_0_1_0": {
@@ -81,5 +81,10 @@
   "natural_language_semantic_accuracy": "not_measured",
   "raw_baseline_superiority": "not_measured",
   "all_turn_automatic_interception": "not_implemented",
-  "package_and_account_registration": "Recorded separately after archive construction"
+  "package_and_account_registration": "Recorded separately after archive construction",
+  "release_0_2_1": {
+    "change": "Repository blobs of 17 hashed resource files had been normalised to LF at first commit, so resources/upstream-files.json SHA-256 did not match a fresh clone; stored byte-exact (CRLF) now.",
+    "new_test": "test_package.test_upstream_hashes_match_files",
+    "tests": 22
+  }
 }
