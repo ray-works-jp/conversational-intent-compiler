@@ -1,0 +1,30 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "intent-compiler",
+  "version": "0.1.0",
+  "description": "曖昧な依頼を、原文・委任・未決・仮定を保った最小のXML解釈メモに変換する。",
+  "author": {
+    "name": "Plugin owner"
+  },
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Intent Compiler — 意図コンパイラ",
+        "shortDescription": "曖昧な依頼を最小の解釈メモに",
+        "longDescription": "原文を正本とし、曖昧さの解決責任を下流AI・調査・ユーザー・保留へ配分します。委任と未決を保ち、事実・仮定・未知を区別し、必要な注釈だけをXMLで出力します。単純な依頼は無加工のまま渡す案内を返します。出力範囲は解釈メモまでです。",
+        "developerName": "Plugin owner",
+        "category": "Productivity",
+        "capabilities": [
+          "Interactive"
+        ],
+        "logo": "./assets/icon.svg",
+        "composerIcon": "./assets/icon.svg",
+        "defaultPrompt": [
+          "次に貼る依頼を、下流AIへ渡す最小の解釈メモに変換してください。解釈メモの出力までで止めてください。",
+          "この依頼の曖昧さ・仮定・未決を整理し、必要な差分だけをXMLで出してください。",
+          "非対話モードでこの依頼をコンパイルしてください。差分がなければ <pass/> だけを返してください。"
+        ]
+      }
+    }
+  }
+}

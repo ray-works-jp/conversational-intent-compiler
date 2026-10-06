@@ -27,9 +27,20 @@ agy plugin install https://github.com/ray-works-jp/conversational-intent-compile
 
 ---
 
-独立したプラグイン / version 0.5.2 / 2026-10-05 JST。
+独立したプラグイン / version 0.6.0 / 2026-10-05 JST。
 
 会話の原文を保持し、指示の変更・撤回・採用範囲・未決事項・判断委任・権限境界を、小さいTurn IRへ整理する。今回作成した研究・schema・offline試作を再利用した明示起動型のプラグインである。
+
+## ループ運転（雑な入力 → コンパイラ → AIの応答 → … → 明示的に停止）
+
+`scripts/cic_loop.py` は、**人間の雑な入力 → コンパイラAI → AIの応答 → 人間の雑な入力 → …** を、**`:stop` などで明示的に停止するまで繰り返す**実行器です。コンパイラAIは、最初のコンパイラー（Intent Compiler 0.1.0）の実行仕様を**無改変のまま**同梱して使い（`resources/intent-compiler/`）、返ってきたIR（XML）を原文と機械的に照合してから、応答AIへ渡します。不合格なら、IRを捨てて原文をそのまま渡します。`--ledger` を付けると、人間の入力とAIの応答をCICの台帳へ逐語で記録します。
+
+```bash
+python scripts/cic_loop.py                  # コンパイラ・応答AIとも `claude -p`
+python scripts/cic_loop.py --ledger loop.db --ab
+```
+
+停止は `:stop` `/stop` `:quit` `:exit` `:q` `コンパイラー停止` のみ（T0・質問・検査不合格・エラーでは止まらない）。仕組み・検査項目・限界は [docs/loop-ja.md](docs/loop-ja.md)。「コンパイルしたほうが、そのまま渡すより良い」ことは未測定で、`--ab` のログで比較する想定です。
 
 ## 対応ホストと導入
 

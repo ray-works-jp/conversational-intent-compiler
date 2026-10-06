@@ -50,6 +50,8 @@ class PackageTests(unittest.TestCase):
             self.assertEqual(sorted(p.name for p in (dest / "schemas").iterdir()),
                              sorted(p.name for p in (ROOT / "schemas").iterdir()))
             self.assertTrue((dest / "references" / "operation-guide.md").exists())
+            self.assertTrue((dest / "scripts" / "cic_loop.py").exists())
+            self.assertTrue((dest / "resources" / "intent-compiler" / "first-compiler-0.1.0" / "skills" / "compile-intent" / "references" / "system-prompt.md").exists())
             for f in ("cic_ledger.py", "capture_antigravity.py"):
                 self.assertTrue((dest / "hooks" / f).exists())
             r = run(dest / "scripts" / "install_antigravity_hook.py", "--workspace", Path(t) / "ws")

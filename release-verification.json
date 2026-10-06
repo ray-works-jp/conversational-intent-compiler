@@ -1,5 +1,5 @@
 {
-  "release": "0.5.2",
+  "release": "0.6.0",
   "recorded_date_jst": "2026-10-05",
   "verification_kind": "deterministic_cli_contracts_and_packaging",
   "baseline_0_1_0": {
@@ -134,5 +134,18 @@
     "change": "README links to docs/install instruction sheets (GPT-ja.md, ANTIGRAVITY-ja.md) and the sheets themselves are included in the archives; no code change",
     "antigravity_instruction_sheet_run": "An Antigravity agent followed ANTIGRAVITY-ja.md: agy plugin install from GitHub (skills/hooks processed), version 0.5.1 confirmed, Test-Path then init -> ok: true, temp DB removed, no permission bypass. Self-reported by that agent; hook firing not tested in that run.",
     "chatgpt_registration": "Reported by a GPT session (not independently verified): the existing private plugin (ID omitted) was updated 0.1.0 -> 0.5.1 with the verified ZIP (71 files, discoverability PRIVATE, scope USER,). Skill invocation, Python execution and persistent ledger inside ChatGPT remain unverified. 0.5.2 is not registered there."
+  },
+  "release_0_6_0": {
+    "change": "scripts/cic_loop.py: loop 'human messy input -> compiler AI -> AI response -> human input -> ... until an explicit stop', using the unchanged first Intent Compiler 0.1.0 spec (resources/intent-compiler, 7 files, SHA256SUMS) with a mechanical IR audit, optional ledger capture and an A/B log",
+    "tests": "scripts/test_loop.py (15 contract tests with mock backends, no model calls); suite total 45",
+    "claude_code_e2e": "cic_loop.py --script (5 inputs + ':stop' + 1 line after the stop) with claude -p as both AIs: 4 rounds processed (IR, T0, IR using history, IR with a gate for an irreversible request), explicit stop honoured, the line after the stop not processed; ledger holds the 4 human inputs verbatim and 4 AI answers; audit errors 0 (3 warnings, all false positives)",
+    "found_by_tests": "classify() missed a self-closing <ir tier='1'/>; fixed",
+    "security": "IR is model output: DOCTYPE/ENTITY/CDATA/processing instructions and >20000 chars are refused before parsing",
+    "not_verified": [
+      "value of compiling vs passing the raw text through (A/B not measured; --ab produces the log)",
+      "other backends (agy, cmd:) were not run against real models",
+      "behaviour with the user's global claude hooks isolated",
+      "antigravity/chatgpt hosts: the loop is a local runner, not a host feature"
+    ]
   }
 }

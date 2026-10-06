@@ -1,0 +1,7 @@
+4d83d223b08cba9f5a7dbc1edb648dba7592fec3da65689107dfa8739561d7a7 *first-compiler-0.1.0/assets/icon.svg
+156a64dc88404fde5a72f1a6bb92edda1d3f7cc291a1c20dc2a2dfcd73d6c785 *first-compiler-0.1.0/plugin.json
+2c48a58b73e8b07785ceb4547b3922152e5103b6a9173c8e30f6431439d47fcb *first-compiler-0.1.0/skills/compile-intent/SKILL.md
+e701b602474622d52f42088cd772088b7332d6085cfc83bae41f5d10a4a56d5e *first-compiler-0.1.0/skills/compile-intent/references/examples.md
+a2d7d31a48599615aa5d4a187ad73e06b0e8a4175a6053b44d23687d5f38b41d *first-compiler-0.1.0/skills/compile-intent/references/integration-notes.md
+8268db34ae676556c45db50562a464d471d039db8d979813a3deafbbd8266d21 *first-compiler-0.1.0/skills/compile-intent/references/original-design.txt
+87335ce028310a1d02090ee4a0bb78d3b6d690eda0c1c3a44942d4afc3f70c12 *first-compiler-0.1.0/skills/compile-intent/references/system-prompt.md
