@@ -2,14 +2,14 @@
 
 | 項目 | 内容 |
 |---|---|
-| 版・確認日 | **最終版**。2026-10-06 に、下記の事実を再確認済み（リポジトリ・タグ・Release・配布物の digest・テスト 30 件） |
+| 版・確認日 | **最終版（v0.6.2 対応）**。2026-10-06 に、0.6.2 の plugin ZIP（下記 SHA-256）を展開し、77 テストの成功と `claude plugin validate .` の合格を確認。GitHub のタグ・Release は 0.6.2 では未作成（確認済み） |
 | 対象 | Conversational Intent Compiler（以下「CIC」）プラグイン |
-| 引き継ぐ版 | **v0.6.0**（タグ `v0.6.0` = コミット `58fdca3`。`main` も同じ）。v0.5.2 からの差は**ループ運転の追加**（第3章 FR-16・FR-17）。 |
+| 引き継ぐ版 | **v0.6.2**（plugin ZIP `conversational-intent-compiler-plugin-0.6.2.zip`。**GitHub 未公開**：タグ・Release なし、作業ツリー未コミット）。公開済みの最新は v0.6.0（タグ = コミット `58fdca3`）。v0.6.0 からの差は、**継続会話モード・UserPromptSubmit ブリッジ・ループ運転の強化（0.6.1）と、task scope 条件の配送修正（0.6.2）**（第3章 FR-18〜FR-20）。 |
 | リポジトリ | https://github.com/ray-works-jp/conversational-intent-compiler （Public、MIT） |
 | 引継ぎ先 | Antigravity（この文書の受け手） |
 | 性格 | 引継ぎ用の文書（公開版）。アカウント固有の識別子と、事故の詳細は省略している |
 
-> **事実の再確認方法**：リポジトリで `git fetch`、`git rev-parse --short v0.6.0^{commit}`（`58fdca3` を期待）、`gh release view v0.6.0 --repo ray-works-jp/conversational-intent-compiler --json assets`（第2章 2.1 の digest と照合）、`python -m unittest discover -s scripts -p "test_*.py"`（45 件成功を期待）。結果が本書と異なる場合は、**本書ではなく実物を正とし**、差を作成者へ報告すること。
+> **事実の再確認方法**：渡された ZIP の SHA-256 が第2章 2.1 の値と一致するか確認し、展開して `python -m unittest discover -s scripts -p "test_*.py"`（77 件成功を期待）を実行する。GitHub 側は `git ls-remote --tags origin`（`v0.6.2` が**ない**ことを期待。あれば Release の digest と照合）。結果が本書と異なる場合は、**本書ではなく実物を正とし**、差を作成者へ報告すること。
 
 > **この文書の読み方**：事実は「確認済み」「自己報告（未照合）」「未確認」に分けて書いています。「未確認」を「動く」と読み替えないでください。Antigravity は、シェルとファイル操作を使える前提です（作成者は、このホストで実機確認を済ませています）。ただし、受け手の環境が同じとは限らないので、第9章の受入確認を、受け手自身が実行してください。
 
@@ -18,7 +18,7 @@
 ## 1. 目的と範囲
 
 ### 1.1 引継ぎの目的
-CIC の現行版（v0.6.0）を、仕様・状態・検証結果・未解決事項・運用規則を失わずに Antigravity へ渡し、**変更を加えても、確認済みの性質（原文の保持、権限の分離、検査の決定論性）を壊さずに開発を続けられる**ようにする。
+CIC の現行版（v0.6.2）を、仕様・状態・検証結果・未解決事項・運用規則を失わずに Antigravity へ渡し、**変更を加えても、確認済みの性質（原文の保持、権限の分離、検査の決定論性）を壊さずに開発を続けられる**ようにする。
 
 ### 1.2 範囲
 - **対象（IN）**：CIC プラグイン一式（skill、Python CLI、スキーマ、フック、導入ツール、導入指示書、評価ハーネス、リリース手順、**ループ運転 `cic_loop.py` と、同梱した最初のコンパイラー**）。
@@ -37,22 +37,24 @@ CIC の現行版（v0.6.0）を、仕様・状態・検証結果・未解決事�
 ### 2.1 リリース状態
 | 項目 | 状態 | 確認方法 |
 |---|---|---|
-| バージョン | `plugin.json`、`.codex-plugin/plugin.json`、`.claude-plugin/plugin.json` が全て `0.6.0` | 確認済み（テストが一致を検査） |
+| バージョン | ZIP 内の `plugin.json`、`.codex-plugin/plugin.json`、`.claude-plugin/plugin.json` が全て `0.6.2`（公開済みの GitHub 最新は `0.6.0`） | 確認済み（テストが一致を検査） |
 | GitHub Releases | v0.6.0（Latest）、v0.5.2、v0.4.1、v0.4.0、v0.3.1、v0.2.1 | 確認済み |
+| v0.6.2 の公開状態 | タグ `v0.6.2`・Release なし（ローカルと origin のタグ一覧で確認）。作業ツリーに 0.6.1／0.6.2 の変更が未コミットで残る | 確認済み（2026-10-06） |
 | タグ | `v0.2.1`、`v0.3.1`、`v0.4.0`、`v0.4.1`、`v0.5.0`（Release なし）、`v0.5.2`、`v0.6.0` | 確認済み。`v0.2.0`、`v0.3.0`、`v0.5.1` は意図して削除済み（欠番） |
-| v0.6.0 の配布物 | plugin ZIP：295,370 bytes・87 ファイル・sha256 `468750575e1463359a4da4eee0e999c526abb59cc3f51608ffc153f1b8cd44f2` ／ Antigravity ZIP：97,309 bytes・31 ファイル・sha256 `ddd5cee3ce72af3e77365c20e92c5a90d44929ea274a331b9c8296c1cb010af9` | 確認済み（GitHub の asset digest と手元の ZIP が一致）。ループ運転（`cic_loop.py`）と、最初のコンパイラーの同梱 7 ファイルを含む |
-| テスト | 45 件（`test_cli.py` 17、`test_hook.py` 7、`test_package.py` 6、`test_loop.py` 15）、全て成功 | 確認済み（2026-10-06 に再実行） |
-| 追跡ファイル数 | 87（plugin ZIP の 87 と一致） | 確認済み |
+| v0.6.0 の配布物（公開済み） | plugin ZIP：295,370 bytes・87 ファイル・sha256 `468750575e1463359a4da4eee0e999c526abb59cc3f51608ffc153f1b8cd44f2` ／ Antigravity ZIP：97,309 bytes・31 ファイル・sha256 `ddd5cee3ce72af3e77365c20e92c5a90d44929ea274a331b9c8296c1cb010af9` | 確認済み（GitHub の asset digest と手元の ZIP が一致）。ループ運転（`cic_loop.py`）と、最初のコンパイラーの同梱 7 ファイルを含む |
+| **v0.6.2 の配布物（未公開）** | plugin ZIP：317,913 bytes・91 ファイル（ZIP 直下がプラグインのルート。上位フォルダなし）・sha256 `b59a028c7e09d14a408ca367cc7388da44e480b5126f2faf0883ec7a319dbdca` ／ Antigravity ZIP：**未作成** | 確認済み（ZIP を展開して読了）。継続会話モード（`cic_session.py`、`continuous_turn.py`）を含む |
+| テスト | 77 件（`test_cli.py` 17、`test_hook.py` 7、`test_package.py` 6、`test_loop.py` 31、`test_session.py` 16）、全て成功 | 確認済み（2026-10-06、0.6.2 の ZIP を展開して実行。約 58 秒）。v0.6.0 は 45 件 |
+| ファイル数 | v0.6.0 の追跡ファイルは 87。v0.6.2 の ZIP は 91（= 87 ＋ 新規 4：`hooks/continuous_turn.py`、`scripts/cic_session.py`、`scripts/test_session.py`、`skills/.../references/continuous-loop.md`） | 確認済み |
 
 ### 2.1.1 作成者の環境 の導入状態（参考）
-- 作成者の環境 の Antigravity に導入済みの plugin は **0.5.1**（導入指示書の検証で入れたもの。0.6.0 との差は、ループ運転の追加など）。更新するかは作成者の判断。
+- 作成者の環境 の Antigravity に導入済みの plugin は **0.5.1**（導入指示書の検証で入れたもの。0.6.2 との差は、ループ運転・継続会話モードの追加など）。更新するかは作成者の判断。
 
 ### 2.2 ChatGPT 側の登録
 - 作成者の ChatGPT アカウントに登録済みの private プラグイン（ID は非公開のため省略）は、GPT セッションの報告では **0.5.1・71 ファイル**（PRIVATE、scope USER）に更新済み。**自己報告で、作成者は未照合**。
-- 0.5.1 から 0.6.0 までの差は、フック・文書・**ループ運転（ローカルの実行器で、ChatGPT 内では使えない）**。更新は任意。更新する場合は v0.6.0 の plugin ZIP を使い、PRIVATE を維持し、新規作成しない。
+- 0.5.1 から 0.6.2 までの差は、フック・文書・**ループ運転・継続会話モード（ローカル実行・信頼済み hook が前提で、ChatGPT 内の Cloud Work では hook が動かない）**。更新は任意。更新する場合は v0.6.2 の plugin ZIP を使い、PRIVATE を維持し、新規作成しない。
 - GitHub の v0.5.1 の Release とタグは削除済みで、その ZIP は GitHub から再取得できない。
 
-### 2.3 リポジトリ構成（追跡ファイル 87）
+### 2.3 リポジトリ構成（v0.6.0：追跡ファイル 87 ／ v0.6.2 の ZIP：91）
 | パス | 役割 |
 |---|---|
 | `plugin.json` / `.codex-plugin/plugin.json` / `.claude-plugin/plugin.json` | ChatGPT・Codex（Agent Plugins 1.0）／Codex 互換／Claude Code の manifest。`.claude-plugin/marketplace.json` も同居 |
@@ -112,8 +114,11 @@ CIC の現行版（v0.6.0）を、仕様・状態・検証結果・未解決事�
 | FR-13 | 人間入力の自動記録（任意） | `CIC_CAPTURE=1` のときだけ、人間入力の原文を `~/.cic/ledgers/<会話ID>.db`（`CIC_LEDGER_DIR` で変更可）へ逐語で追記。Claude Code は `UserPromptSubmit`、Antigravity は `PreInvocation`（`transcriptPath` の `USER_EXPLICIT` の `USER_INPUT` を読む）。stdout を汚さず、失敗しても常に正常終了 | `hooks/`。実機で確認済み |
 | FR-14 | 未解釈入力の引継ぎ | `scripts/ledger_status.py` が、`pending_human` を読み取り専用で一覧（event ID・原文）。skill は古い順に `delta-template` → 解釈 → `validate` → `apply` で処理し、捕捉済み raw を再 capture しない | 確認済み（テスト・Claude Code 実機） |
 | FR-15 | 導入ツール | `install_skill.py`（単独 skill の自己完結フォルダ。LICENSE・hooks・`ledger_status.py` 同梱）、`install_antigravity_hook.py`（`hooks.json` を書く。パスに空白があると拒否） | 確認済み |
-| FR-16 | **ループ運転** | 人間の雑な入力 → コンパイラ AI（T0／IR／質問 1 つのどれか）→ 機械の検査 → 応答 AI → 次の入力、を**明示的に停止するまで繰り返す**。IR は原文との照合（`q` の逐語一致、`src=u` に `q`、`must` の出自、`assume` の `if_wrong` など）に通ったものだけを応答 AI へ渡し、不合格は 1 回直させ、それでも不合格なら IR を捨てて原文をそのまま渡す。質問は人間へ返す。直近 N 回（既定 5）の履歴を両方の AI へ渡す。`--ledger` で人間の入力と AI の応答を台帳へ逐語で記録、`--ab` で IR なしの応答も記録、`--script` でファイルから運転 | `scripts/cic_loop.py`、`docs/loop-ja.md`。15 テスト（モックのバックエンド）と、`claude` による実機確認 |
+| FR-16 | **ループ運転** | 人間の雑な入力 → コンパイラ AI（T0／IR／質問 1 つのどれか）→ 機械の検査 → 応答 AI → 次の入力、を**明示的に停止するまで繰り返す**。IR は原文との照合（`q` の逐語一致、`src=u` に `q`、`must` の出自、`assume` の `if_wrong` など）に通ったものだけを応答 AI へ渡し、不合格は 1 回直させ、それでも不合格なら IR を捨てて原文をそのまま渡す。質問は人間へ返す。履歴（0.6.1 以降は既定で全 turn・原文全文。`--history N` で直近 N 回）を両方の AI へ渡す。`--ledger` で人間の入力と AI の応答を台帳へ逐語で記録、`--ab` で IR なしの応答も記録、`--script` でファイルから運転 | `scripts/cic_loop.py`、`docs/loop-ja.md`。`test_loop.py` 31 テスト（モックのバックエンド）と、`claude` による実機確認 |
 | FR-17 | 最初のコンパイラーの同梱 | 最初のコンパイラー（Intent Compiler 0.1.0）の 7 ファイルを無改変で同梱し、`SHA256SUMS.txt` で検査する。単独 skill の導入（`install_skill.py`）にも、`cic_loop.py` と合わせて同梱する | `resources/intent-compiler/`、`test_loop.py`、`test_package.py` |
+| FR-18 | **継続会話モード（0.6.1）** | 明示起動（`:cic start`／`コンパイラ開始`）した同じ会話・branch で、各 turn に「prepare（原文を先に保存）→ ホストの Compiler／Delta 検査・commit → dispatch（実際に package した Turn IR 全文と hash を応答前に保存）→ 元の依頼への応答 → complete（応答を別出自で保存）」を行い、直接人間入力の停止語まで続ける。start/stop は原文 human event から派生し、再読込・再開・branch 分離・再送の冪等を扱う。complete は、配送内容・raw・state 版・新しい human/stop・同 turn の別応答を検査して拒否する。prepared（表示前の本文）と observed（実際に表示した原文）を区別する。**0.6.2**：task scope の有効条件が dispatch に届かない接続漏れを修正（`task_id` を core.package へ渡し、task scope 条件があるのに `task_id` を省略した配送は拒否） | `scripts/cic_session.py`、`skills/.../references/continuous-loop.md`、`scripts/test_session.py`（16 テスト）。dispatch は処理 lease でも外部操作の許可でもない |
+| FR-19 | UserPromptSubmit ブリッジ（0.6.1） | 信頼済みローカルの runtime（Codex／Claude Code）で、開始後の各 turn に固定の処理手順を挿入し、直接人間入力の原文を先に保存する。ユーザー原文を developer 指示へコピーしない。Cloud Work は command hook を実行しないため対象外（skill＋session の継続で、強制介入は保証しない）。インストールだけでは hook を信頼したことにならない | `hooks/continuous_turn.py`、`hooks/hooks.json`（`capture_turn.py` と並置）。実ホストでの hook 実行は未確認 |
+| FR-20 | ループ運転の強化（0.6.1） | `cic_loop.py` を、全 turn・原文全文の履歴（既定。`--history N` で直近 N 回）、台帳からの再開、停止入力の保存、入力の終わり＝suspended／Ctrl-C＝interrupted、バックエンドの失敗・引用付き argv への対応へ拡張。`claude` は tool／skill／hook／MCP を制限。`agy`・`cmd:` は tool なしを保証できないため `--allow-agent-tools` の明示が必要。XML ループは意味 Delta を自動確定しない | `scripts/cic_loop.py`、`docs/loop-ja.md`、`scripts/test_loop.py`（31 テスト）。`--ab` は同一履歴からの局所比較で、正式な raw 比較ではない |
 
 ### 3.3 CLI の入出力契約
 - 全コマンドは `{ok, command, result, limitations, external_execution_authorized: false}` の形で返す。入力は UTF-8 JSON ファイル、出力は**新規ファイル**（既存の出力ファイルは上書きしない）。
@@ -134,7 +139,8 @@ CIC の現行版（v0.6.0）を、仕様・状態・検証結果・未解決事�
 | NFR-5 | フックは既定で無効。stdout に何も出さず（Antigravity は `{}`）、**読む環境変数は `CIC_CAPTURE` と `CIC_LEDGER_DIR` の 2 つだけ**で、環境変数の一覧を読まず・記録せず、常に終了コード 0 |
 | NFR-6 | フックの command は `python` をPATHから呼ぶ（`python3` のみの環境では動かない。README に前提として明記済み）。Antigravity の plugin フックは相対コマンドで、**引用符を入れると壊れる**（cwd が plugin dir） |
 | NFR-7 | 保存した原文は平文。暗号化・保持期間・削除・ACL は未実装（利用環境の方針に従う） |
-| NFR-8 | ループ運転は、外部のモデル CLI（`claude`／`agy`／任意のコマンド）を呼ぶ（コア CLI・フック・台帳はモデルを呼ばない）。応答 AI にはツールを与えない（外部操作をしない）。IR（モデルの出力）は、`DOCTYPE`・エンティティ宣言・CDATA・処理命令・2 万文字超を、パースの前に拒否する |
+| NFR-8 | ループ運転は、外部のモデル CLI（`claude`／`agy`／任意のコマンド）を呼ぶ（コア CLI・フック・台帳はモデルを呼ばない）。応答 AI にはツールを与えない（外部操作をしない）。IR（モデルの出力）は、`DOCTYPE`・エンティティ宣言・CDATA・処理命令・2 万文字超を、パースの前に拒否する。0.6.1 以降：`claude` バックエンドは tool／skill／hook／MCP を制限し、`agy`・`cmd:` は tool なしを保証できないため `--allow-agent-tools` の明示が必要 |
+| NFR-9 | 継続会話モードは、同梱 Python と永続ファイル（会話専用の SQLite）を必要とする。`cic_session.py` の入出力は新しい UTF-8 JSON。CLI の attestation は認証ではない。hook は信頼済みローカルのみで、Cloud Work は強制介入できない。同じモデルの二重呼出しを防ぐ lease、tool イベントの完全捕捉、無期限・複数端末の保存は未保証 |
 
 ### 4.2 不変の制約（壊してはならないもの）
 1. **ハッシュ照合**：`resources/upstream-files.json` の 33 ファイルの SHA-256 と実ファイルが一致する（テストが検査）。該当ファイルの改行・内容を変えない。`.gitattributes` を外さない。
@@ -150,8 +156,8 @@ CIC の現行版（v0.6.0）を、仕様・状態・検証結果・未解決事�
 ## 5. 検証状況の台帳（確認の区分）
 
 ### 5.1 確認済み
-- 45 テスト（構造契約、フック、パッケージ、バージョン一致、ハッシュ、導入ツール、**ループ運転**）の成功。展開した ZIP でも成功。
-- `claude plugin validate`、`agy plugin validate` の合格。
+- 77 テスト（構造契約、フック、パッケージ、バージョン一致、ハッシュ、導入ツール、ループ運転、**継続会話モード**）の成功。0.6.2 の ZIP を展開して実行（2026-10-06）。`claude plugin validate .` の合格（0.6.2 の展開物）。`agy plugin validate .` はエラー表示なし（hooks 1 件処理）。
+- `claude plugin validate` の合格（0.6.2 を含む）。`agy plugin validate` は 0.6.2 でエラー表示なし。
 - Claude Code・Antigravity CLI での実機動作（上記 2.3.1）。
 - 小規模パイロット：Claude Code 実機（`claude-sonnet-5-5`、skill の手順どおり）で、日本語 5 シナリオ・18 発話を処理し、18/18 が `apply`、自動のキーワード検査 19/20（不一致 1 件は採点器の偽陽性と判断）。`resources/evaluation/pilot/RESULTS.md`。
 - **ループ運転の実機確認**：`cic_loop.py --script`（入力 5 行＋`:stop`＋停止後の 1 行）を、コンパイラ・応答の両方に `claude -p` を使って実行。4 回処理（IR、T0、**履歴を使った訂正**、不可逆の依頼で gate）し、明示停止で終了。停止後の行はログにも台帳にも入っていない。台帳には人間の入力 4 件が逐語で入った。検査の不合格 0 件。
@@ -168,6 +174,8 @@ CIC の現行版（v0.6.0）を、仕様・状態・検証結果・未解決事�
 - 全ターンの自動介入（フックは人間入力の記録のみで、AI 応答・tool 結果・Delta は記録しない。`/clear` 後の別 session、複数端末は対象外）。
 - **コンパイルの価値**：「コンパイルしたほうが、そのまま渡すより良い」ことは未測定（`--ab` のログで盲検比較が必要）。
 - ループの `agy` と `cmd:` のバックエンドを、実モデルで動かした結果。利用者のグローバルなフックを隔離した場合のコンパイラの挙動。
+- **継続会話モードの実ホスト確認**：`continuous_turn.py` の hook 実行（Claude Code・Codex）、Cloud Work での 2 turn 目以降の継続、Antigravity 上の動作。`:cic start` → 複数 turn → `:stop` の実機記録がない。
+- **0.6.2 の GitHub 公開**（タグ・Release・Antigravity 用 ZIP）と、ChatGPT・Antigravity への 0.6.x の導入。
 
 ---
 
@@ -212,6 +220,8 @@ CIC の現行版（v0.6.0）を、仕様・状態・検証結果・未解決事�
 | 7 | Antigravity の transcript の形式が公式 docs にない | `agy` の更新で記録が取り込めなくなる可能性 | 観察に基づく実装（`USER_INPUT` / `USER_EXPLICIT` / `<USER_REQUEST>`） |
 | 8 | 保存する原文が平文。暗号化・保持期間・削除・ACL・durable inbox・dispatch lease・実行中取消は未実装 | 機密を扱う運用には不向き | README に明記済み |
 | 9 | AI 応答・tool 結果は自動では台帳に入らない | 全体の追跡は不完全 | 仕様。skill の手順でホスト AI が捕捉する |
+| 10 | **0.6.2 が未公開**：GitHub にタグ・Release がなく、作業ツリーは未コミット。Antigravity 用 ZIP も未作成。ZIP に埋め込まれた `docs/handoff/` は、0.6.0 時点の注記つきの版 | 配布物を GitHub から取得できない。ChatGPT・Antigravity の更新ができない | 作成者の依頼があったときだけ、コミット・push・タグ・Release・Antigravity ZIP を作る（6.2）。その際、埋め込みの引継ぎ文書を最新へ差し替えるなら 0.6.3 として出し直す |
+| 11 | **継続会話モードの実ホスト確認が薄い**：hook（`continuous_turn.py`）の実機実行、Cloud Work の 2 turn 目以降の継続、Antigravity 上の動作は未確認。release-verification には、Cloud Work で 0.6.1 の初回 turn を観察して 0.6.2 の修正につながったとの記録がある（自己報告・未照合）。意味精度・raw 直接入力との比較は未測定 | 「継続する」が実機で保証されていない | 実機で、`:cic start` → 2〜3 turn → `:stop` を観察し、記録を貼る |
 
 ---
 
@@ -219,7 +229,7 @@ CIC の現行版（v0.6.0）を、仕様・状態・検証結果・未解決事�
 - **環境変数の露出**：調査用のコマンドが、フックのプロセスの環境変数を出力してしまう事故があった（一時ファイルは削除済み）。以後、環境変数の一覧を出力・保存しない。CIC のフックが読む環境変数は `CIC_CAPTURE` と `CIC_LEDGER_DIR` の 2 つだけで、その他は読まず、記録しない。
 - Windows の注意：標準入出力が cp932 になるため、日本語の入出力は UTF-8 を明示する（`sys.stdout.reconfigure(encoding="utf-8")`、`stdin.buffer` を decode）。作業ツリーの改行が CRLF の環境がある。`git archive` で配布物を作る。
 - Antigravity の headless 実行はコマンドが自動拒否される（許可ルールまたは対話が必要）。許可ルールの一時追加は、実行後に必ず元へ戻す。
-- **ループ運転の注意**：応答 AI にツールはなく、IR の `gate` は文章上の指示で、コードによる強制ではない。IR はモデルの出力なので、検査（`q` の逐語一致など）が必須。バックエンドの `claude -p` は、利用者の環境のフック・設定を読み込む場合があり、コンパイラの出力に影響しうる。ループは、モデルへ入力を送るため、個人情報を含む入力は利用先の方針を確認する。
+- **ループ運転の注意**：応答 AI のツールは、`claude` では制限し、`agy`・`cmd:` では明示許可が必要で、IR の `gate` は文章上の指示で、コードによる強制ではない。IR はモデルの出力なので、検査（`q` の逐語一致など）が必須。バックエンドの `claude -p` は、利用者の環境のフック・設定を読み込む場合があり、コンパイラの出力に影響しうる。ループは、モデルへ入力を送るため、個人情報を含む入力は利用先の方針を確認する。
 
 ---
 
@@ -240,14 +250,15 @@ CIC の現行版（v0.6.0）を、仕様・状態・検証結果・未解決事�
 
 | # | 確認 | 期待 |
 |---|---|---|
-| A1 | リポジトリを取得し、`git describe` / タグ一覧を確認 | `v0.6.0` が `58fdca3`、`main` が `58fdca3` 以降 |
-| A2 | Release の ZIP 2 つの SHA-256 を、第2章 2.1 の値と照合 | 一致 |
-| A3 | Python 3.12 以上を確認し、45 テストを実行（`python -m unittest discover -s scripts -p "test_*.py"`） | 全成功（このホストは Python を実行できる前提のため**必須**） |
+| A1 | `git ls-remote --tags origin` と、渡された ZIP の有無を確認 | `v0.6.0` が `58fdca3`。**`v0.6.2` はない**（あれば Release の digest と ZIP を照合）。ない場合は「未公開」と報告し、ZIP で検収する |
+| A2 | 渡された 0.6.2 の plugin ZIP の SHA-256 を、第2章 2.1 の値と照合 | 一致（違えば中止して報告） |
+| A3 | Python 3.12 以上を確認し、77 テストを実行（`python -m unittest discover -s scripts -p "test_*.py"`） | 全成功（このホストは Python を実行できる前提のため**必須**） |
+| S1 | **継続会話モード**：`references/continuous-loop.md` と `scripts/test_session.py` を読み、使い捨ての DB で `cic_session.py` の prepare → dispatch → complete を 1 巡し、`:stop` 後の prepare が停止扱いになること、新入力のあとの古い応答の complete が拒否されることを確認 | 期待どおり。hook の実機動作・Cloud Work の継続は**未確認**と報告し、動くと言わない |
 | B1 | `skills/.../SKILL.md` と `references/operation-guide.md` を読み、第3章 3.1 の P1〜P7 を自分の言葉で要約 | 原文正本・origin と adoption の分離・意図と権限の分離・検証は正しさの証明ではない、を含む |
 | B2 | 第7章の未解決事項を、自分の優先度と理由つきで並べ替えて提案 | 作成者の判断を要するものを区別している |
 | B3 | 第4章 4.2 の不変の制約を、守れないケースの例とともに説明 | 4.2 の 1（ハッシュ）と 2（バージョン一致）を含む |
 | D1 | `agy plugin validate .` | `skills` と `hooks` が processed |
-| D2 | `agy plugin install https://github.com/ray-works-jp/conversational-intent-compiler`（またはローカルのクローン）→ `agy plugin list`、導入先の `plugin.json` の version | version 0.6.0。`hooks : 1 processed` |
+| D2 | `agy plugin install https://github.com/ray-works-jp/conversational-intent-compiler`（またはローカルのクローン）→ `agy plugin list`、導入先の `plugin.json` の version | version 0.6.2（GitHub 未公開のため、marketplace 経由の導入はできない。その旨を報告し、展開した ZIP のディレクトリで代替できる範囲を示す）。`hooks : 1 processed` |
 | D3 | skill が認識されることを確認し、`PLUGIN_ROOT` を直接のパス確認で解決して、一時 DB に `init` を 1 回 | `"ok": true`。許可確認は迂回せず（`--dangerously-skip-permissions` を使わず、「今回のみ」を選ぶ） |
 | D4 | `CIC_CAPTURE=1` と `CIC_LEDGER_DIR`（使い捨て）で、`agy -p` を 2 回（`--continue` を使う）実行し、`ledger_status.py` で確認 | 2 ターンが逐語・順序どおり・重複なしで `pending` に入る |
 | L1 | ループ運転（未確認事項の解消）：`python scripts/cic_loop.py --script <入力ファイル> --log <ログ> --compiler agy --responder agy`（入力は 3〜4 行＋`:stop`＋停止後の 1 行） | 入力の行数だけ処理され、`explicit_stop` で終わり、停止後の行はログに入らない。**`agy` のバックエンドは実モデルで未確認**なので、動いた／動かなかった（エラーの原文）を報告 |
