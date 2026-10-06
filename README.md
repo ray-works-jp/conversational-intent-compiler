@@ -8,7 +8,7 @@
 |---|---|
 | 対応 | Claude Code / Antigravity（CLI）/ ChatGPT・Codex |
 | 実装 | Python 3.12+（標準ライブラリのみ）、SQLite、JSON Schema |
-| 検証 | 自動テスト30件。ZIPを展開した状態でも検証。実機（Claude Code・Antigravity）で `init` と人間入力の記録を確認 |
+| 検証 | core/包装/旧XML loop/継続sessionの契約テスト。最新の件数・終了値は release-verification.json。意味精度・長期比較とは別 |
 | 評価 | 日本語5シナリオ・18発話の小規模パイロット（作者側の評価。精度の保証ではありません。[結果](resources/evaluation/pilot/RESULTS.md)） |
 | ライセンス | [MIT](LICENSE) |
 
@@ -27,9 +27,19 @@ agy plugin install https://github.com/ray-works-jp/conversational-intent-compile
 
 ---
 
-独立したプラグイン / version 0.6.0 / 2026-10-05 JST。
+独立したプラグイン / version 0.6.3 / 2026-10-06 JST。
 
 会話の原文を保持し、指示の変更・撤回・採用範囲・未決事項・判断委任・権限境界を、小さいTurn IRへ整理する。今回作成した研究・schema・offline試作を再利用した明示起動型のプラグインである。
+
+## 停止まで続くプラグイン会話モード（0.6.1）
+
+明示起動後、同じ会話・branchで **人間raw → Compiler → Delta検査/反映 → 実IR配送 → 通常AI応答 → 次の人間raw** を続けます。`コンパイラ停止` / `:stop` で停止。PASS、質問、一つのタスク完了、エラーだけで継続を解除しません。
+
+`scripts/cic_session.py` が開始/停止・原文・IR配送・応答の状態を保存し、再読込で復元します。訂正を応答前に反映し、新入力/stopが届いた古い応答の完了を拒否します。IR内容の差替え、同turnの別通常応答、再送の二重記録も検査します。原本7ファイルと既存core/schemaを変更せず、接続層を追加しました。
+
+ローカルCodex runtime/Claude Codeでは信頼済みUserPromptSubmit hookを使えます。`:cic start` 後に各turnへ固定処理指示を挿入します。Cloud Workではcommand hookが非対応のため、skill＋sessionによる継続で、全turnへの強制介入は保証できません。プラグインの有効化とhookの信頼は別です。[詳細な開始・停止・復旧手順](skills/conversational-intent-compiler/references/continuous-loop.md)
+
+以下のXML runnerは独立した反復経路で、JSON Deltaの自動commitはしません。精度改善・raw baselineへの優位性は未測定です。
 
 ## ループ運転（雑な入力 → コンパイラ → AIの応答 → … → 明示的に停止）
 
@@ -40,7 +50,7 @@ python scripts/cic_loop.py                  # コンパイラ・応答AIとも `
 python scripts/cic_loop.py --ledger loop.db --ab
 ```
 
-停止は `:stop` `/stop` `:quit` `:exit` `:q` `コンパイラー停止` のみ（T0・質問・検査不合格・エラーでは止まらない）。仕組み・検査項目・限界は [docs/loop-ja.md](docs/loop-ja.md)。「コンパイルしたほうが、そのまま渡すより良い」ことは未測定で、`--ab` のログで比較する想定です。
+停止は `:stop` `/stop` `:quit` `:exit` `:q` `コンパイラー停止` 等の直接人間入力（T0・質問・検査不合格・エラーでは止まらない）。仕組み・検査項目・限界は [docs/loop-ja.md](docs/loop-ja.md)。「コンパイルしたほうが、そのまま渡すより良い」ことは未測定で、`--ab` は同一履歴の局所比較で、正式な会話全体のbaseline比較とは別です。
 
 ## 対応ホストと導入
 
@@ -61,7 +71,7 @@ Antigravity（CLI）は、リポジトリをcloneして`agy plugin install <clon
 | Claude Code | このリポジトリをプラグインとして読み込む（`claude --plugin-dir <repo>` またはmarketplace経由）。manifestは `.claude-plugin/plugin.json` | `claude plugin validate` 合格。`--plugin-dir` で `conversational-intent-compiler-plugin:conversational-intent-compiler` として認識されることを確認 |
 | Antigravity（CLI `agy` / IDE） | `python scripts/install_skill.py <workspace>/.agents/skills`。全プロジェクト共通の置き場は版で異なる（CLI: `~/.gemini/antigravity-cli/skills`、2.0/IDE: `~/.gemini/config/skills`）。リポジトリを`agy plugin install <path>`でプラグインとして入れる方法もある（`~/.gemini/config/plugins/`へコピーされる。`dist/`も含めてコピーされるので、不要なら先に消す） | `agy 1.2.14` で、配置したskillの認識と、SKILL_ROOT/PLUGIN_ROOT解決の正しさを確認。`agy plugin validate`合格、`agy plugin install`で導入しskill認識とroot解決（2階層上）を確認。`agy plugin install`したplugin配置から、`cic_cli.py init`がhost内で`ok:true`になることを確認（headless。コマンド実行を許可するregex rule `command(regex:python <plugin>/scripts/cic_cli\.py .*)`を一時的に`~/.gemini/antigravity-cli/settings.json`へ追加し、実行後に元へ戻した）。許可ルールが無いheadless実行はコマンドが自動拒否される。対話モード(agy 1.2.16)では、コマンド実行(`RunCommand`)の許可確認が出て、承認後に`ok: true`になった（CLIログで確認。承認は保存されず、毎回確認される）。既存DBへの再`init`は`ok: false`(FileExistsError)で拒否される |
 
-Antigravityのskill仕様（既定は`.agents/skills/<name>/SKILL.md`、旧`.agent/skills`も後方互換、frontmatterは`description`必須・`name`任意、script/resourceはskillフォルダ相対）は公式docs（antigravity.google/docs/skills）に基づく。Claude Codeのmanifest仕様は公式のplugin reference（`.claude-plugin/plugin.json`、`skills/`標準配置）に基づく。Claude Codeでは、skill読込時にbase directoryが提示され、`SKILL_ROOT`の解決とinitの成功を確認した（`--allowedTools`で許可した実行）。許可ルールを足していない対話セッション(default mode, cwd=`C:\Users\HP`)でも、skillが読み込まれ`init`が`ok: true`になった。このときPowerShellツールの実行前に許可確認が出たかは、貼られた画面にも記録にも残っておらず確認できていない。headlessでは許可なしだと`This command requires approval`で拒否される。
+Antigravityのskill仕様（既定は`.agents/skills/<name>/SKILL.md`、旧`.agent/skills`も後方互換、frontmatterは`description`必須・`name`任意、script/resourceはskillフォルダ相対）は公式docs（antigravity.google/docs/skills）に基づく。Claude Codeのmanifest仕様は公式のplugin reference（`.claude-plugin/plugin.json`、`skills/`標準配置）に基づく。Claude Codeでは、skill読込時にbase directoryが提示され、`SKILL_ROOT`の解決とinitの成功を確認した（`--allowedTools`で許可した実行）。許可ルールを足していない対話セッション(default mode, cwd=ユーザーのホームフォルダ)でも、skillが読み込まれ`init`が`ok: true`になった。このときPowerShellツールの実行前に許可確認が出たかは、貼られた画面にも記録にも残っておらず確認できていない。headlessでは許可なしだと`This command requires approval`で拒否される。
 
 ## 人間入力の自動捕捉（Claude Code / Antigravity・任意・既定は無効）
 
@@ -100,7 +110,7 @@ Antigravityのskill仕様（既定は`.agents/skills/<name>/SKILL.md`、旧`.age
 | Python 3.12以上（コマンド名は環境で`python`/`python3`/`py -3`。`--version`で3.12以上を確認してから使う）のコード実行と永続ファイルを利用可能 | 台帳記録、Delta適用、State/Turn IR出力、replay、機械的preflight | 会話専用のSQLite DB。ユーザーが利用を認めた作業領域に保存 |
 | コード実行または永続ファイルを利用不可 | 原文・根拠・変更・有効条件・未決・権限境界の引継ぎpacket | 手動引継ぎ。永続台帳更新が完了したとは扱わない |
 
-パッケージにはMCP server、host hooks、独立アプリ画面を設定していない。会話全体への自動介入や、任意のweb/mobile環境でのSQLite実行を保証しない。起動した範囲で、取得・保存できた原文を扱う。
+パッケージにはMCP serverと独立アプリ画面は含めない。ローカルruntime向けに `hooks/hooks.json` の人間raw記録と継続プロトコル挿入を持つ。Cloud Workではcommand hookが非対応。会話全体の取得漏れゼロや、任意のweb/mobile環境でのSQLite実行を保証せず、取得・保存できた原文を扱う。
 
 Pythonの実在pathと、このプラグインの実在rootを確認する。`PYTHON` / `PLUGIN_ROOT` / `STATE_DB`は説明用の名前であり、実環境の値へ置き換える。
 

@@ -1,5 +1,21 @@
 # Release notes
 
+## 0.6.3 — 2026-10-06
+
+- README の記述に残っていたローカルのユーザーフォルダの絶対パスを、一般的な表現に置き換え。同梱の `docs/handoff/` を 0.6.2 対応の版（コミット 6763e0c）に更新。コード・core/schema・権限・ハッシュ固定の資料は変更しない。
+
+## 0.6.2 — 2026-10-06
+
+- Work実機で、task scopeの条件がdispatchの有効条件欄へ配送されない接続漏れを発見。task_idを既存core.packageへ渡すよう修正。task scopeの有効条件があるのにtask_idを省略した配送は拒否し、静かな脱落を防ぐ。条件保持の回帰テストを追加。原文・core/schema・権限は変更しない。
+
+## 0.6.1 — 2026-10-06
+
+- 明示起動後の継続会話モードを追加。`cic_session.py`でprepare→host Compiler/Delta→dispatch→Responder→completeを接続。start/stopは原文human eventから派生し、再開/branch分離/再送を扱う。制御だけの入力以外は自動NO_CHANGEにしない。
+- 実際にpackageしたTurn IR全文/hashを応答前に保存。completeは配送内容・raw・state版・新human/stop・同turn別応答を検査。prepared本文と実際にobservedした応答を区別する。配送は処理lease/外部許可ではない。
+- 信頼済みローカルUserPromptSubmit hookで開始後の各turnへ固定手順を挿入。ユーザー原文はdeveloper instructionへコピーしない。Cloud Workのhook非対応は継続skill/session方式と分ける。
+- 旧XML loopを全文/全turn履歴、Ledger再開、質問/失敗の出自、stop保存、EOF待機、backend失敗/引用付きargvへ対応。Claude制限flagsを追加し、agy/cmdはtool隔離未保証として明示opt-in。意味Deltaは自動確定しない。
+- 初版7ファイルと既存hash原本/core/schemaは保持。長期意味精度・raw baseline比較の改善は未測定。
+
 ## 0.6.0 — 2026-10-06
 
 - **ループ運転を追加**：`scripts/cic_loop.py`。人間の雑な入力 → コンパイラAI → AIの応答 → 人間の入力 → … を、`:stop` 等で明示的に停止するまで繰り返す。コンパイラAIには、最初のコンパイラー（Intent Compiler 0.1.0）の実行仕様を無改変のまま同梱（`resources/intent-compiler/`、ハッシュ付き）して使う。IRは、原文との機械的な照合（`q` の逐語一致など）に通ったものだけを応答AIへ渡し、不合格なら原文をそのまま渡す。`--ledger` で台帳へ逐語記録、`--ab` で「IRなし」の応答も記録。仕様は `docs/loop-ja.md`。

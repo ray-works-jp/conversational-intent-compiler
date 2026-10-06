@@ -1,13 +1,13 @@
 {
   "name": "conversational-intent-compiler-plugin",
-  "version": "0.6.0",
-  "description": "会話の原文を保存し、指示変更・採用範囲・未決事項・委任・権限境界を根拠付きで追跡する、明示起動型の会話意図コンパイラ。",
+  "version": "0.6.3",
+  "description": "人間の雑な入力を原文・状態・意図差分へ整理し、明示起動した会話では停止までコンパイルとAI応答を継続する会話意図コンパイラ。",
   "author": { "name": "ray-works-jp" },
   "skills": "./skills/",
   "interface": {
     "displayName": "Conversational Intent Compiler",
     "shortDescription": "会話の原文・変更・未決・権限を追跡",
-    "longDescription": "原文を要約で置換せず、今回の変更と有効な条件、未決事項、判断委任、採用範囲、権限境界を小さいTurn IRへまとめます。ホストAIが意味候補を作り、Python実行と永続ファイルを利用できる環境では同梱CLIで原文台帳・状態差分・根拠照合・replayを扱います。実行環境がない場合は欠落を明示した引継ぎを作ります。全ターン自動介入、認証、外部操作の実行・取消、原文直接入力より高い精度は保証しません。",
+    "longDescription": "明示起動した会話で、人間raw→意図差分の検査・反映→IR配送→通常AI応答を停止まで続けます。原文とAI提案の出自を保存し、開始・停止を台帳から復元します。ローカルの信頼済みhookは各turnへ処理指示を挿入し、Cloud Workではskillとsessionを使います。全環境での強制介入、認証、外部操作の実行・取消、原文直接入力より高い精度は保証しません。",
     "developerName": "ray-works-jp",
     "category": "Productivity",
     "capabilities": ["Interactive"],

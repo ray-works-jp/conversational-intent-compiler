@@ -1,6 +1,6 @@
 {
-  "release": "0.6.0",
-  "recorded_date_jst": "2026-10-05",
+  "release": "0.6.3",
+  "recorded_date_jst": "2026-10-06",
   "verification_kind": "deterministic_cli_contracts_and_packaging",
   "baseline_0_1_0": {
     "note": "Recorded for 0.1.0; CLI/core/schema/skill bodies are unchanged in 0.2.0 apart from one sentence in operation-guide.md.",
@@ -147,5 +147,55 @@
       "behaviour with the user's global claude hooks isolated",
       "antigravity/chatgpt hosts: the loop is a local runner, not a host feature"
     ]
+  },
+  "release_0_6_1": {
+    "status": "local_candidate_not_published_or_registered",
+    "contract_tests": {
+      "tests": 76,
+      "failures": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "seconds": 27.943,
+      "scope": "source tree, Windows Python 3.12.14, permission-reviewed OS temp",
+      "groups": {
+        "CLI": 17,
+        "existing_raw_hooks": 7,
+        "XML_loop": 31,
+        "package": 6,
+        "persistent_session_and_bridge": 15
+      }
+    },
+    "natural_language_semantic_accuracy": "not_measured",
+    "raw_baseline_superiority": "not_measured",
+    "host_hook_activation": "not_tested_in_live_host",
+    "cloud_work_forced_interception": "unsupported",
+    "session_driver": "prepare/validated Delta/dispatch/respond/complete",
+    "core_schema_and_upstream_bytes": "Unchanged. Original 7 files and existing 33 resource hashes passed.",
+    "processing_claim_or_model_execution_lease": "not_implemented",
+    "external_authority_grants": false,
+    "notes": "Historical entries above describe their recorded versions and remain historical; current tests are scoped here."
+  },
+  "release_0_6_2": {
+    "change": "Pass task_id to core.package and reject task-scoped silent omission",
+    "evidence": "Cloud Work 0.6.1 live first-turn run reported task-scoped active_requirements missing despite raw/Delta present",
+    "contract_tests": {
+      "tests": 77,
+      "failures": 0,
+      "errors": 0,
+      "exit_code": 0,
+      "source_run_seconds": 30.367,
+      "extracted_final_package_run": "recorded separately after packaging"
+    },
+    "semantic_superiority": "not_measured",
+    "new_test": "test_task_scope_is_delivered_and_missing_task_id_cannot_silently_drop_conditions",
+    "authority_or_audience_changes": false
+  },
+  "release_0_6_3": {
+    "change": "Documentation only: README local absolute user-folder path replaced with a generic description; bundled docs/handoff updated to the 0.6.2-aware version (commit 6763e0c)",
+    "code_core_schema_changes": false,
+    "hash_pinned_resources_changed": false,
+    "known_remaining": "resources/research snapshots still contain local paths; they are hash-pinned by upstream-files.json and were left unchanged",
+    "contract_tests": "recorded separately after packaging",
+    "authority_or_audience_changes": false
   }
 }

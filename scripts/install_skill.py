@@ -13,8 +13,8 @@ def _writable_retry(func, path, exc):
     os.chmod(path, stat.S_IWRITE)
     func(path)
 
-RUNTIME = ("cic.py", "cic_cli.py", "schema_spec.py", "install_antigravity_hook.py", "ledger_status.py", "cic_loop.py")
-HOOKS = ("cic_ledger.py", "capture_antigravity.py")
+RUNTIME = ("cic.py", "cic_cli.py", "schema_spec.py", "install_antigravity_hook.py", "ledger_status.py", "cic_loop.py", "cic_session.py")
+HOOKS = ("cic_ledger.py", "capture_antigravity.py", "continuous_turn.py")
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
