@@ -2,14 +2,14 @@
 
 | 項目 | 内容 |
 |---|---|
-| 版・確認日 | **最終版（v0.6.3 対応）**。2026-10-06 に、0.6.3 の plugin ZIP（下記 SHA-256）を展開し、77 テストの成功と `claude plugin validate .` の合格を確認。GitHub のタグ・Release は 0.6.3 では未作成（確認済み） |
+| 版・確認日 | **最終版（v0.6.3 の Release 対応）**。2026-10-06 に、v0.6.3 の Release の plugin ZIP を展開し、77 テストの成功と `claude plugin validate .` の合格を確認。Release の digest と手元の ZIP の一致も確認 |
 | 対象 | Conversational Intent Compiler（以下「CIC」）プラグイン |
-| 引き継ぐ版 | **v0.6.3**（plugin ZIP `conversational-intent-compiler-plugin-0.6.3.zip`。**GitHub 未公開**：タグ・Release なし、作業ツリー未コミット）。公開済みの最新は v0.6.0（タグ = コミット `58fdca3`）。v0.6.0 からの差は、**継続会話モード・UserPromptSubmit ブリッジ・ループ運転の強化（0.6.1）と、task scope 条件の配送修正（0.6.2）。0.6.3 は文書のみの修正（README のローカルパス除去、同梱の引継ぎ文書の更新）**（第3章 FR-18〜FR-20）。 |
+| 引き継ぐ版 | **v0.6.3**（タグ `v0.6.3` = コミット `0229521`。`main` も同じ。GitHub Release は Latest）。前の公開版は v0.6.0（コミット `58fdca3`）。v0.6.0 からの差は、**継続会話モード・UserPromptSubmit ブリッジ・ループ運転の強化（0.6.1）と、task scope 条件の配送修正（0.6.2）。0.6.3 は文書のみの修正（README のローカルパス除去、同梱の引継ぎ文書の更新）**（第3章 FR-18〜FR-20）。 |
 | リポジトリ | https://github.com/ray-works-jp/conversational-intent-compiler （Public、MIT） |
 | 引継ぎ先 | GPT-6.1 Sol（この文書の受け手） |
 | 性格 | 引継ぎ用の文書（公開版）。アカウント固有の識別子と、事故の詳細は省略している |
 
-> **事実の再確認方法**：渡された ZIP の SHA-256 が第2章 2.1 の値と一致するか確認し、展開して `python -m unittest discover -s scripts -p "test_*.py"`（77 件成功を期待）を実行する。GitHub 側は `git ls-remote --tags origin`（`v0.6.3` が**ない**ことを期待。あれば Release の digest と照合）。結果が本書と異なる場合は、**本書ではなく実物を正とし**、差を作成者へ報告すること。
+> **事実の再確認方法**：リポジトリで `git fetch --tags`、`git rev-parse --short v0.6.3^{commit}`（`0229521` を期待）、`gh release view v0.6.3 --repo ray-works-jp/conversational-intent-compiler --json assets`（第2章 2.1 の digest と照合）、`python -m unittest discover -s scripts -p "test_*.py"`（77 件成功を期待）。結果が本書と異なる場合は、**本書ではなく実物を正とし**、差を作成者へ報告すること。
 
 > **この文書の読み方**：事実は「確認済み」「自己報告（未照合）」「未確認」に分けて書いています。「未確認」を「動く」と読み替えないでください。GPT-6.1 Sol が実行できるツール（Python 実行、GitHub アクセス、ファイル保存）は、私（作成者）には分かりません。第9章の受入確認で、受け手自身が確認してください。
 
@@ -37,7 +37,7 @@ CIC の現行版（v0.6.3）を、仕様・状態・検証結果・未解決事�
 
 | ID | 要件 |
 |---|---|
-| IR-1 | **対象**：`conversational-intent-compiler-plugin-0.6.3.zip`（作成者がローカルで渡す ZIP。sha256 は第2章 2.1。GitHub に v0.6.3 の Release が作成された後は、その asset の digest とも照合する）。取得後に SHA-256 を照合し、一致しなければ中止して報告する |
+| IR-1 | **対象**：Release `v0.6.3` の `conversational-intent-compiler-plugin-0.6.3.zip`（sha256 は第2章 2.1）。取得後、SHA-256 を Release の digest と照合し、一致しなければ中止して報告する |
 | IR-2 | **手順**：`docs/install/GPT-ja.md` に従う（ZIP をそのまま Plugin Creator へ渡す。中身を書き換えず、ディレクトリを含む形） |
 | IR-3 | **登録の扱い**：ユーザーの ChatGPT アカウントに既存の private プラグイン（0.5.1）があれば、**新規作成せず更新**する。既存が見つからない、またはアクセスできない場合は、新規作成の前にユーザーへ確認する |
 | IR-4 | **公開範囲**：**PRIVATE を維持**する。公開・共有・組織への展開は行わない（ユーザーの許可は、private での導入・更新までである） |
@@ -53,13 +53,13 @@ CIC の現行版（v0.6.3）を、仕様・状態・検証結果・未解決事�
 ### 2.1 リリース状態
 | 項目 | 状態 | 確認方法 |
 |---|---|---|
-| バージョン | ZIP 内の `plugin.json`、`.codex-plugin/plugin.json`、`.claude-plugin/plugin.json` が全て `0.6.3`（公開済みの GitHub 最新は `0.6.0`） | 確認済み（テストが一致を検査） |
-| GitHub Releases | v0.6.0（Latest）、v0.5.2、v0.4.1、v0.4.0、v0.3.1、v0.2.1 | 確認済み |
-| v0.6.3 の公開状態 | タグ `v0.6.3`・Release なし（ローカルと origin のタグ一覧で確認）。作業ツリーに 0.6.1／0.6.3 の変更が未コミットで残る | 確認済み（2026-10-06） |
-| タグ | `v0.2.1`、`v0.3.1`、`v0.4.0`、`v0.4.1`、`v0.5.0`（Release なし）、`v0.5.2`、`v0.6.0` | 確認済み。`v0.2.0`、`v0.3.0`、`v0.5.1` は意図して削除済み（欠番） |
+| バージョン | `plugin.json`、`.codex-plugin/plugin.json`、`.claude-plugin/plugin.json` が全て `0.6.3` | 確認済み（テストが一致を検査） |
+| GitHub Releases | v0.6.3（Latest）、v0.6.0、v0.5.2、v0.4.1、v0.4.0、v0.3.1、v0.2.1 | 確認済み（`gh release list`） |
+| v0.6.3 の公開状態 | タグ `v0.6.3`（注釈付き）= コミット `0229521`。`main` も同じ。作業ツリーは clean。0.6.1〜0.6.3 の変更はこのコミットに含まれる | 確認済み（2026-10-06） |
+| タグ | `v0.2.1`、`v0.3.1`、`v0.4.0`、`v0.4.1`、`v0.5.0`（Release なし）、`v0.5.2`、`v0.6.0`、`v0.6.3` | 確認済み。`v0.2.0`、`v0.3.0`、`v0.5.1` は意図して削除済み（欠番） |
 | v0.6.0 の配布物（公開済み） | plugin ZIP：295,370 bytes・87 ファイル・sha256 `468750575e1463359a4da4eee0e999c526abb59cc3f51608ffc153f1b8cd44f2` ／ Antigravity ZIP：97,309 bytes・31 ファイル・sha256 `ddd5cee3ce72af3e77365c20e92c5a90d44929ea274a331b9c8296c1cb010af9` | 確認済み（GitHub の asset digest と手元の ZIP が一致）。ループ運転（`cic_loop.py`）と、最初のコンパイラーの同梱 7 ファイルを含む |
-| **v0.6.3 の配布物（未公開）** | plugin ZIP：329,259 bytes・91 ファイル（ZIP 直下がプラグインのルート。上位フォルダなし）・sha256 `d14a7c8a9a71473a8b233939490e911aad801ee92c23a94fc71c3b953b83a571` ／ Antigravity ZIP：**未作成** | 確認済み（ZIP を展開して読了）。継続会話モード（`cic_session.py`、`continuous_turn.py`）を含む |
-| テスト | 77 件（`test_cli.py` 17、`test_hook.py` 7、`test_package.py` 6、`test_loop.py` 31、`test_session.py` 16）、全て成功 | 確認済み（2026-10-06、0.6.3 の ZIP を展開して実行。約 58 秒）。v0.6.0 は 45 件 |
+| **v0.6.3 の配布物** | plugin ZIP：339,150 bytes・91 ファイル（展開すると `conversational-intent-compiler-plugin/` が 1 つできる）・sha256 `736b12821294e73a49204e6dc18a120238a098eb1669a44a0bbc9160e7efd5ac` ／ Antigravity ZIP：114,160 bytes・34 ファイル・sha256 `2cf2361cd6f30f728324b090db480ee64850ac1f6df57417e8cacf99debad333` | 確認済み（GitHub の asset digest と手元の ZIP が一致）。継続会話モード（`cic_session.py`、`continuous_turn.py`）を含む。0.6.2 は ZIP のみの中間版で、公開されていない |
+| テスト | 77 件（`test_cli.py` 17、`test_hook.py` 7、`test_package.py` 6、`test_loop.py` 31、`test_session.py` 16）、全て成功 | 確認済み（2026-10-06、v0.6.3 の Release の plugin ZIP を展開して実行。約 58 秒）。v0.6.0 は 45 件 |
 | ファイル数 | v0.6.0 の追跡ファイルは 87。v0.6.3 の ZIP は 91（= 87 ＋ 新規 4：`hooks/continuous_turn.py`、`scripts/cic_session.py`、`scripts/test_session.py`、`skills/.../references/continuous-loop.md`） | 確認済み |
 
 ### 2.1.1 作成者の環境 の導入状態（参考）
@@ -191,7 +191,7 @@ CIC の現行版（v0.6.3）を、仕様・状態・検証結果・未解決事�
 - **コンパイルの価値**：「コンパイルしたほうが、そのまま渡すより良い」ことは未測定（`--ab` のログで盲検比較が必要）。
 - ループの `agy` と `cmd:` のバックエンドを、実モデルで動かした結果。利用者のグローバルなフックを隔離した場合のコンパイラの挙動。
 - **継続会話モードの実ホスト確認**：`continuous_turn.py` の hook 実行（Claude Code・Codex）、Cloud Work での 2 turn 目以降の継続、Antigravity 上の動作。`:cic start` → 複数 turn → `:stop` の実機記録がない。
-- **0.6.3 の GitHub 公開**（タグ・Release・Antigravity 用 ZIP）と、ChatGPT・Antigravity への 0.6.x の導入。
+- **0.6.3 の ChatGPT・Antigravity への導入**（Release は公開済み。導入は未実施）。Antigravity 用 ZIP の実機確認は未実施。
 
 ---
 
@@ -237,7 +237,7 @@ CIC の現行版（v0.6.3）を、仕様・状態・検証結果・未解決事�
 | 7 | Antigravity の transcript の形式が公式 docs にない | `agy` の更新で記録が取り込めなくなる可能性 | 観察に基づく実装（`USER_INPUT` / `USER_EXPLICIT` / `<USER_REQUEST>`） |
 | 8 | 保存する原文が平文。暗号化・保持期間・削除・ACL・durable inbox・dispatch lease・実行中取消は未実装 | 機密を扱う運用には不向き | README に明記済み |
 | 9 | AI 応答・tool 結果は自動では台帳に入らない | 全体の追跡は不完全 | 仕様。skill の手順でホスト AI が捕捉する |
-| 10 | **0.6.3 が未公開**：GitHub にタグ・Release がなく、作業ツリーは未コミット（0.6.1〜0.6.3 の変更）。Antigravity 用 ZIP も未作成。0.6.2 は中間版で、ZIP のみ（317,913 bytes、sha256 `b59a028c7e09d14a408ca367cc7388da44e480b5126f2faf0883ec7a319dbdca`）で公開されておらず、0.6.3 に置き換わった。0.6.3 の ZIP に埋め込まれた `docs/handoff/` は 0.6.2 対応版（コミット `6763e0c`）で、0.6.3 の ZIP の SHA-256 などは含まない | 配布物を GitHub から取得できない。ChatGPT・Antigravity の更新ができない | 作成者の依頼があったときだけ、コミット・push・タグ・Release・Antigravity ZIP を作る（6.2） |
+| 10 | **Release の ZIP に埋め込まれた引継ぎ文書は古い**：v0.6.3 の ZIP の `docs/handoff/` は 0.6.2 対応版（コミット `6763e0c`）で、v0.6.3 の ZIP の値を含まない。`main` の引継ぎ文書（本書）が Release の値を反映している。0.6.2 は ZIP のみの中間版（317,913 bytes、sha256 `b59a028c7e09d14a408ca367cc7388da44e480b5126f2faf0883ec7a319dbdca`）で、公開されず 0.6.3 に置き換わった | ZIP 内の引継ぎ文書の版・値が古い（文書のみ） | 本書を正とする。直すなら次の版で出し直す |
 | 11 | **継続会話モードの実ホスト確認が薄い**：hook（`continuous_turn.py`）の実機実行、Cloud Work の 2 turn 目以降の継続、Antigravity 上の動作は未確認。release-verification には、Cloud Work で 0.6.1 の初回 turn を観察して 0.6.2 の修正につながったとの記録がある（自己報告・未照合）。意味精度・raw 直接入力との比較は未測定 | 「継続する」が実機で保証されていない | 実機で、`:cic start` → 2〜3 turn → `:stop` を観察し、記録を貼る |
 
 ---
@@ -256,15 +256,15 @@ CIC の現行版（v0.6.3）を、仕様・状態・検証結果・未解決事�
 
 | # | 確認 | 期待 |
 |---|---|---|
-| A1 | `git ls-remote --tags origin` と、渡された ZIP の有無を確認 | `v0.6.0` が `58fdca3`。**`v0.6.3` はない**（あれば Release の digest と ZIP を照合）。ない場合は「未公開」と報告し、ZIP で検収する |
-| A2 | 渡された 0.6.3 の plugin ZIP の SHA-256 を、第2章 2.1 の値と照合 | 一致（違えば中止して報告） |
+| A1 | `git ls-remote --tags origin` と `gh release view v0.6.3` を確認 | `v0.6.3` が `0229521`、`main` が `0229521` 以降。Release に ZIP が 2 つ |
+| A2 | Release の plugin ZIP（と Antigravity 用 ZIP）の SHA-256 を、第2章 2.1 の値・Release の digest と照合 | 一致（違えば中止して報告） |
 | A3 | Python 3.12 以上があるか確認し、77 テストを実行（実行環境がある場合） | 全成功。実行環境がなければ「未実施」と報告し、静的な読解（B 群）のみ行う |
 | S1 | **継続会話モード**：`references/continuous-loop.md` と `scripts/test_session.py` を読み、使い捨ての DB で `cic_session.py` の prepare → dispatch → complete を 1 巡し、`:stop` 後の prepare が停止扱いになること、新入力のあとの古い応答の complete が拒否されることを確認 | 期待どおり。hook の実機動作・Cloud Work の継続は**未確認**と報告し、動くと言わない |
 | B1 | `skills/.../SKILL.md` と `references/operation-guide.md` を読み、第3章 3.1 の P1〜P7 を自分の言葉で要約 | 原文正本・origin と adoption の分離・意図と権限の分離・検証は正しさの証明ではない、を含む |
 | B2 | 第7章の未解決事項を、自分の優先度と理由つきで並べ替えて提案 | 作成者の判断を要するものを区別している |
 | B3 | 第4章 4.2 の不変の制約を、守れないケースの例とともに説明 | 4.2 の 1（ハッシュ）と 2（バージョン一致）を含む |
 | B4 | `docs/loop-ja.md` と `resources/intent-compiler/` を読み、ループの**停止の条件**（何で止まり、何で止まらないか）と、IR が応答 AI へ渡る条件を、自分の言葉で説明 | 停止語・入力の終わり・Ctrl-C のみで止まる。T0・質問・不合格・エラーでは止まらない。「サーバーを止めて」は停止にならない。IR は検査に通ったものだけが渡る |
-| E1 | 渡された v0.6.3 の plugin ZIP の SHA-256 を、第2章 2.1 の値と照合（IR-1）。Release が作成済みなら、その digest とも照合 | 一致 |
+| E1 | v0.6.3 の plugin ZIP を取得し、SHA-256 を Release の digest・第2章 2.1 の値と照合（IR-1） | 一致 |
 | E2 | `docs/install/GPT-ja.md` に従い、private プラグインとして導入・更新（IR-2〜IR-4） | 既存の更新（新規作成なし）、PRIVATE 維持 |
 | E3 | 導入後に、version・登録ファイル数・`plugin.json`/`SKILL.md` の一致を読み戻して確認（IR-5） | version 0.6.3、ファイル数 91、一致 |
 | E4 | 新しい会話で、**架空の会話**を使い、スキルの起動、Python 実行、永続保存の 3 点を分けて確認（IR-6） | 3 点それぞれを「確認した／できない」で根拠つきで報告。Python が使えない場合は、手動引継ぎ方式に切り替わったことを報告 |
@@ -285,7 +285,7 @@ python scripts/cic_loop.py --script <入力ファイル> --log <ログ> [--ledge
 python -m unittest discover -s scripts -p "test_*.py"
 claude plugin validate .
 agy plugin validate .
-gh release view v0.6.0 --repo ray-works-jp/conversational-intent-compiler --json assets
+gh release view v0.6.3 --repo ray-works-jp/conversational-intent-compiler --json assets
 ```
 
 ## 付録 B. 用語
